@@ -57,7 +57,49 @@ export function scanHtmlDir(dir: string): HtmlDocMeta[] {
   })
 }
 
-/** Scan subdirectories of `dir`, returning docs grouped by folder name, sorted alphabetically. */
+/** Recursively collect all HTML docs under a directory, preserving relative paths as slugs. */
+function scanHtmlDirRecursive(base: string, rel: string = ''): HtmlDocMeta[] {
+  const fullDir = rel ? join(base, rel) : base
+  let entries: string[]
+  try {
+    entries = readdirSync(fullDir).sort()
+  } catch {
+    return []
+  }
+
+  const docs: HtmlDocMeta[] = []
+  for (const entry of entries) {
+    const fullPath = join(fullDir, entry)
+    try {
+      const stat = statSync(fullPath)
+      if (stat.isDirectory()) {
+        docs.push(...scanHtmlDirRecursive(base, rel ? `${rel}/${entry}` : entry))
+      } else if (entry.endsWith('.html')) {
+        const slug = rel ? `${rel}/${entry.replace('.html', '')}` : entry.replace('.html', '')
+        let title = titleCase(entry.replace('.html', ''))
+        let description = ''
+        let tags: string[] = []
+        try {
+          const html = readFileSync(fullPath, 'utf-8')
+          const t = extractTag(html, /<title[^>]*>([^<]+)<\/title>/i)
+          if (t) title = t
+          const d = extractTag(html, /<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)
+            ?? extractTag(html, /<meta\s+content=["']([^"']+)["']\s+name=["']description["']/i)
+          if (d) description = d
+          const k = extractTag(html, /<meta\s+name=["']keywords["']\s+content=["']([^"']+)["']/i)
+            ?? extractTag(html, /<meta\s+content=["']([^"']+)["']\s+name=["']keywords["']/i)
+          if (k) tags = k.split(',').map(t => t.trim()).filter(Boolean)
+        } catch {}
+        docs.push({ slug, filename: entry, title, description, tags })
+      }
+    } catch {
+      continue
+    }
+  }
+  return docs
+}
+
+/** Scan subdirectories of `dir`, returning docs grouped by top-level folder name, sorted alphabetically. Recurses into nested subdirectories. */
 export function scanHtmlSubdirs(dir: string): GroupedHtmlDocs[] {
   let entries: string[]
   try {
@@ -76,10 +118,7 @@ export function scanHtmlSubdirs(dir: string): GroupedHtmlDocs[] {
       continue
     }
 
-    const docs = scanHtmlDir(fullPath).map(doc => ({
-      ...doc,
-      slug: `${entry}/${doc.slug}`,
-    }))
+    const docs = scanHtmlDirRecursive(dir, entry)
 
     if (docs.length > 0) {
       groups.push({

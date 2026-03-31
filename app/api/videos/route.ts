@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       SELECT id, title, description, youtube_id, tags, pinned, published_at
       FROM videos
       WHERE published = true AND pinned = true
-      ORDER BY published_at DESC
+      ORDER BY published_at ASC
     `
 
     // Fetch non-pinned videos with optional tag filter + pagination

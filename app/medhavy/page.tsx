@@ -20,7 +20,7 @@ export default async function VideosPage() {
       SELECT id, title, description, youtube_id, tags, pinned, published_at
       FROM videos
       WHERE published = true AND pinned = true
-      ORDER BY published_at DESC
+      ORDER BY published_at ASC
     `) as Video[]
     videos = (await sql`
       SELECT id, title, description, youtube_id, tags, pinned, published_at

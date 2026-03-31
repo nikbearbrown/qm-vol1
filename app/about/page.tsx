@@ -71,7 +71,7 @@ export default function AboutPage() {
                 className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-black text-white shadow hover:bg-gray-800 dark:border dark:border-input dark:bg-background dark:text-foreground dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground">
                 GitHub
               </a>
-              <a href="https://youtube.com/playlist?list=PLIS8mRE04Mvoif0tBUlgNV52euT9E5q_e&si=jON2rhrasmimGth8" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.youtube.com/@NikBearBrown" target="_blank" rel="noopener noreferrer"
                 className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-black text-white shadow hover:bg-gray-800 dark:border dark:border-input dark:bg-background dark:text-foreground dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground">
                 YouTube
               </a>

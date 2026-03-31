@@ -230,7 +230,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { name: 'YouTube', href: 'https://youtube.com/playlist?list=PLIS8mRE04Mvoif0tBUlgNV52euT9E5q_e&si=jON2rhrasmimGth8' },
+              { name: 'YouTube', href: 'https://www.youtube.com/@NikBearBrown' },
               { name: 'GitHub', href: 'https://github.com/Medhavy' },
               { name: 'Humanitarians AI', href: 'https://humanitarians.ai' },
             ].map((link) => (

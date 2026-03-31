@@ -14,32 +14,44 @@ interface Doc {
   tags: string[]
 }
 
-export default function DevBrowser({ docs }: { docs: Doc[] }) {
+interface Group {
+  folder: string
+  folderTitle: string
+  docs: Doc[]
+}
+
+export default function DevBrowser({ groups }: { groups: Group[] }) {
   const [query, setQuery] = useState('')
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
   const allTags = useMemo(() => {
     const set = new Set<string>()
-    docs.forEach(d => d.tags.forEach(t => set.add(t)))
+    groups.forEach(g => g.docs.forEach(d => d.tags.forEach(t => set.add(t))))
     return Array.from(set).sort()
-  }, [docs])
+  }, [groups])
 
-  const filtered = useMemo(() => {
-    let result = docs
-    if (activeTag) {
-      result = result.filter(d => d.tags.includes(activeTag))
-    }
-    if (query.trim()) {
-      const q = query.toLowerCase()
-      result = result.filter(
-        d =>
-          d.title.toLowerCase().includes(q) ||
-          d.description.toLowerCase().includes(q) ||
-          d.tags.some(t => t.toLowerCase().includes(q))
-      )
-    }
-    return result
-  }, [docs, query, activeTag])
+  const filteredGroups = useMemo(() => {
+    return groups
+      .map(g => {
+        let docs = g.docs
+        if (activeTag) {
+          docs = docs.filter(d => d.tags.includes(activeTag))
+        }
+        if (query.trim()) {
+          const q = query.toLowerCase()
+          docs = docs.filter(
+            d =>
+              d.title.toLowerCase().includes(q) ||
+              d.description.toLowerCase().includes(q) ||
+              d.tags.some(t => t.toLowerCase().includes(q))
+          )
+        }
+        return { ...g, docs }
+      })
+      .filter(g => g.docs.length > 0)
+  }, [groups, query, activeTag])
+
+  const totalDocs = filteredGroups.reduce((n, g) => n + g.docs.length, 0)
 
   return (
     <>
@@ -88,38 +100,52 @@ export default function DevBrowser({ docs }: { docs: Doc[] }) {
         </div>
       )}
 
-      {/* Cards */}
-      {filtered.length === 0 ? (
+      {/* Grouped cards */}
+      {totalDocs === 0 ? (
         <p className="text-muted-foreground">
           {query || activeTag ? 'No docs match your search.' : 'No docs yet.'}
         </p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map(doc => (
-            <Link key={doc.slug} href={`/dev/${doc.slug}`}>
-              <Card className="h-full hover:border-foreground/20 transition-colors cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="text-base flex items-center gap-2">
-                    {doc.title}
-                    <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                  </CardTitle>
-                  {doc.description && (
-                    <CardDescription className="line-clamp-2">
-                      {doc.description}
-                    </CardDescription>
-                  )}
-                  {doc.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 pt-2">
-                      {doc.tags.map(tag => (
-                        <Badge key={tag} variant="secondary" className="text-[10px]">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </CardHeader>
-              </Card>
-            </Link>
+        <div className="space-y-10">
+          {filteredGroups.map(g => (
+            <section key={g.folder}>
+              <h2 className="text-2xl font-bold tracking-tighter mb-4 border-b pb-2">
+                {g.folderTitle}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {g.docs.map(doc => (
+                  <Link key={doc.slug} href={`/dev/${doc.slug}`}>
+                    <Card className="h-full hover:border-foreground/20 transition-colors cursor-pointer">
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center gap-2">
+                          {doc.title}
+                          <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                        </CardTitle>
+                        {doc.description && (
+                          <CardDescription className="line-clamp-2">
+                            {doc.description}
+                          </CardDescription>
+                        )}
+                        {doc.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 pt-2">
+                            {doc.tags.slice(0, 3).map(tag => (
+                              <Badge key={tag} variant="secondary" className="text-[10px]">
+                                {tag}
+                              </Badge>
+                            ))}
+                            {doc.tags.length > 3 && (
+                              <span className="text-[10px] text-muted-foreground">
+                                +{doc.tags.length - 3} more
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}

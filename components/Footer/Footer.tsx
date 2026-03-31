@@ -5,7 +5,7 @@ import Link from 'next/link'
 const SOCIAL_LINKS = [
   { name: 'GitHub', href: 'https://github.com/Medhavy' },
   { name: 'Substack', href: 'https://medhavy.substack.com/' },
-  { name: 'YouTube', href: 'https://youtube.com/playlist?list=PLIS8mRE04Mvoif0tBUlgNV52euT9E5q_e&si=jON2rhrasmimGth8' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@NikBearBrown' },
 ]
 
 export default function Footer() {
