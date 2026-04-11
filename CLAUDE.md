@@ -300,17 +300,19 @@ The color palette lives in three places that must stay in sync:
 - `public/theme.json` — machine-readable for Indiana and Dev doc generators
 - `app/globals.css` — CSS variables (`--bb-1` through `--bb-8`) that drive the actual site
 
-### Medhavy palette
-| Var | Hex | Role | WCAG on bb8 |
-|-----|-----|------|-------------|
-| bb1 | #1a0a00 | near black — primary text | 15.6:1 |
-| bb2 | #8B3A0F | burnt orange — primary accent | 6.3:1 |
-| bb3 | #A52A1A | deep crimson — danger/emphasis | 5.8:1 |
-| bb4 | #E8A020 | amber — highlight/callout | 8.7:1 (on bb1) |
-| bb5 | #B5420A | burnt sienna — secondary accent | 4.5:1 |
-| bb6 | #B8860B | dark goldenrod — muted accent | — |
-| bb7 | #C8A96E | warm tan — borders, subtle bg | — |
-| bb8 | #F0E6D0 | cream — page background | — |
+### Medhavy palette (Guardian)
+Guardian structure, fully earthed. Deep forest replaces sapphire. Brick replaces red. Ochre replaces neon yellow. Warm taupe and stone for grays. White background.
+
+| Var | Hex | Role | WCAG on bg | Level |
+|-----|-----|------|------------|-------|
+| bb1 | #121212 | iron black — primary text | 18.0:1 | AAA |
+| bb2 | #1F3D1A | deep forest — primary accent | 12.6:1 | AAA |
+| bb3 | #8C3422 | brick — danger/emphasis | 8.0:1 | AAA |
+| bb4 | #C8860E | warm ochre — highlight/callout | 3.1:1 | AA large |
+| bb5 | #5C5A4E | warm taupe — secondary accent | 7.0:1 | AAA |
+| bb6 | #8C8878 | warm stone — muted accent | 3.7:1 | AA large |
+| bb7 | #D6D0C4 | warm pebble — borders, subtle bg | 1.4:1 | decorative |
+| bb8 | #FFFFFF | white — page background | — | |
 
 ### To rebrand a new deployment
 1. Edit the hex values in all three files (`lib/theme.ts`, `public/theme.json`, `app/globals.css`)

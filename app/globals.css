@@ -3,15 +3,15 @@
 @tailwind utilities;
 @layer base {
   :root {
-    /* Medhavy palette — swap these to rebrand the entire site */
-    --bb-1: #0D0D0D;
-    --bb-2: #4A4A4A;
-    --bb-3: #8B0000;
-    --bb-4: #8B7536;
-    --bb-5: #2F2F2F;
-    --bb-6: #6B6B5E;
-    --bb-7: #9C9680;
-    --bb-8: #E8E0D0;
+    /* Medhavy Guardian palette — swap these to rebrand the entire site */
+    --bb-1: #121212;   /* iron black */
+    --bb-2: #1F3D1A;   /* deep forest */
+    --bb-3: #8C3422;   /* brick */
+    --bb-4: #C8860E;   /* warm ochre */
+    --bb-5: #5C5A4E;   /* warm taupe */
+    --bb-6: #8C8878;   /* warm stone */
+    --bb-7: #D6D0C4;   /* warm pebble */
+    --bb-8: #FFFFFF;   /* white */
 
     /* Semantic aliases */
     --color-text:        var(--bb-1);
@@ -25,50 +25,50 @@
 
     /* shadcn/ui variables */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 7%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 0 0% 29%; /* Iron Grey #4A4A4A */
-    --primary-foreground: 40 34% 86%;
-    --secondary: 40 20% 94%;
-    --secondary-foreground: 0 0% 29%; /* Iron Grey */
-    --muted: 40 20% 94%;
-    --muted-foreground: 60 6% 39%;
-    --accent: 0 0% 29%; /* Iron Grey #4A4A4A */
-    --accent-foreground: 40 34% 86%;
-    --destructive: 0 100% 27%; /* Dried-ink Red #8B0000 */
-    --destructive-foreground: 40 34% 86%;
-    --border: 47 12% 56%;
-    --input: 47 12% 56%;
-    --ring: 0 0% 29%; /* Iron Grey */
-    --highlight: 0 100% 27%; /* Dried-ink Red for highlighting */
-    --highlight-foreground: 40 34% 86%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 111 40% 17%; /* Deep Forest #1F3D1A */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 18% 96%;
+    --secondary-foreground: 111 40% 17%; /* Deep Forest */
+    --muted: 40 18% 96%;
+    --muted-foreground: 51 8% 33%; /* Warm Taupe #5C5A4E */
+    --accent: 111 40% 17%; /* Deep Forest #1F3D1A */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 10 61% 34%; /* Brick #8C3422 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 18% 80%; /* Warm Pebble #D6D0C4 */
+    --input: 40 18% 80%;
+    --ring: 111 40% 17%; /* Deep Forest */
+    --highlight: 39 87% 42%; /* Warm Ochre #C8860E */
+    --highlight-foreground: 0 0% 100%;
     --radius: 0.5rem;
   }
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 0 0% 45%; /* Lighter Iron Grey for dark mode */
-    --primary-foreground: 40 34% 86%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 111 35% 35%; /* Lighter Forest for dark mode */
+    --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 18%;
-    --secondary-foreground: 40 34% 86%;
+    --secondary-foreground: 40 18% 80%;
     --muted: 0 0% 18%;
-    --muted-foreground: 47 12% 56%;
-    --accent: 0 0% 45%; /* Lighter Iron Grey for dark mode */
-    --accent-foreground: 40 34% 86%;
-    --destructive: 0 100% 40%; /* Brighter Dried-ink Red for dark mode */
-    --destructive-foreground: 40 34% 86%;
+    --muted-foreground: 40 18% 65%;
+    --accent: 111 35% 35%; /* Lighter Forest for dark mode */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 10 61% 50%; /* Brighter Brick for dark mode */
+    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 0 0% 45%; /* Lighter Iron Grey for dark mode */
-    --highlight: 0 100% 40%; /* Brighter Dried-ink Red for dark mode */
-    --highlight-foreground: 40 34% 86%;
+    --ring: 111 35% 35%; /* Lighter Forest for dark mode */
+    --highlight: 39 87% 52%; /* Brighter Ochre for dark mode */
+    --highlight-foreground: 0 0% 7%;
   }
 }
 @layer base {

@@ -62,7 +62,7 @@ export default async function render(el: HTMLElement): Promise<void> {
         .tickFormat(() => '')
     )
     .call(g => g.select('.domain').remove())
-    .call(g => g.selectAll('.tick line').attr('stroke', '#e5e5e5').attr('stroke-dasharray', '2,3'))
+    .call(g => g.selectAll('.tick line').attr('stroke', '#D6D0C4').attr('stroke-dasharray', '2,3'))
 
   // Bars
   svg
@@ -74,7 +74,7 @@ export default async function render(el: HTMLElement): Promise<void> {
     .attr('y', d => y(d.sector)!)
     .attr('width', d => x(d.pct) - margin.left)
     .attr('height', y.bandwidth())
-    .attr('fill', '#5C3D2E')
+    .attr('fill', '#1F3D1A')
     .attr('rx', 3)
 
   // Percentage labels

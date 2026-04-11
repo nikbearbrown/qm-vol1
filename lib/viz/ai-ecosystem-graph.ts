@@ -18,12 +18,12 @@ interface Link {
 }
 
 const GROUP_COLORS: Record<string, string> = {
-  'Foundation Models': '#5C3D2E',
-  'Applications': '#8B5E3C',
-  'Infrastructure': '#A0522D',
-  'Research': '#6B4226',
-  'Regulation': '#C41E3A',
-  'Data': '#2E4A3E',
+  'Foundation Models': '#1F3D1A',
+  'Applications': '#8C3422',
+  'Infrastructure': '#5C5A4E',
+  'Research': '#C8860E',
+  'Regulation': '#6B1A10',
+  'Data': '#2E5424',
 }
 
 const NODES: Node[] = [
