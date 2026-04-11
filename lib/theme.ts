@@ -9,7 +9,7 @@ export const theme = {
     bb4: '#C8860E',   // warm ochre — highlight, callout
     bb5: '#5C5A4E',   // warm taupe — secondary accent
     bb6: '#8C8878',   // warm stone — muted accent
-    bb7: '#D6D0C4',   // warm pebble — borders, subtle backgrounds
+    bb7: '#999387',   // warm pebble — borders
     bb8: '#FFFFFF',   // white — page background, light surfaces
   },
   // Semantic aliases — use these in components, not raw hex

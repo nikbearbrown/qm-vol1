@@ -10,7 +10,7 @@
     --bb-4: #C8860E;   /* warm ochre */
     --bb-5: #5C5A4E;   /* warm taupe */
     --bb-6: #8C8878;   /* warm stone */
-    --bb-7: #D6D0C4;   /* warm pebble */
+    --bb-7: #999387;   /* warm pebble */
     --bb-8: #FFFFFF;   /* white */
 
     /* Semantic aliases */
@@ -40,8 +40,8 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 10 61% 34%; /* Brick #8C3422 */
     --destructive-foreground: 0 0% 100%;
-    --border: 40 18% 80%; /* Warm Pebble #D6D0C4 */
-    --input: 40 18% 80%;
+    --border: 40 8% 57%; /* Warm Pebble #999387 */
+    --input: 40 8% 57%;
     --ring: 111 40% 17%; /* Deep Forest */
     --highlight: 39 87% 42%; /* Warm Ochre #C8860E */
     --highlight-foreground: 0 0% 100%;

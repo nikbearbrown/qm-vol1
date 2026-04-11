@@ -311,7 +311,7 @@ Guardian structure, fully earthed. Deep forest replaces sapphire. Brick replaces
 | bb4 | #C8860E | warm ochre — highlight/callout | 3.1:1 | AA large |
 | bb5 | #5C5A4E | warm taupe — secondary accent | 7.0:1 | AAA |
 | bb6 | #8C8878 | warm stone — muted accent | 3.7:1 | AA large |
-| bb7 | #D6D0C4 | warm pebble — borders, subtle bg | 1.4:1 | decorative |
+| bb7 | #999387 | warm pebble — borders | 3.05:1 | AA large |
 | bb8 | #FFFFFF | white — page background | — | |
 
 ### To rebrand a new deployment

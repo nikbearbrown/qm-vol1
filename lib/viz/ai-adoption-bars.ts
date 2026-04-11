@@ -62,7 +62,7 @@ export default async function render(el: HTMLElement): Promise<void> {
         .tickFormat(() => '')
     )
     .call(g => g.select('.domain').remove())
-    .call(g => g.selectAll('.tick line').attr('stroke', '#D6D0C4').attr('stroke-dasharray', '2,3'))
+    .call(g => g.selectAll('.tick line').attr('stroke', '#999387').attr('stroke-dasharray', '2,3'))
 
   // Bars
   svg
