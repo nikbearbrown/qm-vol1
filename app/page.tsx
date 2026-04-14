@@ -83,7 +83,7 @@ export default function Home() {
                 {' — the perfect name for our AI-powered intelligent textbook system.'}
               </p>
               <p className="max-w-[540px] text-lg italic text-muted-foreground">
-                Come learn something
+                Come learn something with us
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <a href="mailto:medhavy@humanitarians.ai" className={buttonStyles}>
