@@ -5,9 +5,7 @@ import { Play } from 'lucide-react'
 
 export default function CancerVideoPlayer() {
   const sectionRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
 
   useEffect(() => {
     const el = sectionRef.current
@@ -26,17 +24,7 @@ export default function CancerVideoPlayer() {
     return () => observer.disconnect()
   }, [])
 
-  function handlePlay() {
-    const video = videoRef.current
-    if (!video) return
-    if (video.paused) {
-      video.play()
-      setIsPlaying(true)
-    } else {
-      video.pause()
-      setIsPlaying(false)
-    }
-  }
+  // Playback is now handled by the iframe.
 
   return (
     <section
@@ -94,38 +82,20 @@ export default function CancerVideoPlayer() {
             />
 
             {/* Video element */}
-            <video
-              ref={videoRef}
-              className="w-full h-auto aspect-video object-cover"
-              controls
-              preload="metadata"
-              poster=""
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onEnded={() => setIsPlaying(false)}
-            >
-              <source
-                src="/videos/medhavy-cancer-tutorial-1.mp4"
-                type="video/mp4"
-              />
-              Your browser does not support the video tag.
-            </video>
-
-            {/* Custom play overlay — shown only before first play */}
-            {!isPlaying && (
-              <button
-                onClick={handlePlay}
-                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] transition-all duration-300 hover:bg-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 group/play"
-                aria-label="Play video tutorial"
-              >
-                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/90 shadow-lg transition-transform duration-300 group-hover/play:scale-110">
-                  <Play
-                    className="w-8 h-8 text-white ml-1"
-                    fill="currentColor"
-                  />
-                </div>
-              </button>
-            )}
+            <div style={{ maxWidth: 1280 }}>
+              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
+                <iframe 
+                  src="https://northeastern-my.sharepoint.com/personal/agarwal_au_northeastern_edu/_layouts/15/embed.aspx?UniqueId=6b53f72f-9f93-4a54-bc7d-acc01bedaa19&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
+                  width="1280" 
+                  height="720" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  allowFullScreen 
+                  title="Medhavy_Cancer_Tutorial 1.mp4" 
+                  style={{ border: 'none', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, height: '100%', maxWidth: '100%' }}
+                ></iframe>
+              </div>
+            </div>
           </div>
 
           {/* Caption below video */}
