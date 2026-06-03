@@ -1,0 +1,71 @@
+{
+  "title": "Cancer Biology and Therapeutics",
+  "subtitle": "A Thorough Intelligent Textbook",
+  "description": "An Intelligent Interactive Personalized Textbook and a comprehensive, research-grade resource spanning the full arc of oncology education.",
+  "type": "intelligent",
+  "authors": ["Evin Gultepe", "Nicholas Brown", "Srinivas Sridhar"],
+  "status": "published",
+  "coverImage": "/books/cancer-biology/cover.jpg",
+  "keywords": ["oncology", "cancer biology", "therapeutics", "medicine"],
+  "tags": ["medicine", "oncology"],
+  "stats": {
+    "chapters": 38,
+    "appendices": 4,
+    "topics": 180
+  },
+  "youtubeId": "YOUR_YOUTUBE_ID",
+  "thematicStructure": [
+    { "number": 1, "title": "Foundations of Cell Biology & Cancer", "chapterRange": "Ch. 1–9" },
+    { "number": 2, "title": "Disease Mechanisms & Microenvironment",  "chapterRange": "Ch. 10–16" },
+    { "number": 3, "title": "Prevention, Detection & Diagnosis",       "chapterRange": "Ch. 17–19" },
+    { "number": 4, "title": "Treatment Modalities",                    "chapterRange": "Ch. 20–27" },
+    { "number": 5, "title": "Cancer by Disease & System",              "chapterRange": "Ch. 28–35" },
+    { "number": 6, "title": "Supportive Care, Survivorship & Health Systems", "chapterRange": "Ch. 36–38" }
+  ],
+  "audiences": [
+    {
+      "icon": "🎓",
+      "title": "Medical Students",
+      "description": "Master the complexities of oncology with interactive, personalized study sessions."
+    },
+    {
+      "icon": "🔬",
+      "title": "Biomedical Researchers",
+      "description": "Quickly dive into deep mechanisms and access expert-vetted literature easily."
+    },
+    {
+      "icon": "👩‍🏫",
+      "title": "Educators",
+      "description": "Enhance your curriculum with a dynamic, research-grade resource."
+    },
+    {
+      "icon": "📋",
+      "title": "Lecturers",
+      "description": "Leverage AI companions to help your students understand 'why' as well as 'what'."
+    }
+  ],
+  "featuredPreview": {
+    "label": "Featured Preview",
+    "chapterRef": "Chapter 2, Section 3",
+    "title": "Hallmarks of Cancer",
+    "excerpt": "The complexity of cancer can be distilled into a logical set of underlying principles, commonly referred to as the Hallmarks of Cancer. These hallmarks represent the essential biological capabilities acquired during the multistep development of human tumors. By conceptualizing cancer not as a single disease, but as a diverse collection of maladies sharing these fundamental traits, researchers and clinicians can better understand tumor pathogenesis."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "Foundations of Cell Biology & Cancer",
+      "chapterRange": "Ch. 1–9",
+      "chapters": [
+        { "slug": "chapter-01", "title": "The Building Blocks of Life: Normal Cell Biology", "filename": "chapter-01.html" },
+        { "slug": "chapter-02", "title": "Introduction to Cancer: A Disease of Deregulation", "filename": "chapter-02.html" },
+        { "slug": "chapter-03", "title": "Cancer Epidemiology and Risk Factors", "filename": "chapter-03.html" },
+        { "slug": "chapter-04", "title": "Genetics and Genomic Instability in Cancer", "filename": "chapter-04.html" },
+        { "slug": "chapter-05", "title": "Oncogenes", "filename": "chapter-05.html" },
+        { "slug": "chapter-06", "title": "Tumor Suppressor Genes", "filename": "chapter-06.html" },
+        { "slug": "chapter-07", "title": "Epigenetics in Cancer", "filename": "chapter-07.html" },
+        { "slug": "chapter-08", "title": "Cancer Etiology", "filename": "chapter-08.html" },
+        { "slug": "chapter-09", "title": "Cell Cycle Control and Cancer", "filename": "chapter-09.html" }
+      ]
+    }
+  ]
+}

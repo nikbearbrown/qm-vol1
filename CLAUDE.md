@@ -28,8 +28,8 @@ Medhavy AI, LLC was founded by **Nik Bear Brown** and **Srinivas Sridhar**.
 1. `/` — Home (platform intro + services + connect)
 2. `/blog` — Blog feed: published posts newest first, clean card list
 3. `/blog/[slug]` — Individual blog post with prose content
-4. `/books` — Books browser (searchable card grid, filesystem-driven from `public/books/`)
-5. `/books/[slug]` — Book detail page with metadata, TOC, chapter links
+4. `/books` — Books browser (cover-image grid with Guardian-palette fallback cards, intelligent books featured row, filesystem-driven from `public/books/`)
+5. `/books/[slug]` — Book detail page: standard books get metadata + TOC + chapter links; books with `"type": "intelligent"` in `book.json` render `IntelligentBookLanding` (hero, features, video, thematic structure, audience, full TOC)
 6. `/books/[slug]/[...chapter]` — Chapter viewer (full-viewport iframe)
 7. `/dev` — Dev docs browser (searchable, grouped by subdirectory, filesystem-driven from `public/dev/`)
 8. `/dev/[...slug]` — Full-viewport iframe of a dev doc HTML file (e.g. `/dev/Medhavy/doc-name`)
@@ -171,13 +171,27 @@ CREATE POLICY "service_role_tools" ON tools FOR ALL USING (true) WITH CHECK (tru
 4. Push to main — the book appears on `/books` automatically
 5. Filesystem is the source of truth
 
+### Adding an intelligent book
+1. Follow steps above, but set `"type": "intelligent"` in `book.json`
+2. Additional `book.json` fields for intelligent books (all optional):
+   - `coverImage` — path to cover image (e.g. `"/books/cancer-biology/cover.jpg"`)
+   - `stats` — `{ chapters, appendices, topics }` (numbers)
+   - `youtubeId` — YouTube video ID for the demo embed
+   - `thematicStructure` — `[{ number, title, chapterRange }]` for the thematic overview
+   - `audiences` — `[{ icon, title, description }]` for the "Who this book is for" section
+   - `featuredPreview` — `{ label?, chapterRef, title, excerpt }` for the featured preview card
+   - `tags` — string array for tag filtering on `/books`
+3. Parts in intelligent books use extended format: `{ number, title, chapterRange, chapters: [{ slug, title, filename }] }`
+4. See `assets/book.json.example` for a complete schema reference
+5. When `book.type === 'intelligent'`, `/books/[slug]` renders `IntelligentBookLanding` instead of the standard detail view
+
 ### Public pages
-- `/books` — searchable card browser with tag filtering, shows title, subtitle, authors, status, series position
-- `/books/[slug]` — book detail page with metadata, cover image, TOC (from parts or flat chapter list)
+- `/books` — cover-image grid browser with Guardian-palette fallback cards, tag filtering, search; intelligent books shown in a featured row
+- `/books/[slug]` — standard books: metadata + TOC + chapter links; intelligent books: `IntelligentBookLanding` (hero, features, video, thematic structure, audience, full TOC)
 - `/books/[slug]/[...chapter]` — chapter viewer (full-viewport iframe)
 
 ### Shared utility
-- `lib/book-meta.ts` — `scanBooks(dir)` reads all subdirectories with `book.json`, extracts metadata and chapter files. Returns `BookMeta[]`.
+- `lib/book-meta.ts` — `scanBooks(dir)` reads all subdirectories with `book.json`, extracts metadata and chapter files. Returns `BookMeta[]`. Extended with new optional fields: `type`, `tags`, `coverImage`, `stats`, `youtubeId`, `thematicStructure`, `audiences`, `featuredPreview`, `partsExtended`, `chapters`, `seriesPosition`. All new fields are optional — existing books without them continue to work.
 
 ## Dev Docs system — DONE
 
@@ -580,8 +594,9 @@ app/
   tools/[slug]/page.tsx             # Tool page (filesystem first, DB fallback)
   books/
     page.tsx                        # Books browser (server component, reads filesystem)
-    BooksBrowser.tsx                # Client component: search + tag filter + card grid
-    [slug]/page.tsx                 # Book detail page with metadata + TOC
+    BooksBrowser.tsx                # Client component: cover-image grid with Guardian-palette fallbacks, intelligent books featured row
+    [slug]/page.tsx                 # Book detail page: standard view or IntelligentBookLanding conditional
+    [slug]/IntelligentBookLanding.tsx # Client component: intelligent book landing page (hero, features, video, thematic structure, audience, TOC)
     [slug]/[...chapter]/page.tsx    # Chapter viewer (full-viewport iframe)
   dev/
     page.tsx                        # Dev docs browser (server component, reads filesystem subdirs)
@@ -672,4 +687,6 @@ After every session, always:
 
 ## Remaining work (in priority order)
 1. Add Subby + CRITIQ tools via admin dashboard (artifact IDs in Tools system docs above)
-2. Consider AI contact assistant widget (currently all CTAs route to mailto)
+2. Create `public/books/cancer-biology/` directory with chapter HTML files and `book.json` (first intelligent book instance; schema reference in `assets/book.json.example`)
+3. Add cover images for existing books (currently all use Guardian-palette fallback cards)
+4. Consider AI contact assistant widget (currently all CTAs route to mailto)

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import ThemeToggle from '@/components/ThemeToggle'
 
 const NAV_ITEMS = [
-  { name: 'Cancer Textbook', href: '/cancer-textbook' },
+  { name: 'Books', href: '/books' },
   { name: 'Tools', href: '/tools' },
   { name: 'Blog', href: '/blog' },
   { name: 'Learning Hub', href: 'https://hub.medhavy.com/' },
