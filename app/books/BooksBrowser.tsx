@@ -164,24 +164,28 @@ export default function BooksBrowser({ books }: { books: BookMeta[] }) {
   const [query, setQuery] = useState('')
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
-  // Hardcoded Live Textbook
+  // Hardcoded featured (Live) Textbook
   const liveTextbooks: BookMeta[] = [
     {
-      slug: 'cancer-biology',
-      title: 'Cancer Biology and Therapeutics',
-      subtitle: 'An Intelligent Interactive Personalized Textbook',
-      authors: ['Evin Gultepe', 'Nicholas Brown', 'Srinivas Sridhar'],
-      status: 'published',
-      description: 'An Intelligent Interactive Personalized Textbook and a comprehensive, research-grade resource spanning the full arc of oncology education.',
-      coverImage: '/images/cancer-cover.png',
+      slug: 'quantum-mechanics-vol1',
+      title: 'Quantum Mechanics',
+      subtitle: 'Foundations: The Quantum World',
+      authors: ['Srinivas Sridhar', 'Nik Bear Brown'],
+      status: 'in-progress',
+      description: 'A first course in one-dimensional quantum mechanics that pairs every derivation with an interactive simulation you build and verify yourself — from the ultraviolet catastrophe to a working 1-D Schrödinger solver.',
+      coverImage: '/books/quantum-mechanics-vol1/cover.jpg',
       type: 'live',
-      customHref: '/cancer-textbook',
-      tags: ['Oncology', 'Biology'],
+      customHref: '/books/quantum-mechanics-vol1',
+      tags: ['Physics', 'Quantum', 'Interactive'],
     }
   ]
 
-  // Combine fetched books with hardcoded live textbooks for filtering purposes
-  const allBooks = useMemo(() => [...liveTextbooks, ...books], [books])
+  // Combine fetched books with hardcoded featured textbooks, dropping any
+  // filesystem duplicate of a featured book so it doesn't appear twice.
+  const allBooks = useMemo(() => {
+    const liveSlugs = new Set(liveTextbooks.map((b) => b.slug))
+    return [...liveTextbooks, ...books.filter((b) => !liveSlugs.has(b.slug))]
+  }, [books])
 
   // Collect all tags from books
   const allTags = useMemo(() => {

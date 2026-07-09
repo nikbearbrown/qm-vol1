@@ -9,7 +9,7 @@ import ThemeToggle from '@/components/ThemeToggle'
 
 const NAV_ITEMS = [
   //{ name: 'Books', href: '/books' },
-  { name: 'Cancer Textbook', href: '/cancer-textbook' },
+  { name: 'Quantum Mechanics', href: '/books/quantum-mechanics-vol1' },
   //{ name: 'Tools', href: '/tools' },
   //{ name: 'Blog', href: '/blog' },
   { name: 'Learning Hub', href: 'https://hub.medhavy.com/' },
