@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 10-measurement-and-the-qubit-fig-01.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 10-measurement-and-the-qubit
+  Figure: 01 - The Measurement Postulate: Superposition to Outcome to Collapse
+  Generated: 2026-06-06
+  Source: pantry/10-measurement-and-the-qubit-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-10-01">
+  <title id="fig-title-10-01">The quantum measurement postulate: superposition input branches into two probability-weighted outcomes, then collapses to one eigenstate</title>
+  <desc>Three-stage left-to-right flowchart: input superposition node, probabilistic branch with thick and thin arrows to two outcome nodes, and post-measurement collapsed eigenstate with the unrealized outcome dimmed. A repeat arc indicates collapse stability.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="10-measurement-and-the-qubit" figure-number="01"
+      figure-title="The Measurement Postulate: Superposition to Outcome to Collapse"
+      figure-slug="measurement-postulate-flow" figure-type="process-diagram"
+      priority="Critical" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/10-measurement-and-the-qubit-cajal.md"/>
+  </metadata>
+  <defs>
+    <marker id="arr-thick" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0072B2"/>
+    </marker>
+    <marker id="arr-thin" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#56B4E9"/>
+    </marker>
+    <marker id="arr-repeat" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#BF7400"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="420" fill="#FFFFFF"/>
+
+  <text x="350" y="28" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">The measurement postulate: superposition &#8594; outcome &#8594; collapse</text>
+
+  <rect x="48" y="150" width="150" height="150" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="1"/>
+  <rect x="98" y="170" width="50" height="75" fill="#0072B2"/>
+  <rect x="98" y="245" width="50" height="25" fill="#56B4E9"/>
+  <rect x="98" y="170" width="50" height="100" fill="none" stroke="#545454" stroke-width="0.75"/>
+  <text x="123" y="288" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">|&#968;&#10217; = &#945;|a&#8321;&#10217; + &#946;|a&#8322;&#10217;</text>
+
+  <circle cx="278" cy="225" r="8" fill="#D4D4D4" stroke="#545454" stroke-width="1"/>
+  <line x1="198" y1="225" x2="266" y2="225" stroke="#545454" stroke-width="1.5" marker-end="url(#arr-thick)"/>
+  <path d="M 286,219 L 362,154" fill="none" stroke="#0072B2" stroke-width="2.5" marker-end="url(#arr-thick)"/>
+  <path d="M 286,231 L 362,296" fill="none" stroke="#56B4E9" stroke-width="1.25" marker-end="url(#arr-thin)"/>
+
+  <circle cx="392" cy="142" r="24" fill="#009E73"/>
+  <text x="392" y="138" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">a&#8321;</text>
+  <text x="392" y="155" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle">|&#945;|&#178;</text>
+
+  <circle cx="392" cy="308" r="24" fill="#F2E0EA" stroke="#CC79A7" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="392" y="304" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#545454" text-anchor="middle">a&#8322;</text>
+  <text x="392" y="321" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="middle">|&#946;|&#178;</text>
+
+  <text x="292" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#0072B2">P = |&#945;|&#178;</text>
+  <text x="292" y="302" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#56B4E9">P = |&#946;|&#178;</text>
+
+  <line x1="416" y1="142" x2="486" y2="142" stroke="#009E73" stroke-width="1.5" marker-end="url(#arr-thick)"/>
+  <rect x="490" y="108" width="150" height="68" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+  <rect x="500" y="120" width="36" height="44" fill="#009E73"/>
+  <text x="588" y="148" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#009E73" text-anchor="middle">|a&#8321;&#10217;</text>
+
+  <path d="M 616,108 C 628,72 512,72 524,108" fill="none" stroke="#BF7400" stroke-width="1.25" stroke-dasharray="4 3" marker-end="url(#arr-repeat)"/>
+  <text x="565" y="64" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#BF7400" text-anchor="middle">stable on re-measurement</text>
+
+  <line x1="424" y1="294" x2="456" y2="326" stroke="#545454" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="456" y1="294" x2="424" y2="326" stroke="#545454" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <text x="123" y="330" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#9312; Superposition</text>
+  <text x="392" y="358" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#9313; Branch by Born rule</text>
+  <text x="565" y="200" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#9314; Collapse</text>
+
+  <text x="350" y="400" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">Outcome is an eigenvalue; probability is |&#10216;a&#8345;|&#968;&#10217;|&#178;; post-measurement state is |a&#8345;&#10217;</text>
+</svg>

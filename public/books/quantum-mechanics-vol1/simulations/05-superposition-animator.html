@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Superposition animator — Quantum Mechanics Vol. 1, Chapter 5</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 6px;}
+  .ctl{display:flex;align-items:center;gap:8px;font-size:14px;}
+  input[type=range]{width:120px;accent-color:var(--blue);}
+  button{font-family:inherit;font-size:14px;padding:6px 15px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;}
+  button:hover{background:#f3f3f3;}
+  button.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .coeffs{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:6px 0 0;padding:12px;background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;}
+  .coeffs .lab{font-size:13px;color:var(--gray);margin-right:4px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Superposition animator</h1>
+  <p class="sub">Build a state &Psi;(x,0) = &sum; c<sub>n</sub>&psi;<sub>n</sub> from the lowest few infinite-well eigenstates and watch it evolve. Each term turns at its own rate e<sup>&minus;iE<sub>n</sub>t/&#8463;</sup>; their interference makes the probability density |&Psi;(x,t)|&sup2; slosh. The average position &#10216;x&#10217; oscillates, but the average energy &#10216;H&#10217; never changes. Units: L = 1, E<sub>1</sub> = 1, &#8463; = 1.</p>
+  <canvas id="cv" width="760" height="380" aria-label="Animated probability density of a superposition, with a scrolling trace of the average position"></canvas>
+  <div class="controls">
+    <button id="play" class="on">Pause</button>
+    <button id="reset">Reset</button>
+    <button id="preset12">Preset: &psi;&#8321;+&psi;&#8322;</button>
+    <div class="ctl"><label for="spd">speed</label><input type="range" id="spd" min="0.2" max="3" step="0.1" value="1"></div>
+  </div>
+  <div class="coeffs" id="coeffs"><span class="lab">amplitudes c<sub>n</sub>:</span></div>
+  <div class="stats">
+    <div class="card"><div class="l">&#10216;H&#10217; (constant)</div><div class="v" id="H">&mdash;</div></div>
+    <div class="card"><div class="l">&#10216;x&#10217; now</div><div class="v" id="xnow">&mdash;</div></div>
+    <div class="card"><div class="l">time t</div><div class="v" id="tnow">&mdash;</div></div>
+    <div class="card"><div class="l">revival period</div><div class="v" id="Trev">2&pi;</div></div>
+  </div>
+  <p class="note">A single eigenstate is stationary: its density stands still and &#10216;x&#10217; is flat. Motion needs at least two different energies. With only &psi;&#8321; and &psi;&#8322;, &#10216;x&#10217; oscillates at the beat frequency (E&#8322;&minus;E&#8321;)/&#8463; = 3. Because every E<sub>n</sub> = n&sup2; is an integer here, the whole state exactly revives after t = 2&pi;. Adding higher states with their faster phases makes the density break up and re-form in more intricate ways &mdash; yet &#10216;H&#10217; = &sum;|c<sub>n</sub>|&sup2;E<sub>n</sub> / &sum;|c<sub>n</sub>|&sup2; stays pinned.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NMAX=5;
+let coeff=[0,1,1,0,0,0]; // index by n (1..5); default psi1+psi2
+let t=0, running=true, raf=null, last=null;
+const playBtn=document.getElementById('play'),resetBtn=document.getElementById('reset'),spdEL=document.getElementById('spd');
+
+// build coefficient sliders
+const cwrap=document.getElementById('coeffs');
+const sliders=[];
+for(let n=1;n<=NMAX;n++){
+  const span=document.createElement('span'); span.className='ctl';
+  const lab=document.createElement('label'); lab.innerHTML='c<sub>'+n+'</sub>'; lab.style.fontSize='13px';
+  const sl=document.createElement('input'); sl.type='range'; sl.min='0'; sl.max='1'; sl.step='0.05'; sl.value=coeff[n]; sl.style.width='84px';
+  sl.addEventListener('input',()=>{coeff[n]=+sl.value; });
+  span.appendChild(lab); span.appendChild(sl); cwrap.appendChild(span); sliders[n]=sl;
+}
+
+function norm(){ let s=0; for(let n=1;n<=NMAX;n++) s+=coeff[n]*coeff[n]; return s>0?Math.sqrt(s):1; }
+
+function densityAt(xi,tt){
+  let re=0,im=0; const Z=norm();
+  for(let n=1;n<=NMAX;n++){
+    if(coeff[n]===0) continue;
+    const a=(coeff[n]/Z)*Math.SQRT2*Math.sin(n*Math.PI*xi);
+    const ph=-(n*n)*tt; re+=a*Math.cos(ph); im+=a*Math.sin(ph);
+  }
+  return re*re+im*im;
+}
+function meanX(tt){
+  let num=0,den=0,prev=null;
+  for(let i=0;i<=400;i++){ const xi=i/400, d=densityAt(xi,tt); num+=xi*d; den+=d; }
+  return num/den;
+}
+function meanH(){ let num=0,den=0; for(let n=1;n<=NMAX;n++){const w=coeff[n]*coeff[n]; num+=w*n*n; den+=w;} return den>0?num/den:0; }
+
+const xhist=[]; // {t,x}
+function draw(){
+  cx.clearRect(0,0,W,H);
+  const padL=46,padR=18,padT=16;
+  // top: density panel
+  const px0=padL,px1=W-padR,py0=padT,py1=240;
+  cx.fillStyle=C('--plot'); cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair'); cx.lineWidth=0.75; cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--ink'); cx.lineWidth=4; cx.beginPath();
+  cx.moveTo(px0,py0); cx.lineTo(px0,py1); cx.moveTo(px1,py0); cx.lineTo(px1,py1); cx.stroke();
+  const xx=xi=>px0+(px1-px0)*xi;
+  // density curve + fill
+  const pts=[]; let dmax=0.0001;
+  for(let i=0;i<=300;i++){ const xi=i/300, d=densityAt(xi,t); pts.push([xi,d]); if(d>dmax)dmax=d; }
+  const scale=(py1-py0-12)/Math.max(dmax,2.2);
+  cx.beginPath(); cx.moveTo(px0,py1);
+  pts.forEach(([xi,d])=>cx.lineTo(xx(xi),py1-d*scale)); cx.lineTo(px1,py1); cx.closePath();
+  cx.fillStyle=C('--paleblue'); cx.fill();
+  cx.strokeStyle=C('--blue'); cx.lineWidth=2.4; cx.beginPath();
+  pts.forEach(([xi,d],i)=>{const X=xx(xi),Y=py1-d*scale; i?cx.lineTo(X,Y):cx.moveTo(X,Y);}); cx.stroke();
+  // mean x marker
+  const mx=meanX(t);
+  cx.strokeStyle=C('--verm'); cx.lineWidth=2; cx.setLineDash([5,4]);
+  cx.beginPath(); cx.moveTo(xx(mx),py0); cx.lineTo(xx(mx),py1); cx.stroke(); cx.setLineDash([]);
+  cx.fillStyle=C('--verm'); cx.beginPath(); cx.arc(xx(mx),py1-6,5,0,7); cx.fill();
+  // labels
+  cx.fillStyle=C('--ink'); cx.font="14px 'Inter',sans-serif"; cx.textAlign="left";
+  cx.fillText("|Ψ(x,t)|²",px0+8,py0+18);
+  cx.fillStyle=C('--verm'); cx.textAlign="right"; cx.fillText("⟨x⟩",xx(mx)-6,py0+18);
+  cx.fillStyle=C('--gray'); cx.font="13px 'JetBrains Mono',monospace"; cx.textAlign="center";
+  cx.fillText("0",px0,py1+18); cx.fillText("L/2",(px0+px1)/2,py1+18); cx.fillText("L",px1,py1+18);
+  // bottom: <x>(t) scrolling trace
+  const qx0=padL,qx1=W-padR,qy0=274,qy1=H-22;
+  cx.fillStyle=C('--plot'); cx.fillRect(qx0,qy0,qx1-qx0,qy1-qy0);
+  cx.strokeStyle=C('--hair'); cx.lineWidth=0.75; cx.strokeRect(qx0,qy0,qx1-qx0,qy1-qy0);
+  // reference line at 0.5
+  const yofX=xv=>qy1-(qy1-qy0)*xv;
+  cx.strokeStyle=C('--hair'); cx.setLineDash([5,4]); cx.beginPath(); cx.moveTo(qx0,yofX(0.5)); cx.lineTo(qx1,yofX(0.5)); cx.stroke(); cx.setLineDash([]);
+  xhist.push({t:t,x:mx}); const span=4*Math.PI; while(xhist.length && xhist[0].t < t-span) xhist.shift();
+  cx.strokeStyle=C('--blue'); cx.lineWidth=2; cx.beginPath();
+  xhist.forEach((p,i)=>{ const fx=qx0+(qx1-qx0)*(1-(t-p.t)/span); const fy=yofX(p.x); i?cx.lineTo(fx,fy):cx.moveTo(fx,fy); }); cx.stroke();
+  cx.fillStyle=C('--ink'); cx.font="14px 'Inter',sans-serif"; cx.textAlign="left"; cx.fillText("⟨x⟩(t)",qx0+8,qy0+16);
+  cx.fillStyle=C('--gray'); cx.font="12px 'JetBrains Mono',monospace"; cx.textAlign="right";
+  cx.fillText("L/2",qx0-4,yofX(0.5)+4); cx.fillText("L",qx0-4,yofX(1)+8); cx.fillText("0",qx0-4,yofX(0)-2);
+  // stats
+  document.getElementById('H').textContent=meanH().toFixed(3)+' E₁';
+  document.getElementById('xnow').textContent=mx.toFixed(3)+' L';
+  document.getElementById('tnow').textContent=t.toFixed(2);
+}
+function step(ts){ if(!running)return; if(last==null)last=ts; const dt=Math.min(0.05,(ts-last)/1000); last=ts; t+=dt*(+spdEL.value)*1.6; draw(); raf=requestAnimationFrame(step); }
+function start(){ running=true; playBtn.textContent='Pause'; playBtn.classList.add('on'); last=null; raf=requestAnimationFrame(step); }
+function stop(){ running=false; playBtn.textContent='Play'; playBtn.classList.remove('on'); if(raf)cancelAnimationFrame(raf); }
+playBtn.onclick=()=> running?stop():start();
+resetBtn.onclick=()=>{ t=0; xhist.length=0; draw(); };
+document.getElementById('preset12').onclick=()=>{ coeff=[0,1,1,0,0,0]; for(let n=1;n<=NMAX;n++)sliders[n].value=coeff[n]; t=0; xhist.length=0; draw(); };
+draw(); start();
+</script>
+</body>
+</html>

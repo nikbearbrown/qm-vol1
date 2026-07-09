@@ -1,0 +1,112 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 04-the-schrodinger-equation
+     Figure: 03 — Single Eigenstate vs. Two-State Superposition
+     Type: comparison panels (VG + MC)
+     Priority: Important
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-06
+     Source: pantry/04-the-schrodinger-equation-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="fig-title-ch4-03">
+  <title id="fig-title-ch4-03">Single eigenstate probability density stays frozen; two-state superposition sloshes</title>
+  <desc>Two-by-two panel layout comparing a single eigenstate (left column, identical at both time snapshots) with an equal-weight superposition of two eigenstates (right column). At t=0 the superposition density peaks left; at t=T/2 it peaks right. The left column never changes — the right column sloshes with each beat period.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1"
+      chapter="04-the-schrodinger-equation"
+      figure-number="03"
+      figure-title="Stationary vs. Non-Stationary: Eigenstate and Superposition"
+      figure-slug="stationary-vs-superposition"
+      figure-type="comparison-panels"
+      priority="Important"
+      author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/04-the-schrodinger-equation-cajal.md"/>
+  </metadata>
+
+  <defs>
+    <clipPath id="clip-tl-ch4-03"><rect x="40" y="40" width="280" height="115"/></clipPath>
+    <clipPath id="clip-tr-ch4-03"><rect x="380" y="40" width="280" height="115"/></clipPath>
+    <clipPath id="clip-bl-ch4-03"><rect x="40" y="220" width="280" height="115"/></clipPath>
+    <clipPath id="clip-br-ch4-03"><rect x="380" y="220" width="280" height="115"/></clipPath>
+  </defs>
+
+  <!-- Figure title -->
+  <text x="350" y="17" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" font-weight="400" fill="#2a1a0e" text-anchor="middle">Stationary eigenstate vs. sloshing superposition</text>
+
+  <!-- Column header labels -->
+  <text x="180" y="32" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#545454" text-anchor="middle" font-style="italic">single eigenstate |ψ₁|²</text>
+  <text x="520" y="32" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#545454" text-anchor="middle" font-style="italic">superposition ½|ψ₁+ψ₂|²</text>
+
+  <!-- Time row indicators (left strip) -->
+  <circle cx="22" cy="97" r="6" fill="#545454"/>
+  <circle cx="22" cy="277" r="6" fill="#545454" opacity="0.4"/>
+  <text x="22" y="130" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9" fill="#545454" text-anchor="middle">t₀</text>
+  <text x="22" y="310" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9" fill="#545454" text-anchor="middle">T/2</text>
+
+  <!-- ===== TOP-LEFT: Single eigenstate t=0 ===== -->
+  <rect x="40" y="40" width="280" height="115" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <polygon points="40.0,155.0 45.6,154.6 51.2,153.4 56.8,151.3 62.4,148.5 68.0,145.0 73.6,140.8 79.2,136.0 84.8,130.7 90.4,125.0 96.0,118.9 101.6,112.5 107.2,106.0 112.8,99.4 118.4,92.9 124.0,86.6 129.6,80.5 135.2,74.7 140.8,69.4 146.4,64.6 152.0,60.4 157.6,56.9 163.2,54.1 168.8,52.1 174.4,50.9 180.0,50.5 185.6,50.9 191.2,52.1 196.8,54.1 202.4,56.9 208.0,60.4 213.6,64.6 219.2,69.4 224.8,74.7 230.4,80.5 236.0,86.6 241.6,92.9 247.2,99.4 252.8,106.0 258.4,112.5 264.0,118.9 269.6,125.0 275.2,130.7 280.8,136.0 286.4,140.8 292.0,145.0 297.6,148.5 303.2,151.3 308.8,153.4 314.4,154.6 320.0,155.0
+    320.0,155.0 40.0,155.0"
+    fill="#787878" fill-opacity="0.25" stroke="none" clip-path="url(#clip-tl-ch4-03)"/>
+  <polyline points="40.0,155.0 45.6,154.6 51.2,153.4 56.8,151.3 62.4,148.5 68.0,145.0 73.6,140.8 79.2,136.0 84.8,130.7 90.4,125.0 96.0,118.9 101.6,112.5 107.2,106.0 112.8,99.4 118.4,92.9 124.0,86.6 129.6,80.5 135.2,74.7 140.8,69.4 146.4,64.6 152.0,60.4 157.6,56.9 163.2,54.1 168.8,52.1 174.4,50.9 180.0,50.5 185.6,50.9 191.2,52.1 196.8,54.1 202.4,56.9 208.0,60.4 213.6,64.6 219.2,69.4 224.8,74.7 230.4,80.5 236.0,86.6 241.6,92.9 247.2,99.4 252.8,106.0 258.4,112.5 264.0,118.9 269.6,125.0 275.2,130.7 280.8,136.0 286.4,140.8 292.0,145.0 297.6,148.5 303.2,151.3 308.8,153.4 314.4,154.6 320.0,155.0"
+    fill="none" stroke="#787878" stroke-width="1.8" clip-path="url(#clip-tl-ch4-03)"/>
+
+  <!-- ===== TOP-RIGHT: Superposition t=0 (left-heavy) ===== -->
+  <rect x="380" y="40" width="280" height="115" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <polygon points="380.0,155.0 385.6,153.8 391.2,150.3 396.8,144.6 402.4,137.0 408.0,127.9 413.6,117.6 419.2,106.7 424.8,95.7 430.4,85.0 436.0,75.1 441.6,66.5 447.2,59.5 452.8,54.3 458.4,51.3 464.0,50.5 469.6,51.7 475.2,55.1 480.8,60.3 486.4,67.1 492.0,75.1 497.6,84.0 503.2,93.5 508.8,103.0 514.4,112.4 520.0,121.3 525.6,129.3 531.2,136.3 536.8,142.3 542.4,147.0 548.0,150.5 553.6,153.0 559.2,154.4 564.8,155.0 570.4,154.9 576.0,154.3 581.6,153.5 587.2,152.6 592.8,151.7 598.4,151.0 604.0,150.5 609.6,150.4 615.2,150.6 620.8,151.0 626.4,151.6 632.0,152.4 637.6,153.2 643.2,153.9 648.8,154.5 654.4,154.9 660.0,155.0
+    660.0,155.0 380.0,155.0"
+    fill="#009E73" fill-opacity="0.28" stroke="none" clip-path="url(#clip-tr-ch4-03)"/>
+  <polyline points="380.0,155.0 385.6,153.8 391.2,150.3 396.8,144.6 402.4,137.0 408.0,127.9 413.6,117.6 419.2,106.7 424.8,95.7 430.4,85.0 436.0,75.1 441.6,66.5 447.2,59.5 452.8,54.3 458.4,51.3 464.0,50.5 469.6,51.7 475.2,55.1 480.8,60.3 486.4,67.1 492.0,75.1 497.6,84.0 503.2,93.5 508.8,103.0 514.4,112.4 520.0,121.3 525.6,129.3 531.2,136.3 536.8,142.3 542.4,147.0 548.0,150.5 553.6,153.0 559.2,154.4 564.8,155.0 570.4,154.9 576.0,154.3 581.6,153.5 587.2,152.6 592.8,151.7 598.4,151.0 604.0,150.5 609.6,150.4 615.2,150.6 620.8,151.0 626.4,151.6 632.0,152.4 637.6,153.2 643.2,153.9 648.8,154.5 654.4,154.9 660.0,155.0"
+    fill="none" stroke="#009E73" stroke-width="2" clip-path="url(#clip-tr-ch4-03)"/>
+  <!-- Left-heavy indicator arrow -->
+  <text x="500" y="60" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9" fill="#009E73" text-anchor="middle">peak left</text>
+
+  <!-- Row separator (visual gap) -->
+  <rect x="0" y="155" width="700" height="65" fill="#FFFFFF"/>
+
+  <!-- Row labels on separator -->
+  <text x="180" y="182" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="11" fill="#2a1a0e" text-anchor="middle" font-style="italic">unchanged</text>
+  <text x="520" y="175" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="11" fill="#D55E00" text-anchor="middle" font-weight="600">sloshes →</text>
+  <text x="520" y="198" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">cross-term cos(ω₁₂t) beats</text>
+
+  <!-- Double-headed arrow between super panels -->
+  <line x1="380" y1="183" x2="660" y2="183" stroke="#D55E00" stroke-width="0.75" stroke-dasharray="3 2"/>
+
+  <!-- ===== BOTTOM-LEFT: Single eigenstate t=T/2 (same) ===== -->
+  <rect x="40" y="220" width="280" height="115" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <polygon points="40.0,335.0 45.6,334.6 51.2,333.4 56.8,331.3 62.4,328.5 68.0,325.0 73.6,320.8 79.2,316.0 84.8,310.7 90.4,305.0 96.0,298.9 101.6,292.5 107.2,286.0 112.8,279.4 118.4,272.9 124.0,266.6 129.6,260.5 135.2,254.7 140.8,249.4 146.4,244.6 152.0,240.4 157.6,236.9 163.2,234.1 168.8,232.1 174.4,230.9 180.0,230.5 185.6,230.9 191.2,232.1 196.8,234.1 202.4,236.9 208.0,240.4 213.6,244.6 219.2,249.4 224.8,254.7 230.4,260.5 236.0,266.6 241.6,272.9 247.2,279.4 252.8,286.0 258.4,292.5 264.0,298.9 269.6,305.0 275.2,310.7 280.8,316.0 286.4,320.8 292.0,325.0 297.6,328.5 303.2,331.3 308.8,333.4 314.4,334.6 320.0,335.0
+    320.0,335.0 40.0,335.0"
+    fill="#787878" fill-opacity="0.25" stroke="none" clip-path="url(#clip-bl-ch4-03)"/>
+  <polyline points="40.0,335.0 45.6,334.6 51.2,333.4 56.8,331.3 62.4,328.5 68.0,325.0 73.6,320.8 79.2,316.0 84.8,310.7 90.4,305.0 96.0,298.9 101.6,292.5 107.2,286.0 112.8,279.4 118.4,272.9 124.0,266.6 129.6,260.5 135.2,254.7 140.8,249.4 146.4,244.6 152.0,240.4 157.6,236.9 163.2,234.1 168.8,232.1 174.4,230.9 180.0,230.5 185.6,230.9 191.2,232.1 196.8,234.1 202.4,236.9 208.0,240.4 213.6,244.6 219.2,249.4 224.8,254.7 230.4,260.5 236.0,266.6 241.6,272.9 247.2,279.4 252.8,286.0 258.4,292.5 264.0,298.9 269.6,305.0 275.2,310.7 280.8,316.0 286.4,320.8 292.0,325.0 297.6,328.5 303.2,331.3 308.8,333.4 314.4,334.6 320.0,335.0"
+    fill="none" stroke="#787878" stroke-width="1.8" clip-path="url(#clip-bl-ch4-03)"/>
+
+  <!-- ===== BOTTOM-RIGHT: Superposition t=T/2 (right-heavy) ===== -->
+  <rect x="380" y="220" width="280" height="115" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <polygon points="380.0,335.0 385.6,334.9 391.2,334.5 396.8,333.9 402.4,333.2 408.0,332.4 413.6,331.6 419.2,331.0 424.8,330.6 430.4,330.4 436.0,330.5 441.6,331.0 447.2,331.7 452.8,332.6 458.4,333.5 464.0,334.3 469.6,334.9 475.2,335.0 480.8,334.4 486.4,333.0 492.0,330.5 497.6,327.0 503.2,322.3 508.8,316.3 514.4,309.3 520.0,301.3 525.6,292.4 531.2,283.0 536.8,273.5 542.4,264.0 548.0,255.1 553.6,247.1 559.2,240.3 564.8,235.1 570.4,231.7 576.0,230.5 581.6,231.3 587.2,234.3 592.8,239.5 598.4,246.5 604.0,255.1 609.6,265.0 615.2,275.7 620.8,286.7 626.4,297.6 632.0,307.9 637.6,317.0 643.2,324.6 648.8,330.3 654.4,333.8 660.0,335.0
+    660.0,335.0 380.0,335.0"
+    fill="#0072B2" fill-opacity="0.28" stroke="none" clip-path="url(#clip-br-ch4-03)"/>
+  <polyline points="380.0,335.0 385.6,334.9 391.2,334.5 396.8,333.9 402.4,333.2 408.0,332.4 413.6,331.6 419.2,331.0 424.8,330.6 430.4,330.4 436.0,330.5 441.6,331.0 447.2,331.7 452.8,332.6 458.4,333.5 464.0,334.3 469.6,334.9 475.2,335.0 480.8,334.4 486.4,333.0 492.0,330.5 497.6,327.0 503.2,322.3 508.8,316.3 514.4,309.3 520.0,301.3 525.6,292.4 531.2,283.0 536.8,273.5 542.4,264.0 548.0,255.1 553.6,247.1 559.2,240.3 564.8,235.1 570.4,231.7 576.0,230.5 581.6,231.3 587.2,234.3 592.8,239.5 598.4,246.5 604.0,255.1 609.6,265.0 615.2,275.7 620.8,286.7 626.4,297.6 632.0,307.9 637.6,317.0 643.2,324.6 648.8,330.3 654.4,333.8 660.0,335.0"
+    fill="none" stroke="#0072B2" stroke-width="2" clip-path="url(#clip-br-ch4-03)"/>
+  <!-- Right-heavy indicator -->
+  <text x="540" y="245" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9" fill="#0072B2" text-anchor="middle">peak right</text>
+
+  <!-- x-axis labels at bottoms of panels -->
+  <text x="40" y="352" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454">0</text>
+  <text x="320" y="352" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="end">L</text>
+  <text x="380" y="352" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454">0</text>
+  <text x="660" y="352" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="end">L</text>
+
+  <!-- Shared x-axis label -->
+  <text x="350" y="370" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="12" fill="#2a1a0e" text-anchor="middle">Position x in well [0, L]</text>
+
+  <!-- Bottom key -->
+  <text x="350" y="395" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">Stationary: |ψ₁|² constant.   Superposition: cross-term 2ψ₁ψ₂ cos(ω₁₂t) oscillates at beat frequency.</text>
+
+  <!-- Column vertical divider -->
+  <line x1="350" y1="30" x2="350" y2="380" stroke="#D4D4D4" stroke-width="1" stroke-dasharray="6 3"/>
+</svg>

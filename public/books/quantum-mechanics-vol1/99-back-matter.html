@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Back Matter</title>
+<meta name="description" content="99-back-matter.md BACK MATTER — everything that appears after the final" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<!--
+    99-back-matter.md
+    BACK MATTER — everything that appears after the final chapter.
+
+    Sections in order:
+      1. Acknowledgments
+      2. About the Authors
+      3. About Humanitarians AI
+      4. Notes
+      5. References
+      6. A Note on the Index
+      7. Glossary
+-->
+<hr>
+<h2>Acknowledgments</h2>
+<p>This book exists because of the community around it. We thank the Fellows of the Humanitarians AI Fellows Program, who built tools, tested prompts, and challenged early drafts of the simulation exercises; the students who worked through this material in its rougher forms and told us, precisely and sometimes bluntly, where the explanations failed; and the open-source physics education community, whose decades of freely shared problem sets, visualizations, and pedagogical argument set the standard this series tries to meet. Errors that remain are ours.</p>
+<hr>
+<h2>About the Authors</h2>
+<p><strong>Srinivas Sridhar</strong> is University Distinguished Professor of Physics, Bioengineering and Chemical Engineering at Northeastern University and Lecturer on Radiation Oncology at Harvard Medical School. He is the founding director of the Nanomedicine Innovation Center and director and principal investigator of the Nanomedicine Academy and the NIH CaNCURE program, and he served as Northeastern’s Vice Provost for Research from 2004 to 2008. An elected Fellow of the American Physical Society, the American Institute for Medical and Biological Engineering, and the National Academy of Inventors, he is the author of more than 450 journal articles, patents, and technical reports spanning quantum chaos, superconductivity, collective excitations in materials, nanophotonics, metamaterials, nanomedicine, and neurotechnology. His 2003 Nature paper on negative-refraction photonic crystals was listed among the journal Science’s “Breakthroughs of 2003.” His current research spans nanomedicine, neurotechnology, and quantitative MRI. He received the 2016 Biomedical Engineering Society Diversity Award and has taught and mentored more than 1,200 students. He can be found online at <a href="http://srinivassridhar.com">srinivassridhar.com</a>.</p>
+<p><strong>Nik Bear Brown</strong> is an Associate Teaching Professor at Northeastern University’s College of Engineering, where he teaches AI, data science, and information visualization. He holds a PhD in computer science from UCLA, where his research centered on computational and systems biology with minors in AI and statistics, as well as an MS in Information Design and Data Visualization and an MBA from Northeastern University. He has served as a part-time postdoctoral researcher at Harvard Medical School. He is the founder of Humanitarians AI, a 501©(3) nonprofit, and of Bear Brown &amp; Company, and he builds AI infrastructure for education, including the Irreducibly Human curriculum framework that shapes this series. His other book projects include the Computational Skepticism for AI series and the “with LLMs” series of AI-assisted textbooks, of which these quantum mechanics volumes are a part.</p>
+<hr>
+<h2>About Humanitarians AI</h2>
+<p>Humanitarians AI Incorporated is a 501©(3) nonprofit organization founded in 2019 and based in Boston, Massachusetts (EIN 33-1984805). Through its Fellows Program, it gives early-career researchers and builders mentored, hands-on experience creating AI projects for the public good. Its educational work centers on the Irreducibly Human curriculum, which teaches the skills AI cannot replace alongside the AI fluency every field now demands. Learn more at <a href="http://humanitarians.ai">humanitarians.ai</a>.</p>
+<hr>
+<h2>Notes</h2>
+<p>Endnote-style notes appear within the chapters where they arise; this section is reserved for edition notes in future printings.</p>
+<hr>
+<h2>References</h2>
+<p>The following texts shaped this volume and are the right next destinations for a reader who wants more depth at or just above this book’s level.</p>
+<ul>
+<li>Griffiths, David J., and Darrell F. Schroeter. <em>Introduction to Quantum Mechanics</em>. Cambridge University Press.</li>
+<li>French, A. P., and Edwin F. Taylor. <em>An Introduction to Quantum Physics</em>. W. W. Norton.</li>
+<li>Feynman, Richard P., Robert B. Leighton, and Matthew Sands. <em>The Feynman Lectures on Physics, Volume III: Quantum Mechanics</em>. Basic Books.</li>
+<li>Shankar, Ramamurti. <em>Principles of Quantum Mechanics</em>. Springer.</li>
+<li>Cohen-Tannoudji, Claude, Bernard Diu, and Franck Laloë. <em>Quantum Mechanics</em>. Wiley.</li>
+<li>Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum Computation and Quantum Information</em>. Cambridge University Press.</li>
+</ul>
+<hr>
+<h2>A Note on the Index</h2>
+<p>This book has no index, and the omission is deliberate. This is a Kindle and online edition with reflowable text: there are no fixed pages, so a page-anchored index would point at nothing. Full-text search already does what a traditional index did — instantly, and for every word rather than a curated few. More importantly, this book is designed for integration with Medhavy (<a href="http://medhavy.com">medhavy.com</a>), Humanitarians AI’s intelligent-textbook platform, named from the Sanskrit मेधावी, “intellectually brilliant.” Medhavy provides semantic lookup — ask for a concept, not just a keyword — along with adaptive navigation through the book’s structure. Between search and Medhavy, a static index would be the least capable tool on the shelf.</p>
+<hr>
+<h2>Glossary</h2>
+<p><strong>Wave function (ψ)</strong> — The complex-valued function that completely describes the state of a quantum system; everything measurable about the system is computed from it.</p>
+<p><strong>Probability density (|ψ|²)</strong> — The squared modulus of the wave function, giving probability per unit length; it must be integrated over a region to yield an actual probability.</p>
+<p><strong>Born rule</strong> — The rule that the probability of finding a particle in an interval is the integral of |ψ|² over that interval.</p>
+<p><strong>Normalization</strong> — The requirement that the total probability of finding the particle somewhere equals exactly 1.</p>
+<p><strong>Superposition</strong> — A quantum state formed by adding two or more states together, which behaves as all of its components at once until measured.</p>
+<p><strong>Schrödinger equation</strong> — The fundamental equation of motion of quantum mechanics, telling the wave function how to change in time.</p>
+<p><strong>Stationary state</strong> — An energy eigenstate whose probability density never changes in time; only an overall complex phase rotates.</p>
+<p><strong>Eigenvalue and eigenstate</strong> — A special state that an operator merely rescales, and the number it rescales it by; measurement outcomes are eigenvalues.</p>
+<p><strong>Boundary condition</strong> — A requirement the wave function must satisfy at the edge of a region, such as vanishing at an impenetrable wall.</p>
+<p><strong>Quantization</strong> — The restriction of a physical quantity, such as energy, to a discrete set of allowed values, arising from confinement and boundary conditions.</p>
+<p><strong>Ground state</strong> — The lowest-energy state available to a system; in quantum mechanics its energy is generally above the bottom of the potential.</p>
+<p><strong>Zero-point energy</strong> — The irreducible minimum energy a confined quantum system retains even in its ground state.</p>
+<p><strong>Tunneling</strong> — The passage of a particle through a barrier that classical mechanics says it lacks the energy to cross, because the wave function decays but never quite reaches zero inside the barrier.</p>
+<p><strong>Transmission coefficient</strong> — The probability that a particle incident on a barrier or step passes through rather than reflecting.</p>
+<p><strong>Ladder operators</strong> — The raising and lowering operators of the harmonic oscillator, which move a state up or down the energy ladder by one quantum.</p>
+<p><strong>Wave packet</strong> — A localized, normalizable state built by superposing plane waves of nearby momenta.</p>
+<p><strong>Group velocity</strong> — The speed at which a wave packet’s envelope, and hence the particle’s likely position, travels.</p>
+<p><strong>Dispersion</strong> — The spreading of a wave packet over time, caused by its component waves traveling at different speeds.</p>
+<p><strong>Operator</strong> — A mathematical rule that turns one wave function into another; in quantum mechanics every observable quantity is represented by one.</p>
+<p><strong>Hermitian operator</strong> — An operator equal to its own adjoint, guaranteeing real eigenvalues and therefore real measurement outcomes.</p>
+<p><strong>Expectation value</strong> — The average of many measurements of an observable on identically prepared systems.</p>
+<p><strong>Commutator</strong> — The difference AB minus BA between two operators; when it is nonzero, the two observables cannot both be sharp in the same state.</p>
+<p><strong>Uncertainty principle</strong> — The theorem that the spreads of position and momentum in any state satisfy σₓσₚ ≥ ℏ/2; a property of states, not of clumsy instruments.</p>
+<p><strong>Measurement collapse</strong> — The state-update rule: immediately after a measurement returns an eigenvalue, the system is in the corresponding eigenstate.</p>
+<p><strong>Qubit</strong> — A two-level quantum system, the unit of quantum information; its general state is a superposition of |0⟩ and |1⟩.</p>
+<p><strong>Photon</strong> — The quantum of light, carrying energy hν and momentum h/λ.</p>
+<p><strong>de Broglie wavelength</strong> — The wavelength λ = h/p associated with any particle of momentum p, making matter itself wavelike.</p>
+
+</article>
+</body>
+</html>

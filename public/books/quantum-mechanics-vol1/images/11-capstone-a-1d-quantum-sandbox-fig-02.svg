@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 11-capstone-a-1d-quantum-sandbox-fig-02.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 11-capstone-a-1d-quantum-sandbox
+  Figure: 02 — Tridiagonal Hamiltonian Matrix
+  Generated: 2026-06-06  (rebuilt as house SVG 2026-06-24)
+  Source: pantry/11-capstone-a-1d-quantum-sandbox-cajal.md
+-->
+<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="ft-02">
+  <title id="ft-02">Tridiagonal Hamiltonian: real symmetric matrix with diagonal 2t_k+V_j and off-diagonal -t_k; boundary rows and columns are dropped.</title>
+  <desc>A 7x7 matrix grid. The first and last rows and columns are greyed (boundary, Dirichlet). The interior 5x5 block is tridiagonal: diagonal cells 2t_k+V_j in pale blue, off-diagonal cells -t_k in pale orange, all other cells empty.</desc>
+  <metadata><cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="11-capstone-a-1d-quantum-sandbox" figure-number="02"
+      figure-title="Tridiagonal Hamiltonian Matrix" figure-type="diagram" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06" source-file="pantry/11-capstone-a-1d-quantum-sandbox-cajal.md"/></metadata>
+  <rect width="700" height="500" fill="#FFFFFF"/>
+  <text x="350" y="34" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">Structure of the discretized Hamiltonian H</text>
+  <rect x="196" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="217" y="95" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#2a1a0e" text-anchor="middle">1</text>
+  <rect x="238" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="280" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="322" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="364" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="406" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="448" y="70" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="112" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="112" width="42" height="42" fill="#CCE5F1" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="259" y="137" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#0072B2" text-anchor="middle">2tₖ+Vⱼ</text>
+  <rect x="280" y="112" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="301" y="137" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="322" y="112" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="364" y="112" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="406" y="112" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="448" y="112" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="154" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="154" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="259" y="179" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="280" y="154" width="42" height="42" fill="#CCE5F1" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="301" y="179" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#0072B2" text-anchor="middle">2tₖ+Vⱼ</text>
+  <rect x="322" y="154" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="343" y="179" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="364" y="154" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="406" y="154" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="448" y="154" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="196" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="196" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="280" y="196" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="301" y="221" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="322" y="196" width="42" height="42" fill="#CCE5F1" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="343" y="221" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#0072B2" text-anchor="middle">2tₖ+Vⱼ</text>
+  <rect x="364" y="196" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="385" y="221" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="406" y="196" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="448" y="196" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="238" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="238" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="280" y="238" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="322" y="238" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="343" y="263" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="364" y="238" width="42" height="42" fill="#CCE5F1" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="385" y="263" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#0072B2" text-anchor="middle">2tₖ+Vⱼ</text>
+  <rect x="406" y="238" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="427" y="263" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="448" y="238" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="280" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="280" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="280" y="280" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="322" y="280" width="42" height="42" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="364" y="280" width="42" height="42" fill="#FBE9CC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="385" y="305" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#BF7400" text-anchor="middle">−tₖ</text>
+  <rect x="406" y="280" width="42" height="42" fill="#CCE5F1" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="427" y="305" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#0072B2" text-anchor="middle">2tₖ+Vⱼ</text>
+  <rect x="448" y="280" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="196" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="238" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="280" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="322" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="364" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="406" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <rect x="448" y="322" width="42" height="42" fill="#ECECEC" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="469" y="347" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#2a1a0e" text-anchor="middle">1</text>
+  <text x="170" y="223" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="30" fill="#2a1a0e" text-anchor="end">H</text>
+  <text x="512" y="223" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="20" fill="#2a1a0e" text-anchor="start">ψ = E ψ</text>
+  <rect x="196" y="398" width="16" height="16" fill="#CCE5F1" stroke="#0072B2" stroke-width="1"/><text x="220" y="411" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">diagonal: 2tₖ + Vⱼ</text>
+  <rect x="430" y="398" width="16" height="16" fill="#FBE9CC" stroke="#BF7400" stroke-width="1"/><text x="454" y="411" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">off-diagonal: −tₖ</text>
+  <rect x="196" y="424" width="16" height="16" fill="#ECECEC" stroke="#D4D4D4" stroke-width="1"/><text x="220" y="437" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">boundary row/col dropped (Dirichlet: ψ₀ = ψₙ₋₁ = 0)</text>
+  <text x="350" y="470" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">tₖ = ħ²/(2mh²). The diagonal is 2tₖ, not tₖ — confusing the two makes Eₙ wrong by a factor of 2.</text>
+</svg>

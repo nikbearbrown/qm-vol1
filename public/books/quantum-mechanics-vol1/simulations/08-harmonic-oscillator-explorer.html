@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harmonic oscillator explorer — Quantum Mechanics Vol. 1, Chapter 8</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--palev:#F7DDCC;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:170px;accent-color:var(--blue);}
+  .seg{display:inline-flex;border:0.75px solid var(--hair);border-radius:6px;overflow:hidden;}
+  .seg button{font:inherit;font-size:13px;padding:5px 11px;border:0;background:#fff;color:var(--ink);cursor:pointer;}
+  .seg button.on{background:var(--blue);color:#fff;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .card.hl{background:#fbf2e6;border-color:var(--amber);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  .dash{width:20px;height:0;border-top:2px dashed var(--verm);display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-2px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Harmonic oscillator explorer</h1>
+  <p class="sub">The energy eigenstates of V(x) = ½mω²x². Pick a level n: the wave function ψ<sub>n</sub> (or the density |ψ<sub>n</sub>|²) is drawn on its rung E<sub>n</sub> = (n+½)ℏω inside the parabola. Dashed lines mark the classical turning points; the shaded tails beyond them are the classically forbidden region. Dimensionless units ξ = √(mω/ℏ)·x, energies in ℏω.</p>
+  <canvas id="cv" width="760" height="430" aria-label="Harmonic oscillator eigenfunctions on energy levels inside the parabolic well"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>ψ<sub>n</sub> / |ψ<sub>n</sub>|²</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>selected level E<sub>n</sub></span>
+    <span class="key"><span class="dash"></span>classical turning points</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="n">level n</label><input type="range" id="n" min="0" max="8" step="1" value="0"><span id="nv" style="font-family:monospace">0</span></div>
+    <div class="ctl">show
+      <span class="seg"><button id="bWave" class="on">ψ<sub>n</sub></button><button id="bDens">|ψ<sub>n</sub>|²</button></span>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="card hl"><div class="l">E<sub>n</sub> = (n+½)ℏω</div><div class="v" id="En">&mdash;</div></div>
+    <div class="card"><div class="l">nodes</div><div class="v" id="nodes">&mdash;</div></div>
+    <div class="card"><div class="l">turning point ξ</div><div class="v" id="tp">&mdash;</div></div>
+    <div class="card"><div class="l">P(beyond turning pts)</div><div class="v" id="pout">&mdash;</div></div>
+  </div>
+  <p class="note" id="msg"></p>
+  <p class="note">The spacing is uniform — every rung sits ℏω above the one below — and the ground state floats at E₀ = ½ℏω, never zero. Notice ψ<sub>n</sub> has exactly n nodes, the turning points widen as √(2n+1), and a slice of probability always leaks past them: about 16% for n=0, shrinking as n grows and the state turns classical.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const nEL=document.getElementById('n');
+let mode='wave';
+const bWave=document.getElementById('bWave'),bDens=document.getElementById('bDens');
+bWave.onclick=()=>{mode='wave';bWave.classList.add('on');bDens.classList.remove('on');draw();};
+bDens.onclick=()=>{mode='dens';bDens.classList.add('on');bWave.classList.remove('on');draw();};
+
+function hermite(n,x){ if(n===0)return 1; if(n===1)return 2*x; let hm=1,h=2*x; for(let k=1;k<n;k++){const hn=2*x*h-2*k*hm; hm=h; h=hn;} return h; }
+function logfact(n){let s=0;for(let k=2;k<=n;k++)s+=Math.log(k);return s;}
+// normalized psi_n(xi): N = 1/sqrt(2^n n! sqrt(pi))
+function psi(n,xi){ const logN=-0.5*(n*Math.log(2)+logfact(n)+0.5*Math.log(Math.PI)); return Math.exp(logN)*hermite(n,xi)*Math.exp(-xi*xi/2); }
+
+const XI=5.2;                         // half-range in xi
+function Pout(n){                      // numeric P(|xi|>turning point)
+  const tp=Math.sqrt(2*n+1); let tot=0,out=0; const dx=0.01;
+  for(let x=-XI;x<=XI;x+=dx){const p=psi(n,x)**2; tot+=p; if(Math.abs(x)>tp)out+=p;}
+  return out/tot;
+}
+
+function draw(){
+  const n=+nEL.value;
+  document.getElementById('nv').textContent=n;
+  cx.clearRect(0,0,W,H);
+  const padL=54,padR=18,padT=18,padB=40;
+  const px0=padL,px1=W-padR,py0=padT,py1=H-padB;
+  const Emax=9.2;                      // top of energy axis (n=8 -> 8.5)
+  const X=xi=>px0+(px1-px0)*(xi+XI)/(2*XI);
+  const Y=E=>py1-(py1-py0)*E/Emax;
+  // plot bg
+  cx.fillStyle=C('--plot');cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  // parabola V=0.5 xi^2
+  cx.strokeStyle=C('--gray');cx.lineWidth=1.5;cx.beginPath();let st=false;
+  for(let xi=-XI;xi<=XI;xi+=0.05){const v=0.5*xi*xi; if(v>Emax)continue; const xx=X(xi),yy=Y(v); st?cx.lineTo(xx,yy):cx.moveTo(xx,yy); st=true;}
+  cx.stroke();
+  // all levels faint, selected bold
+  for(let k=0;k<=8;k++){
+    const E=k+0.5, tp=Math.sqrt(2*k+1), sel=(k===n);
+    cx.strokeStyle=sel?C('--amber'):C('--hair');cx.lineWidth=sel?2.4:1;
+    cx.beginPath();cx.moveTo(X(-tp),Y(E));cx.lineTo(X(tp),Y(E));cx.stroke();
+    if(sel){cx.fillStyle=C('--amber');cx.font="13px 'JetBrains Mono',monospace";cx.textAlign="left";cx.fillText("n="+k,X(tp)+6,Y(E)+4);}
+  }
+  // turning points (dashed verticals) for selected
+  const tp=Math.sqrt(2*n+1);
+  cx.strokeStyle=C('--verm');cx.lineWidth=1.2;cx.setLineDash([5,4]);
+  cx.beginPath();cx.moveTo(X(-tp),py0);cx.lineTo(X(-tp),py1);cx.moveTo(X(tp),py0);cx.lineTo(X(tp),py1);cx.stroke();cx.setLineDash([]);
+  // wavefunction or density on the selected level
+  const E=n+0.5, base=Y(E);
+  const amp=(py1-py0)/Emax*0.92;       // ~0.92 ℏω of vertical room
+  let maxv=0; for(let xi=-XI;xi<=XI;xi+=0.02){maxv=Math.max(maxv, mode==='wave'?Math.abs(psi(n,xi)):psi(n,xi)**2);}
+  // forbidden-region shaded tails (density mode emphasises this)
+  if(mode==='dens'){
+    cx.fillStyle="rgba(213,94,0,0.16)";
+    for(const sgn of [-1,1]){
+      cx.beginPath();cx.moveTo(X(sgn*tp),base);
+      for(let xi=sgn*tp; (sgn>0?xi<=XI:xi>=-XI); xi+=sgn*0.02){const v=psi(n,xi)**2/maxv; cx.lineTo(X(xi), base-amp*v);}
+      cx.lineTo(X(sgn*XI),base);cx.closePath();cx.fill();
+    }
+  }
+  // curve
+  cx.strokeStyle=C('--blue');cx.lineWidth=2.2;cx.beginPath();
+  let first=true;
+  for(let xi=-XI;xi<=XI;xi+=0.02){const val=mode==='wave'?psi(n,xi):psi(n,xi)**2; const yy=base-amp*val/maxv; const xx=X(xi); first?cx.moveTo(xx,yy):cx.lineTo(xx,yy); first=false;}
+  cx.stroke();
+  // baseline at the level (thin)
+  cx.strokeStyle="rgba(0,114,178,0.35)";cx.lineWidth=0.75;cx.beginPath();cx.moveTo(px0,base);cx.lineTo(px1,base);cx.stroke();
+  // axes labels
+  cx.fillStyle=C('--ink');cx.font="14px 'Inter',sans-serif";cx.textAlign="center";
+  cx.fillText("position  ξ = √(mω/ℏ)·x",(px0+px1)/2,H-10);
+  cx.save();cx.translate(16,(py0+py1)/2);cx.rotate(-Math.PI/2);cx.fillText("energy  E / ℏω",0,0);cx.restore();
+  // E ticks
+  cx.fillStyle=C('--gray');cx.font="12px 'JetBrains Mono',monospace";cx.textAlign="right";
+  for(let e=0;e<=9;e+=1){cx.fillText(e.toString(),px0-5,Y(e)+4);}
+  // stats
+  document.getElementById('En').textContent=(n+0.5).toFixed(1)+' ℏω';
+  document.getElementById('nodes').textContent=n;
+  document.getElementById('tp').textContent='±'+tp.toFixed(3);
+  const po=Pout(n);
+  document.getElementById('pout').textContent=(po*100).toFixed(1)+'%';
+  document.getElementById('msg').textContent=
+    "n = "+n+": energy "+(n+0.5).toFixed(1)+" ℏω, "+n+" node"+(n===1?'':'s')+", turning points at ξ = ±"+tp.toFixed(2)+". "+(po*100).toFixed(1)+"% of |ψ|² lies in the classically forbidden region beyond them.";
+}
+nEL.addEventListener('input',draw);
+draw();
+</script>
+</body>
+</html>

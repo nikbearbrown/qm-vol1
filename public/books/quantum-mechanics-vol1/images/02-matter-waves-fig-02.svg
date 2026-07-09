@@ -1,0 +1,142 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 02-matter-waves
+     Figure: 02 — The Davisson–Germer experiment: a 50° intensity peak explained by Bragg reflection
+     Type: schematic
+     Priority: Important
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-19
+     Source: pantry/02-matter-waves-cajal.md
+-->
+<svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-title-02m">
+  <title id="fig-title-02m">The Davisson–Germer experiment: a 50° intensity peak explained by Bragg reflection</title>
+  <desc>Top: an electron gun fires a 54 V beam at a nickel single crystal and a detector on a rotatable arm finds a sharp intensity peak near a 50 degree scattering angle. Bottom, magnified to the atomic scale: two parallel electron waves reflect from successive crystal planes separated by d; the lower wave travels an extra path 2 d sin theta, so the reflections reinforce, and a diffraction peak appears, when that extra path equals a whole number of wavelengths.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1" chapter="02-matter-waves"
+      figure-number="02" figure-title="The Davisson–Germer experiment: a 50° intensity peak explained by Bragg reflection" figure-slug="davisson-germer-and-bragg"
+      figure-type="schematic" priority="Important" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-19" source-file="pantry/02-matter-waves-cajal.md"/>
+  </metadata>
+  <defs>
+    <marker id="arrow-02" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/></marker>
+    <marker id="arrowR-02" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0072B2"/></marker>
+    <marker id="arrowS-02" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#545454"/></marker>
+    <marker id="arrowSs-02" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto"><polygon points="8 0, 0 3, 8 6" fill="#545454"/></marker>
+  </defs>
+<text x="350" y="24" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" fill="#2a1a0e" text-anchor="middle">The Davisson–Germer experiment: a 50° peak, explained by Bragg reflection</text>
+<text x="300" y="52" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="11" fill="#2a1a0e" text-anchor="middle">What the detector sees</text>
+<rect x="262" y="62" width="76" height="30" fill="#FFFFFF" stroke="#545454" stroke-width="1"/>
+<text x="300" y="76" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#2a1a0e" text-anchor="middle">electron gun</text>
+<text x="300" y="88" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#0072B2" text-anchor="middle">54 V</text>
+<line x1="300" y1="92" x2="300" y2="236" stroke="#0072B2" stroke-width="2.2" marker-end="url(#arrowR-02)"/>
+<text x="292" y="168" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#0072B2" text-anchor="end">incident beam</text>
+<rect x="250" y="240" width="100" height="28" fill="#D4D4D4" opacity="0.5"/>
+<circle cx="262" cy="248" r="2.3" fill="#545454"/>
+<circle cx="274" cy="248" r="2.3" fill="#545454"/>
+<circle cx="286" cy="248" r="2.3" fill="#545454"/>
+<circle cx="298" cy="248" r="2.3" fill="#545454"/>
+<circle cx="310" cy="248" r="2.3" fill="#545454"/>
+<circle cx="322" cy="248" r="2.3" fill="#545454"/>
+<circle cx="334" cy="248" r="2.3" fill="#545454"/>
+<circle cx="262" cy="260" r="2.3" fill="#545454"/>
+<circle cx="274" cy="260" r="2.3" fill="#545454"/>
+<circle cx="286" cy="260" r="2.3" fill="#545454"/>
+<circle cx="298" cy="260" r="2.3" fill="#545454"/>
+<circle cx="310" cy="260" r="2.3" fill="#545454"/>
+<circle cx="322" cy="260" r="2.3" fill="#545454"/>
+<circle cx="334" cy="260" r="2.3" fill="#545454"/>
+<text x="300" y="284" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">nickel single crystal</text>
+<text x="300" y="296" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">(one crystal after the annealing accident)</text>
+<path d="M 373.4 58.3 A 196 196 0 0 1 493.0 206.0" fill="none" stroke="#D4D4D4" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="300" y1="240" x2="443.1" y2="120.0" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="450.1" cy="114.0" r="11" fill="#CCE5F1"/>
+<circle cx="450.1" cy="114.0" r="5.5" fill="#0072B2"/>
+<text x="465.1447108513197" y="111.01362850143829" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#2a1a0e" text-anchor="start">diffraction peak</text>
+<text x="465.1447108513197" y="124.01362850143829" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="start">(intensity maximum)</text>
+<rect x="461.4" y="168.7" width="52" height="28" fill="#FFFFFF" stroke="#545454" stroke-width="1"/>
+<text x="487.43573216875495" y="209.6951458743436" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">movable detector</text>
+<path d="M 480.4 163.4 A 196 196 0 0 0 469.7 142.0" fill="none" stroke="#545454" stroke-width="1" marker-end="url(#arrowS-02)"/>
+<path d="M 300 190 A 50 50 0 0 1 338.3 207.9" fill="none" stroke="#545454" stroke-width="1"/>
+<text x="322" y="196" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="start">φ ≈ 50°</text>
+<line x1="255" y1="268" x2="130" y2="322" stroke="#D4D4D4" stroke-width="0.9" stroke-dasharray="3 2"/>
+<line x1="345" y1="268" x2="570" y2="322" stroke="#D4D4D4" stroke-width="0.9" stroke-dasharray="3 2"/>
+<text x="350" y="316" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="11" fill="#2a1a0e" text-anchor="middle">Why the peak sits at 50° — reflection from the atomic planes</text>
+<rect x="125" y="322" width="450" height="222" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+<line x1="150" y1="378" x2="548" y2="378" stroke="#545454" stroke-width="0.8"/>
+<circle cx="160" cy="378" r="2.3" fill="#545454"/>
+<circle cx="182" cy="378" r="2.3" fill="#545454"/>
+<circle cx="204" cy="378" r="2.3" fill="#545454"/>
+<circle cx="226" cy="378" r="2.3" fill="#545454"/>
+<circle cx="248" cy="378" r="2.3" fill="#545454"/>
+<circle cx="270" cy="378" r="2.3" fill="#545454"/>
+<circle cx="292" cy="378" r="2.3" fill="#545454"/>
+<circle cx="314" cy="378" r="2.3" fill="#545454"/>
+<circle cx="336" cy="378" r="2.3" fill="#545454"/>
+<circle cx="358" cy="378" r="2.3" fill="#545454"/>
+<circle cx="380" cy="378" r="2.3" fill="#545454"/>
+<circle cx="402" cy="378" r="2.3" fill="#545454"/>
+<circle cx="424" cy="378" r="2.3" fill="#545454"/>
+<circle cx="446" cy="378" r="2.3" fill="#545454"/>
+<circle cx="468" cy="378" r="2.3" fill="#545454"/>
+<circle cx="490" cy="378" r="2.3" fill="#545454"/>
+<circle cx="512" cy="378" r="2.3" fill="#545454"/>
+<circle cx="534" cy="378" r="2.3" fill="#545454"/>
+<line x1="150" y1="418" x2="548" y2="418" stroke="#545454" stroke-width="0.8"/>
+<circle cx="160" cy="418" r="2.3" fill="#545454"/>
+<circle cx="182" cy="418" r="2.3" fill="#545454"/>
+<circle cx="204" cy="418" r="2.3" fill="#545454"/>
+<circle cx="226" cy="418" r="2.3" fill="#545454"/>
+<circle cx="248" cy="418" r="2.3" fill="#545454"/>
+<circle cx="270" cy="418" r="2.3" fill="#545454"/>
+<circle cx="292" cy="418" r="2.3" fill="#545454"/>
+<circle cx="314" cy="418" r="2.3" fill="#545454"/>
+<circle cx="336" cy="418" r="2.3" fill="#545454"/>
+<circle cx="358" cy="418" r="2.3" fill="#545454"/>
+<circle cx="380" cy="418" r="2.3" fill="#545454"/>
+<circle cx="402" cy="418" r="2.3" fill="#545454"/>
+<circle cx="424" cy="418" r="2.3" fill="#545454"/>
+<circle cx="446" cy="418" r="2.3" fill="#545454"/>
+<circle cx="468" cy="418" r="2.3" fill="#545454"/>
+<circle cx="490" cy="418" r="2.3" fill="#545454"/>
+<circle cx="512" cy="418" r="2.3" fill="#545454"/>
+<circle cx="534" cy="418" r="2.3" fill="#545454"/>
+<line x1="150" y1="458" x2="548" y2="458" stroke="#545454" stroke-width="0.8"/>
+<circle cx="160" cy="458" r="2.3" fill="#545454"/>
+<circle cx="182" cy="458" r="2.3" fill="#545454"/>
+<circle cx="204" cy="458" r="2.3" fill="#545454"/>
+<circle cx="226" cy="458" r="2.3" fill="#545454"/>
+<circle cx="248" cy="458" r="2.3" fill="#545454"/>
+<circle cx="270" cy="458" r="2.3" fill="#545454"/>
+<circle cx="292" cy="458" r="2.3" fill="#545454"/>
+<circle cx="314" cy="458" r="2.3" fill="#545454"/>
+<circle cx="336" cy="458" r="2.3" fill="#545454"/>
+<circle cx="358" cy="458" r="2.3" fill="#545454"/>
+<circle cx="380" cy="458" r="2.3" fill="#545454"/>
+<circle cx="402" cy="458" r="2.3" fill="#545454"/>
+<circle cx="424" cy="458" r="2.3" fill="#545454"/>
+<circle cx="446" cy="458" r="2.3" fill="#545454"/>
+<circle cx="468" cy="458" r="2.3" fill="#545454"/>
+<circle cx="490" cy="458" r="2.3" fill="#545454"/>
+<circle cx="512" cy="458" r="2.3" fill="#545454"/>
+<circle cx="534" cy="458" r="2.3" fill="#545454"/>
+<line x1="257.9" y1="326.0" x2="348" y2="378" stroke="#0072B2" stroke-width="2" marker-end="url(#arrowR-02)"/>
+<line x1="348" y1="378" x2="438.1" y2="326.0" stroke="#0072B2" stroke-width="2" marker-end="url(#arrowR-02)"/>
+<line x1="218.1" y1="343.0" x2="348" y2="418" stroke="#0072B2" stroke-width="2" marker-end="url(#arrowR-02)"/>
+<line x1="348" y1="418" x2="477.9" y2="343.0" stroke="#0072B2" stroke-width="2" marker-end="url(#arrowR-02)"/>
+<line x1="348" y1="378" x2="330.7" y2="408.0" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="3 2"/>
+<line x1="348" y1="378" x2="365.3" y2="408.0" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="3 2"/>
+<line x1="330.7" y1="408.0" x2="348" y2="418" stroke="#BF7400" stroke-width="3"/>
+<line x1="348" y1="418" x2="365.3" y2="408.0" stroke="#BF7400" stroke-width="3"/>
+<text x="348" y="452" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#BF7400" text-anchor="middle">extra path = 2d sin θ</text>
+<line x1="178" y1="378" x2="178" y2="418" stroke="#2a1a0e" stroke-width="1" marker-start="url(#arrow-02)" marker-end="url(#arrow-02)"/>
+<text x="170" y="402" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="12" fill="#2a1a0e" text-anchor="end" font-style="italic">d</text>
+<text x="150" y="444" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="start">d = 0.091 nm (atomic planes)</text>
+<path d="M 314 378 A 34 34 0 0 0 318.6 361.0" fill="none" stroke="#545454" stroke-width="1"/>
+<text x="302" y="367" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="11" fill="#545454" text-anchor="middle" font-style="italic">θ</text>
+<rect x="246" y="496" width="208" height="38" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="350" y="513" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#2a1a0e" text-anchor="middle">2d sin θ = nλ</text>
+<text x="350" y="528" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9.5" fill="#545454" text-anchor="middle">peak when the extra path is a whole number of λ</text>
+</svg>

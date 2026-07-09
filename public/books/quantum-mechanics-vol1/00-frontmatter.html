@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quantum Mechanics</title>
+<meta name="description" content="00-frontmatter.md FRONT MATTER — everything that appears before the" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<!--
+    00-frontmatter.md
+    FRONT MATTER — everything that appears before the Introduction.
+
+    Sections in order:
+      1. Title page
+      2. Copyright page
+      3. Preface
+
+    Do not number these sections. They use roman numerals in print
+    and appear before the body in the compiled EPUB.
+-->
+<h1>Quantum Mechanics</h1>
+<p><em>Foundations: The Quantum World</em></p>
+<p><strong>Srinivas Sridhar and Nik Bear Brown</strong></p>
+<hr>
+<h2>Copyright</h2>
+<p>Copyright © 2026 Srinivas Sridhar and Nik Bear Brown. All rights reserved.</p>
+<p>Published by Humanitarians AI Incorporated, a 501©(3) nonprofit organization.</p>
+<p>No part of this publication may be reproduced, distributed, or transmitted
+in any form or by any means without the prior written permission of the
+publisher, except in the case of brief quotations in critical reviews and
+certain other noncommercial uses permitted by copyright law.</p>
+<p>ISBN: [INSERT ISBN]</p>
+<p>First edition: 2026</p>
+<hr>
+<h2>Preface</h2>
+<p>This textbook introduces quantum mechanics to undergraduate students meeting the subject for the first time. Its goal is to develop the core ideas of the theory — the wave function, the Schrödinger equation, energy quantization, the uncertainty principle — carefully and completely, so that each result is something the reader can derive, understand, and connect to an experiment, rather than a formula to be taken on faith.</p>
+<p>This volume opens a five-volume quantum mechanics series written for undergraduates and for self-learners. We wrote it together — one of us a physicist who has spent four decades doing and teaching quantum-mechanical experiments, the other a computer scientist — out of a shared conviction that the one-dimensional theory, developed slowly and with every step shown, is the right foundation on which the rest of quantum mechanics can be built. We also wrote it to bring the latest digital technologies and learning methods to bear on how quantum mechanics is taught.</p>
+<p>The emphasis throughout is on understanding the physics. Derivations are complete enough to follow without gaps, worked examples accompany each major step, and the limiting cases a physicist uses to check a result — what happens as \(\hbar \to 0\), or as a barrier becomes infinitely high — are made explicit rather than left to the reader to supply. The final chapter assembles the methods of the book into a single numerical solver and validates it against the exact results derived along the way; computation enters there as a way to make the physics visible and to confirm it, not as a substitute for working through it by hand.</p>
+<p>The text assumes a working knowledge of single-variable calculus — the reader can take a derivative and evaluate a definite integral — and builds everything else from there. The mathematical development is complete enough to follow without gaps, and worked examples appear at each major step. We use “we” throughout to signal that the derivations are meant to be followed actively, pencil in hand, not simply read.</p>
+<p>This book does not aim to be encyclopedic. It treats the core one-dimensional theory — the wave function, the Schrödinger equation, the standard potential wells, the harmonic oscillator, and the uncertainty principle — in enough depth for the reader to reason carefully about each topic. Three-dimensional problems, angular momentum, spin, and many-body systems are left for later volumes.</p>
+<p>This book is available both as a hardcopy and as an online edition. The online edition includes interactive simulations, animations, and videos, putting the latest digital technologies to work to convey these quantum concepts.</p>
+
+</article>
+</body>
+</html>

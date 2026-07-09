@@ -1,0 +1,74 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 01-why-classical-physics-failed
+     Figure: 03 — Quantum regime map: x = hν / kBT
+     Type: regime-map
+     Priority: Important
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-19
+     Source: pantry/01-why-classical-physics-failed-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-title-03">
+  <title id="fig-title-03">Quantum regime map: x = hν / kBT</title>
+  <desc>A horizontal axis in the dimensionless ratio x = hv/kBT. For x well below 1 the classical (Rayleigh-Jeans) description holds; for x above 1 quantization dominates. Marked points show deep infrared, the crossover, and the ultraviolet worked example.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1" chapter="01-why-classical-physics-failed"
+      figure-number="03" figure-title="Quantum regime map: x = hν / kBT" figure-slug="regime-map-x-hnu-kbt"
+      figure-type="regime-map" priority="Important" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-19" source-file="pantry/01-why-classical-physics-failed-cajal.md"/>
+  </metadata>
+  <defs>
+    <marker id="arrow-03" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <marker id="arrowR-03" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0072B2"/>
+    </marker>
+  </defs>
+
+<text x="350" y="36" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" fill="#2a1a0e" text-anchor="middle">When does quantization matter?</text>
+<text x="350" y="54" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454" text-anchor="middle">x = hν / k_BT</text>
+<rect x="70" y="150" width="49.0" height="80" fill="#ECECEC"/>
+<rect x="119.0" y="150" width="441.0" height="80" fill="#CCE5F1"/>
+<line x1="70" y1="210" x2="560" y2="210" stroke="#2a1a0e" stroke-width="1.5"/>
+<line x1="70.0" y1="206" x2="70.0" y2="214" stroke="#2a1a0e" stroke-width="1"/>
+<line x1="119.0" y1="206" x2="119.0" y2="214" stroke="#2a1a0e" stroke-width="1"/>
+<line x1="168.0" y1="207" x2="168.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="217.0" y1="207" x2="217.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="266.0" y1="207" x2="266.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="315.0" y1="206" x2="315.0" y2="214" stroke="#2a1a0e" stroke-width="1"/>
+<line x1="364.0" y1="207" x2="364.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="413.0" y1="207" x2="413.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="462.0" y1="207" x2="462.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="511.0" y1="207" x2="511.0" y2="213" stroke="#D4D4D4" stroke-width="0.8"/>
+<line x1="560.0" y1="206" x2="560.0" y2="214" stroke="#2a1a0e" stroke-width="1"/>
+<text x="70.0" y="228" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">0</text>
+<text x="119.0" y="228" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">1</text>
+<text x="315.0" y="228" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">5</text>
+<text x="560.0" y="228" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">10</text>
+<line x1="560" y1="210" x2="588" y2="210" stroke="#2a1a0e" stroke-width="1.5"/>
+<line x1="586" y1="205" x2="592" y2="215" stroke="#2a1a0e" stroke-width="1.5"/>
+<line x1="591" y1="205" x2="597" y2="215" stroke="#2a1a0e" stroke-width="1.5"/>
+<line x1="595" y1="210" x2="650" y2="210" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-03)"/>
+<line x1="119.0" y1="146" x2="119.0" y2="234" stroke="#2a1a0e" stroke-width="1.2"/>
+<text x="94" y="172" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle" font-style="italic">classical</text>
+<text x="94" y="186" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">x ≪ 1</text>
+<text x="340" y="172" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#0072B2" text-anchor="middle" font-style="italic">quantum</text>
+<text x="340" y="186" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">x ≫ 1</text>
+<line x1="74.9" y1="215" x2="74.9" y2="262" stroke="#2a1a0e" stroke-width="0.8" stroke-dasharray="3 2"/>
+<circle cx="74.9" cy="268" r="4.5" fill="#2a1a0e"/>
+<text x="74.9" y="286" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">x ≈ 0.1</text>
+<text x="74.9" y="299" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">infrared</text>
+<line x1="119.0" y1="215" x2="119.0" y2="262" stroke="#2a1a0e" stroke-width="0.8" stroke-dasharray="3 2"/>
+<circle cx="119.0" cy="268" r="4.5" fill="#2a1a0e"/>
+<text x="119.0" y="286" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">x = 1</text>
+<text x="119.0" y="299" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">crossover</text>
+<line x1="625.0" y1="215" x2="625.0" y2="262" stroke="#0072B2" stroke-width="0.8" stroke-dasharray="3 2"/>
+<circle cx="625.0" cy="268" r="4.5" fill="#0072B2"/>
+<text x="625.0" y="286" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">x ≈ 48</text>
+<text x="625.0" y="299" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">UV, 3000 K</text>
+<text x="350" y="340" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#545454" text-anchor="middle">Classical and quantum predictions agree for x ≪ 1 and diverge like e^x once x ≳ 1.</text>
+</svg>

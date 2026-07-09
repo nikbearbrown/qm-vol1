@@ -1,0 +1,71 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 01-why-classical-physics-failed
+     Figure: 07 — Photoelectric energy budget: hν = Phi + K_max
+     Type: bar-diagram
+     Priority: Important
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-19
+     Source: pantry/01-why-classical-physics-failed-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-title-07">
+  <title id="fig-title-07">Photoelectric energy budget: hν = Phi + K_max</title>
+  <desc>Two energy bars on a common eV axis for sodium (work function 2.28 eV). For 300 nm light the photon energy 4.13 eV exceeds the escape threshold, leaving 1.85 eV of kinetic energy; for 546 nm light the photon energy 2.27 eV falls just below the threshold and no electron escapes.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1" chapter="01-why-classical-physics-failed"
+      figure-number="07" figure-title="Photoelectric energy budget: hν = Phi + K_max" figure-slug="photoelectric-energy-budget"
+      figure-type="bar-diagram" priority="Important" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-19" source-file="pantry/01-why-classical-physics-failed-cajal.md"/>
+  </metadata>
+  <defs>
+    <marker id="arrow-07" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <marker id="arrowR-07" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0072B2"/>
+    </marker>
+  </defs>
+
+<rect x="110" y="64" width="450" height="296" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="335" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" fill="#2a1a0e" text-anchor="middle">Only the photon energy above Φ becomes electron motion</text>
+<line x1="110" y1="64" x2="110" y2="360" stroke="#2a1a0e" stroke-width="1.5"/>
+<line x1="105" y1="360.0" x2="110" y2="360.0" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="364.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0</text>
+<line x1="105" y1="300.8" x2="110" y2="300.8" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="304.8" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">1</text>
+<line x1="105" y1="241.6" x2="110" y2="241.6" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="245.6" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">2</text>
+<line x1="105" y1="182.4" x2="110" y2="182.4" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="186.4" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">3</text>
+<line x1="105" y1="123.2" x2="110" y2="123.2" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="127.2" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">4</text>
+<line x1="105" y1="64.0" x2="110" y2="64.0" stroke="#2a1a0e" stroke-width="1"/>
+<text x="101" y="68.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">5</text>
+<text x="30" y="212" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="12" fill="#545454" text-anchor="middle" transform="rotate(-90,30,212)">Energy (eV)</text>
+<line x1="110" y1="225.0" x2="540" y2="225.0" stroke="#0072B2" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="325" y="219.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#0072B2" text-anchor="middle">Φ = 2.28 eV</text>
+<rect x="186.0" y="225.0" width="78" height="135.0" fill="#D4D4D4"/>
+<rect x="186.0" y="115.5" width="78" height="109.5" fill="#0072B2"/>
+<line x1="272.0" y1="115.5" x2="272.0" y2="360.0" stroke="#545454" stroke-width="0.8"/>
+<line x1="269.0" y1="115.5" x2="272.0" y2="115.5" stroke="#545454" stroke-width="0.8"/>
+<line x1="269.0" y1="360.0" x2="272.0" y2="360.0" stroke="#545454" stroke-width="0.8"/>
+<text x="277.0" y="237.8" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">hν = 4.13 eV</text>
+<text x="225.0" y="378.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">above threshold</text>
+<text x="225.0" y="392.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">300 nm (UV)</text>
+<text x="225" y="174.3" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#FFFFFF" text-anchor="middle">K_max</text>
+<text x="225" y="296.5" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#2a1a0e" text-anchor="middle">Φ (escape)</text>
+<text x="225" y="107.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#0072B2" text-anchor="middle">K_max = 1.85 eV</text>
+<rect x="386.0" y="225.6" width="78" height="134.4" fill="#D4D4D4"/>
+<line x1="472.0" y1="225.6" x2="472.0" y2="360.0" stroke="#545454" stroke-width="0.8"/>
+<line x1="469.0" y1="225.6" x2="472.0" y2="225.6" stroke="#545454" stroke-width="0.8"/>
+<line x1="469.0" y1="360.0" x2="472.0" y2="360.0" stroke="#545454" stroke-width="0.8"/>
+<text x="477.0" y="292.8" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">hν = 2.27 eV</text>
+<text x="425.0" y="378.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">below threshold</text>
+<text x="425.0" y="392.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">546 nm (green)</text>
+<text x="425" y="296.8" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#2a1a0e" text-anchor="middle">absorbed,</text>
+<text x="425" y="310.8" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#2a1a0e" text-anchor="middle">no escape</text>
+<text x="425" y="203.6" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#0072B2" text-anchor="middle">below Φ — no electron</text>
+</svg>

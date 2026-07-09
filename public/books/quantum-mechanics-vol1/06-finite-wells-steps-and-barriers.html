@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 6 — Reflection, Transmission and Tunneling</title>
+<meta name="description" content="When we studied the infinite square well in Chapter 5, we assumed perfectly impenetrable walls. That idealization is a useful starting point, but real physical systems have finite" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Chapter 6 — Reflection, Transmission and Tunneling</h1>
+<p>When we studied the infinite square well in Chapter 5, we assumed perfectly impenetrable walls. That idealization is a useful starting point, but real physical systems have finite barriers. In this chapter we explore what changes when the walls are finite — and we discover that quantum particles can penetrate, and even pass through, regions that are classically forbidden.</p>
+<p>The first person to recognize this was Friedrich Hund, who in 1927 was studying the spectra of molecules. Consider ammonia, \(\text{NH}_3\): a nitrogen atom sits above a triangular base of three hydrogens, like the apex of a shallow pyramid. The nitrogen can rest above the plane of hydrogens or below it, and the two arrangements are mirror images of equal energy, separated by an energy barrier — to pass from one to the other, the nitrogen would classically have to force its way through the plane of hydrogens, which costs more energy than the molecule normally has. Hund realized that the wave function does not simply stop at the edge of the classically allowed region. It decays into the forbidden barrier and still has some amplitude on the far side, so the nitrogen can flip from one configuration to the other without ever acquiring the energy to go over the top. The molecule oscillates between its two pyramidal shapes by tunneling straight through the barrier between them — an effect with no classical counterpart, and the first instance of quantum tunneling ever identified. A barrier, in quantum mechanics, does not behave like a solid wall. It suppresses the wave function exponentially, and exponential suppression, no matter how severe, never reaches exactly zero.</p>
+<p>The following year, George Gamow applied the same idea to a problem that had frustrated nuclear physicists for a decade. Inside a nucleus, an alpha particle sits behind a Coulomb barrier roughly 30 MeV high, yet the alpha particles that emerge carry only 4–8 MeV of kinetic energy. Classically, such a particle is trapped forever. Quantum mechanically, it leaks through, and the leakage rate is so sensitive to barrier height and particle energy that doubling the energy can change the half-life by twenty-four orders of magnitude. The decay rate of uranium-238 differs from that of polonium-212 by a factor of nearly \(10^{24}\), and the tunneling formula explains the entire span.</p>
+<p>The behavior behind both stories is the subject of this chapter: what happens when the walls have a finite height.</p>
+<hr>
+<h2>6.1 The Finite Square Well</h2>
+<p>We begin with the infinite square well from Chapter 5 and lower its walls to a finite height. The potential is \(V = -V_0\) for \(|x| < L/2\) and \(V = 0\) outside, with \(V_0 > 0\). Bound states have \(-V_0 < E < 0\) — they sit below the top of the well but above its floor.</p>
+<p>Inside the well, the Schrödinger equation describes a particle with kinetic energy \(E + V_0 > 0\), so the solutions are oscillatory:</p>
+<p>\[\psi_\text{in}(x) = A\cos(kx) + B\sin(kx), \qquad k = \frac{\sqrt{2m(E+V_0)}}{\hbar}. \tag{6.1}\]</p>
+<p>Outside, the kinetic energy is \(E < 0\), so the solutions are exponentials. Normalizable solutions must decay away from the well:</p>
+<p>\[\psi_\text{out}(x) = Ce^{-\kappa|x|}, \qquad \kappa = \frac{\sqrt{2m|E|}}{\hbar}. \tag{6.2}\]</p>
+<p>We notice right away that \(\psi\) does not vanish at \(x = \pm L/2\). In the infinite well, the infinite walls forced it to zero there, and that condition gave us quantization directly. With finite walls the wave function no longer vanishes there, so we fall back on the general requirement that \(\psi\) and its slope \(\psi'\) be continuous at each wall — a condition the Schrödinger equation enforces wherever the potential is finite. Applied at both walls, those matching conditions determine the allowed energies.</p>
+<p>Because the potential is symmetric, the solutions separate cleanly into even-parity states (cosine inside) and odd-parity states (sine inside). For even-parity states, matching at \(x = L/2\) yields:</p>
+<p>\[\kappa = k\tan\!\left(\frac{kL}{2}\right). \tag{6.3}\]</p>
+<p>For odd-parity states:</p>
+<p>\[\kappa = -k\cot\!\left(\frac{kL}{2}\right). \tag{6.4}\]</p>
+<p>Neither equation can be solved analytically for \(E\). We can, however, solve them graphically, which is just as informative. Define \(z = kL/2\) and \(z_0 = (L/2\hbar)\sqrt{2mV_0}\), so that \(\kappa L/2 = \sqrt{z_0^2 - z^2}\). The even condition becomes:</p>
+<p>\[\sqrt{z_0^2 - z^2} = z\tan z. \tag{6.5}\]</p>
+<p>The left side is a quarter-circle of radius \(z_0\). The right side is a series of tangent branches. Each intersection of the circle with a tangent branch is one even-parity bound state. The odd states come from intersections with \(-z\cot z\).</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-01.svg" alt="Graphical solution: a quarter-circle of radius z₀ crossing the z·tan z (even) and −z·cot z (odd) branches; two crossings for z₀ = 3π/4, four for z₀ = 7π/4." loading="lazy" /><figcaption>Figure 6.1 — Graphical solution for the finite-well bound states. A quarter-circle of radius \(z_0\) (with \(z = kL/2\)) is crossed by the \(z\tan z\) branches (even-parity states) and the \(-z\cot z\) branches (odd-parity states); each crossing is one bound state. Left: \(z_0 = 3\pi/4\) gives two states. Right: \(z_0 = 7\pi/4\) gives four. As \(z_0\) grows — a deeper or wider well — new states appear from the top, and one bound state always survives however shallow the well.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=06-finite-well-bound-states.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/06-finite-well-bound-states.html" title="Interactive simulation: Finite-well bound states" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Finite-well bound states. If the embedded widget does not load, open <a href="simulations/06-finite-well-bound-states.html" target="_blank" rel="noopener">simulations/06-finite-well-bound-states.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=06-finite-well-bound-states.html -->
+<p>Counting the crossings reveals something the infinite well never showed us: the finite well has a <strong>finite</strong> number of bound states. That number is roughly \(z_0/(\pi/2)\) rounded up, which in physical units is \(N \approx (L/\pi\hbar)\sqrt{2mV_0}\). As we make the well shallower or narrower, levels disappear from the top, and as we make it deeper or wider, new levels appear. One level always survives, though: no matter how shallow the well, the finite square well always has a ground state. We can see this in the graph, because the quarter-circle always crosses the first tangent branch at least once, however small \(z_0\) becomes.</p>
+<p>What about the wave function outside the well? It decays as \(e^{-\kappa|x|}\). The characteristic length \(1/\kappa = \hbar/\sqrt{2m|E|}\) is called the penetration depth. A tightly bound ground state, with large \(|E|\), has a small penetration depth, so its wave function hugs the well. A loosely bound state, with \(E\) near zero, has a large penetration depth, so its wave function leaks far past the classical turning points into a region where a classical particle could never be found.</p>
+<p>This is not a defect in the wave function. It is precisely what the Schrödinger equation demands.</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-02.svg" alt="Two finite-well eigenstates: a tightly bound ground state with short evanescent tails, and a loosely bound top state with long tails leaking past the well edges." loading="lazy" /><figcaption>Figure 6.2 — Penetration depth grows as the binding weakens. Both panels show a finite-well eigenstate; the well region is shaded and its edges — the classical turning points — are dashed. The tightly bound ground state (top) has large \(|E|\) and short evanescent tails that hug the well. The loosely bound top state (bottom), with \(E\) near zero, leaks far past the turning points into the classically forbidden region.</figcaption></figure>
+<p>As \(V_0 \to \infty\), the penetration depth goes to zero and the energy levels return to the infinite-well values \(n^2\pi^2\hbar^2/(2mL^2)\). In other words, the infinite well is simply the finite well taken to the limit of walls that nothing can penetrate.</p>
+<hr>
+<h2>6.2 The Potential Step: Reflection and Transmission</h2>
+<p>We now turn from bound states to scattering. The potential is a step: \(V = 0\) for \(x < 0\), \(V = V_0\) for \(x > 0\). A particle arrives from the left, and we want to know what fraction transmits and what fraction reflects.</p>
+<p>Before writing down any wave functions, we set up the right bookkeeping tool. The <strong>probability current</strong> is:</p>
+<p>\[J(x,t) = \frac{\hbar}{m}\,\mathrm{Im}\!\left(\psi^*\frac{\partial\psi}{\partial x}\right). \tag{6.6}\]</p>
+<p>For a rightward plane wave \(Ae^{ikx}\), this gives \(J = \hbar k|A|^2/m\) — probability flowing rightward at a rate proportional to speed times density, exactly what we would expect. The transmission coefficient \(T\) is the ratio of transmitted current to incident current, and the reflection coefficient \(R\) is reflected current over incident current. Conservation of probability requires \(R + T = 1\).</p>
+<p><strong>When the particle has enough energy</strong> (\(E > V_0\)): in region I, \(\psi_I = Ae^{ik_0 x} + Be^{-ik_0 x}\) with \(k_0 = \sqrt{2mE}/\hbar\); in region II, only a rightward wave \(\psi_{II} = Ce^{ik_1 x}\) with \(k_1 = \sqrt{2m(E-V_0)}/\hbar\). Matching \(\psi\) and \(\psi'\) at \(x = 0\):</p>
+<p>\[A + B = C, \qquad k_0(A-B) = k_1 C. \tag{6.7}\]</p>
+<p>Solving: \(B/A = (k_0 - k_1)/(k_0 + k_1)\) and \(C/A = 2k_0/(k_0 + k_1)\). Now we compute the currents, and a subtlety appears. The transmitted current is \(\hbar k_1|C|^2/m\), not \(\hbar k_0|C|^2/m\), because the particle moves at a different speed on the far side. Using probability current throughout:</p>
+<p>\[R = \left(\frac{k_0 - k_1}{k_0 + k_1}\right)^2, \qquad T = \frac{4k_0 k_1}{(k_0 + k_1)^2}. \tag{6.8}\]</p>
+<p>Check: \((k_0 - k_1)^2 + 4k_0k_1 = (k_0 + k_1)^2\). \(R + T = 1\). \(\checkmark\)</p>
+<p>Here is the genuinely quantum result: \(R \neq 0\) even though the particle has more than enough energy to clear the step. Classically, a particle with \(E > V_0\) always transmits. Quantum mechanically, any abrupt change in \(k\) produces some reflection, in the same way that an impedance mismatch in a transmission line reflects part of a signal. What governs the reflection is not whether the particle can clear the step energetically, but how sharply \(k\) changes at the boundary. Reflection vanishes only when \(k_0 = k_1\), which requires \(V_0 = 0\). Even a step downward, with \(V_0 < 0\), reflects part of the wave.</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-03.svg" alt="Reflection R and transmission T versus E/V₀ for a potential step: R = 1 below the step, then T rises and R falls but stays nonzero above it." loading="lazy" /><figcaption>Figure 6.3 — Reflection and transmission at a potential step versus \(E/V_0\). Below the step (\(E < V_0\)) the reflection is total: \(R = 1\), \(T = 0\). Above it, \(T\) rises and \(R\) falls, but \(R\) stays strictly positive — a particle with more than enough energy to clear the step is still partly reflected. \(R + T = 1\) throughout.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=06-step-reflection.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/06-step-reflection.html" title="Interactive simulation: Potential-step reflection" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Potential-step reflection. If the embedded widget does not load, open <a href="simulations/06-step-reflection.html" target="_blank" rel="noopener">simulations/06-step-reflection.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=06-step-reflection.html -->
+<p><strong>When the particle does not have enough energy</strong> (\(E < V_0\)): now \(k_1 = \sqrt{2m(E-V_0)}/\hbar\) is imaginary. We write \(\kappa = \sqrt{2m(V_0-E)}/\hbar\) (real and positive), so the bounded solution in region II is \(\psi_{II} = Ce^{-\kappa x}\), a decaying exponential. Matching gives \(|B/A|^2 = 1\), so \(R = 1\) and \(T = 0\).</p>
+<p>The reflection is total, yet the wave function in region II is not zero. An <em>evanescent</em> tail — a wave function that decays exponentially instead of oscillating — penetrates the forbidden region with characteristic length \(1/\kappa\). Probability density is present there, but no net current flows: the probability sloshes in and out of the step without ever transmitting. This is not tunneling, because the barrier extends forever, so the evanescent tail never reaches a far edge from which it could launch a transmitted wave.</p>
+<hr>
+<h2>6.3 The Rectangular Barrier: Tunneling</h2>
+<p>Now we give the barrier a finite width. \(V = V_0\) for \(0 < x < L\) and \(V = 0\) elsewhere. A particle with \(E < V_0\) comes in from the left. The classical prediction is total reflection. The quantum prediction is something quite different.</p>
+<p>Three regions:</p>
+<ul>
+<li>Region I (\(x < 0\)): \(\psi_I = Ae^{ikx} + Be^{-ikx}\), \(\hspace{2pt}\) \(k = \sqrt{2mE}/\hbar\).</li>
+<li>Region II (\(0 < x < L\)): \(\psi_{II} = Ce^{\kappa x} + De^{-\kappa x}\), \(\hspace{2pt}\) \(\kappa = \sqrt{2m(V_0-E)}/\hbar\).</li>
+<li>Region III (\(x > L\)): \(\psi_{III} = Fe^{ikx}\) (no reflected wave; nothing to reflect from on the right).</li>
+</ul>
+<p>We match \(\psi\) and \(\psi'\) at both interfaces. The algebra is direct — four continuity conditions and four unknowns — and the result is exact:</p>
+<p>\[T_\text{exact} = \left[1 + \frac{V_0^2\sinh^2(\kappa L)}{4E(V_0 - E)}\right]^{-1}. \tag{6.9}\]</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-04.svg" alt="Transmission T on a log scale versus E/V₀: the exact curve and the WKB estimate nearly coincide below the barrier, and T approaches 1 with resonances above it." loading="lazy" /><figcaption>Figure 6.4 — Barrier transmission on a logarithmic scale, for an electron through a \(V_0 = 5\) eV, \(L = 5\) Å barrier. Below the barrier \(T\) is exponentially small; the WKB estimate (amber) tracks the exact curve (blue), missing only a smooth prefactor of order one. Above the barrier \(T \to 1\), with resonances wherever the barrier width fits a whole number of half-wavelengths.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=06-tunneling-barrier.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/06-tunneling-barrier.html" title="Interactive simulation: Tunneling barrier" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Tunneling barrier. If the embedded widget does not load, open <a href="simulations/06-tunneling-barrier.html" target="_blank" rel="noopener">simulations/06-tunneling-barrier.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=06-tunneling-barrier.html -->
+<p>Everything we want is contained in this single formula. The dependence on barrier height \(V_0\), barrier width \(L\), and particle energy \(E\) is all there, exact and without approximation. Let us read off what it tells us.</p>
+<p>For a thick barrier (\(\kappa L \gg 1\)), \(\sinh(\kappa L) \approx e^{\kappa L}/2\), and the denominator is dominated by the exponential:</p>
+<p>\[T_\text{exact} \approx \frac{16E(V_0 - E)}{V_0^2}\,e^{-2\kappa L}. \tag{6.10}\]</p>
+<p>The <strong>WKB approximation</strong> — a standard semiclassical estimate that keeps only the exponential decay of the wave across the barrier — gives \(T_\text{WKB} = e^{-2\kappa L}\). The ratio is \(16E(V_0-E)/V_0^2\), a smooth prefactor of order unity when \(E\) lies well below \(V_0\). WKB captures the exponential suppression exactly and misses only the prefactor. For most purposes, the exponential is all that matters.</p>
+<p>And that exponential is striking. \(T \propto e^{-2\kappa L}\). Doubling the barrier width squares \(e^{-2\kappa L}\), so the transmission collapses. A scanning tunneling microscope makes direct use of this fact: a single extra ångström of gap between tip and surface changes the tunneling current by a factor of \(e^{2\kappa} \approx 7\) to \(10\), depending on the material. That decade of sensitivity per ångström is what makes atomic-resolution imaging possible. The instrument is a tunneling-current meter, and the current functions as an exponential ruler.</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-05.svg" alt="STM schematic: a sharp tip hovering a gap d above a metal surface, with the wave function decaying exponentially across the gap." loading="lazy" /><figcaption>Figure 6.5 — The scanning tunneling microscope as an exponential ruler. The wave function decays exponentially across the gap \(d\) between tip and surface, so the tunneling current depends exponentially on \(d\): one extra ångström changes the current by a factor of about 7 to 10. That sensitivity is what turns the tunneling current into an atomic-scale ruler.</figcaption></figure>
+<p><strong>Above the barrier</strong> (\(E > V_0\)): now \(\kappa\) becomes imaginary. We let \(k_2 = \sqrt{2m(E-V_0)}/\hbar\), so \(\kappa = ik_2\) and \(\sinh(i\theta) = i\sin\theta\). The formula becomes:</p>
+<p>\[T_\text{exact} = \left[1 + \frac{V_0^2\sin^2(k_2 L)}{4E(E - V_0)}\right]^{-1}. \tag{6.11}\]</p>
+<p>Now \(T = 1\) whenever \(\sin(k_2 L) = 0\), that is, when \(k_2 L = n\pi\). The barrier becomes perfectly transparent when its width is exactly an integer number of half-wavelengths at the energy inside the barrier. The wave fits the barrier, constructive interference takes over, and the particle passes as though the barrier were not there. These are <strong>resonances</strong>, and they are the quantum counterpart of anti-reflection coatings in optics or of a Fabry-Pérot cavity tuned to resonance. Between resonances, \(T < 1\) even with \(E > V_0\): the particle has plenty of energy and still reflects in part.</p>
+<hr>
+<h2>6.4 Worked Example — Electron Tunneling Through a 5 Å Barrier</h2>
+<p>An electron (\(m_e = 9.109 \times 10^{-31}\) kg) with kinetic energy \(E = 1\) eV hits a rectangular barrier of height \(V_0 = 5\) eV and width \(L = 5\) Å. What is \(T\)?</p>
+<p>First, \(\kappa\):</p>
+<p>\[\kappa = \frac{\sqrt{2m_e(V_0 - E)}}{\hbar} = \frac{\sqrt{2 \times 9.109\times10^{-31} \times 4 \times 1.602\times10^{-19}}}{1.055\times10^{-34}} \approx 1.025\times10^{10}\ \text{m}^{-1} = 1.025\ \text{Å}^{-1}. \tag{6.12}\]</p>
+<p>Then \(\kappa L = 1.025 \times 5 = 5.125\). Since \(\kappa L \gg 1\), the thick-barrier limit applies.</p>
+<p>\(\sinh(5.125) = (e^{5.125} - e^{-5.125})/2 \approx (168.2 - 0.006)/2 \approx 84.1.\)</p>
+<p>Plugging into the exact formula:</p>
+<p>\[T_\text{exact} = \left[1 + \frac{25 \times (84.1)^2}{4 \times 1 \times 4}\right]^{-1} = \left[1 + 11052\right]^{-1} \approx 9.1\times10^{-5}. \tag{6.13}\]</p>
+<p>WKB gives \(T_\text{WKB} = e^{-10.25} \approx 3.5\times10^{-5}\).</p>
+<p>The ratio: \(T_\text{exact}/T_\text{WKB} \approx 2.56\). The prefactor \(16E(V_0-E)/V_0^2 = 16\times1\times4/25 = 2.56\). Agreement exact, as it must be. \(\checkmark\)</p>
+<p>Now consider the physical meaning. The transmission is around \(10^{-4}\) — tiny, but not zero. If the barrier were 10 Å wide instead of 5, \(\kappa L\) would double to 10.25, and \(T_\text{WKB}\) would drop to \(e^{-20.5} \approx 1.25\times10^{-9}\), four more orders of magnitude lower. The exponential gives no quarter. This is why, in tunneling calculations, the barrier width matters more than almost any other quantity.</p>
+<hr>
+<h2>6.5 Why There Is No Energy Debt</h2>
+<p>A common pop-science account of tunneling goes like this: “The particle borrows energy from the vacuum — allowed by the time-energy uncertainty principle — crosses the barrier before the debt is called in, and repays it on the other side.” This account is incorrect, and it is worth being clear about exactly why.</p>
+<p>The uncertainty relation \(\Delta E\,\Delta t \geq \hbar/2\) does not license borrowing energy for a time \(\Delta t\). That is not what the relation says. Energy is conserved at every instant inside the barrier, and the particle’s total energy stays \(E\) throughout — in region I, inside the barrier, and in region III alike. The wave function inside the barrier, \(Ce^{\kappa x} + De^{-\kappa x}\), is a perfectly valid solution of the time-independent Schrödinger equation for a particle of energy \(E\) in a region where \(V = V_0 > E\). The function is real and decaying rather than oscillatory, but it is the correct solution. There is no negative kinetic energy, no energy overdraft, and no repayment schedule.</p>
+<p>What actually happens is both simpler and stranger than the borrowing story. The wave equation requires nonzero amplitude in the classically forbidden region, and when the barrier is finite, that amplitude reaches the far side and launches a transmitted wave. The transmitted amplitude is small because the decaying exponential has reduced it across the width \(L\). That is the whole story. The particle borrows nothing. It passes through because the mathematics of partial differential equations has no concept of “classically forbidden.”</p>
+<figure class="qm-figure"><img src="images/06-finite-wells-steps-and-barriers-fig-06.svg" alt="Energy diagram: the total energy E is a flat dashed line at the same height everywhere; the barrier V₀ rises above it; ψ oscillates, decays across the barrier, then oscillates with smaller amplitude." loading="lazy" /><figcaption>Figure 6.6 — Energy diagram for the rectangular barrier. The total energy \(E\) (dashed) is the same flat value everywhere — before, inside, and beyond the barrier. The barrier \(V_0\) rises above \(E\). The wave function is oscillatory in region I, decays across the barrier (region II), and oscillates with reduced amplitude in region III. Nothing is borrowed; only the character of the solution changes.</figcaption></figure>
+<hr>
+<h2>Looking Ahead</h2>
+<p>The next chapter, <strong>Chapter 7 — Operators and Uncertainty</strong>, recasts every observable as a Hermitian operator, finds that position and momentum refuse to commute, and derives the uncertainty principle as a theorem about quantum states rather than a statement about clumsy measurement.</p>
+<hr>
+<h2>Interactive Simulations</h2>
+<p>These companion simulations run in the browser and accompany this chapter online.</p>
+<ul>
+<li><a href="simulations/06-tunneling-barrier.html" target="_blank" rel="noopener">Tunneling barrier</a> — set E, V0 and width; integrate the exact wave function across the barrier and compare T_exact with the WKB estimate.</li>
+<li><a href="simulations/06-finite-well-bound-states.html" target="_blank" rel="noopener">Finite-well bound states</a> — slide the well-depth parameter and watch the graphical-solution crossings and the bound-state count.</li>
+<li><a href="simulations/06-step-reflection.html" target="_blank" rel="noopener">Step reflection</a> — vary E/V0 to see reflection, transmission and the evanescent tail at a potential step.</li>
+</ul>
+<hr>
+<h2>Exercises</h2>
+<p><strong>Warm-up</strong></p>
+<ol>
+<li>
+<p><em>[Transcendental matching, graphical counting]</em> A particle of mass \(m\) is in a finite square well of width \(L\) and depth \(V_0\). (a) Show that the even-parity matching condition can be written \(\sqrt{z_0^2 - z^2} = z\tan z\). (b) Sketch both sides for \(z_0 = 3\pi/2\) and count the even-parity bound states. © How many total bound states (even + odd) exist for this \(z_0\)?
+<em>What this tests: reading bound-state count from the graphical solution without solving transcendental equations numerically.</em></p>
+</li>
+<li>
+<p>[\(R + T = 1\) <em>from probability current]</em> For the potential step at \(E > V_0\): (a) verify \(R + T = 1\) algebraically; (b) explain in one sentence why \(T \neq |C/A|^2\); © compute \(R\) when \(E = 2V_0\).
+<em>What this tests: keeping probability current accounting straight, and recognizing that amplitude ratios are not transmission coefficients.</em></p>
+</li>
+<li>
+<p><em>[Evanescent penetration depth]</em> A particle with \(E = 2\) eV hits a step with \(V_0 = 5\) eV, \(m = m_e\). (a) Compute \(1/\kappa\) in nm. (b) By what factor does \(|\psi|^2\) drop at \(x = 1/\kappa\)? At \(x = 2/\kappa\)?
+<em>What this tests: quantifying how rapidly the evanescent tail decays and building intuition for penetration depth as a physical length.</em></p>
+</li>
+</ol>
+<p><strong>Application</strong></p>
+<ol start="4">
+<li>
+<p><em>[Exact barrier transmission, numerical]</em> An electron with \(E = 3\) eV hits a barrier with \(V_0 = 6\) eV and \(L = 3\) Å. (a) Compute \(\kappa\) in \(\text{Å}^{-1}\). (b) Compute \(T_\text{exact}\) from the exact transmission formula, equation (6.9). © Compute \(T_\text{WKB}\). (d) Find the ratio and compare to \(16E(V_0-E)/V_0^2\).
+<em>What this tests: numerical fluency with the exact tunneling formula and verifying where WKB is accurate.</em></p>
+</li>
+<li>
+<p><em>[Resonance condition above the barrier]</em> For \(V_0 = 2\) eV, \(L = 1\) nm, find the two lowest energies above \(V_0\) at which \(T = 1\). Then find the minimum value of \(T\) between the first and second resonances.
+<em>What this tests: applying the above-barrier formula and locating resonances as a condition on</em> \(k_2 L\).</p>
+</li>
+<li>
+<p><em>[STM physics, exponential sensitivity]</em> An STM tip is held 4 Å above platinum (\(\phi \approx 5.7\) eV). (a) Compute \(\kappa\) in \(\text{Å}^{-1}\). (b) Find the ratio of tunneling current at 4 Å vs. 5 Å. © By what factor does current change over a 2 Å surface step? (d) Explain in one sentence why this sensitivity enables atomic-resolution imaging.
+<em>What this tests: connecting the tunneling formula to a real instrument and appreciating what exponential transduction means in practice.</em></p>
+</li>
+</ol>
+<p><strong>Synthesis</strong></p>
+<ol start="7">
+<li>
+<p><em>[Finite well applied to nuclear physics]</em> The deuteron can be modeled as a finite square well with \(V_0 \approx 35\) MeV, \(L \approx 2.1\) fm, reduced mass \(\mu \approx m_p/2\). (a) Compute \(z_0\) using \(\hbar c \approx 197\) MeV·fm. (b) How many even-parity bound states does this well support? © The deuteron has only one bound state. Is this consistent? What does it say about deuteron excited states? (A caveat for the curious: the real deuteron is a three-dimensional s-wave problem, which maps onto the odd-parity states of a 1D well; unlike the 1D well, a 3D well must be deeper than a minimum depth to bind at all, and the deuteron is in fact only barely bound.)
+<em>What this tests: applying the graphical bound-state formalism to a real physical system and cross-checking against experimental fact.</em></p>
+</li>
+<li>
+<p><em>[Probability current as physical constraint]</em> Suppose someone proposes \(\psi_{II} = Ce^{\kappa x}\) only (growing exponential) in the barrier region of the step. (a) Compute \(J_{II}\). (b) Is \(R + T = 1\) satisfied? © Why is this solution inadmissible?
+<em>What this tests: using boundary conditions and current conservation to reject unphysical solutions rather than accepting any function that solves the TISE locally.</em></p>
+</li>
+</ol>
+<p><strong>Challenge</strong></p>
+<ol start="9">
+<li><em>[Resonances as anti-reflection coatings]</em> The above-barrier resonance condition \(k_2 L = n\pi\) is structurally identical to the condition for a thin-film anti-reflection coating in optics (\(n_\text{film} t = \lambda/4\) per layer). (a) Identify the optical analogue of each quantum quantity (\(k_2\), \(L\), \(V_0\), \(E\)). (b) In a Fabry-Pérot cavity, resonances occur when the round-trip phase is \(2\pi n\). Show that the quantum resonance condition has the same origin. © Suppose a “double barrier” potential has two rectangular barriers separated by a well. Predict qualitatively where resonances occur and explain the concept of a resonant tunneling diode.
+<em>What this tests: transferring the resonance concept across physical contexts and beginning to think about devices built on controlled tunneling.</em></li>
+</ol>
+<hr>
+<h2>References</h2>
+<p>Griffiths, D. J., &amp; Schroeter, D. F. (2018). <em>Introduction to Quantum Mechanics</em> (3rd ed.). Cambridge University Press. §2.5–2.6 (finite well), §2.7 (scattering, step, barrier).</p>
+<p>Gamow, G. (1928). Zur Quantentheorie des Atomkernes. <em>Zeitschrift für Physik</em>, 51, 204.</p>
+<p>Gurney, R. W., &amp; Condon, E. U. (1928). Wave mechanics and radioactive disintegration. <em>Nature</em>, 122, 439; and <em>Physical Review</em>, 33, 127 (1929).</p>
+<p>Binnig, G., &amp; Rohrer, H. (1982). Scanning tunneling microscopy. <em>Physical Review Letters</em>, 49, 57.</p>
+<p>Eckle, P. et al. (2008). Attosecond ionization and tunneling delay time measurements in helium. <em>Science</em>, 322, 1525.</p>
+<p>Sainadh, U. S. et al. (2019). Attosecond angular streaking and tunnelling time in atomic hydrogen. <em>Nature</em>, 568, 75.</p>
+<p>PhysicsLibreTexts: “3.4 — Finite Square Well,” UCD Physics 9HE. <a href="https://phys.libretexts.org/Courses/University_of_California_Davis/UCD:_Physics_9HE_-_Modern_Physics/03:_One-Dimensional_Potentials/3.4:_Finite_Square_Well">https://phys.libretexts.org/Courses/University_of_California_Davis/UCD:_Physics_9HE_-_Modern_Physics/03:_One-Dimensional_Potentials/3.4:_Finite_Square_Well</a></p>
+
+</article>
+</body>
+</html>

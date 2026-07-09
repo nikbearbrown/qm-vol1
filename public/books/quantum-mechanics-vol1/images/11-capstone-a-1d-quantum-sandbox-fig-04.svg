@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 11-capstone-a-1d-quantum-sandbox-fig-04.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 11-capstone-a-1d-quantum-sandbox
+  Figure: 04 — Eigensolver Validation against the Infinite Square Well
+  Generated: 2026-06-24  (validation scatter; label/spacing de-overlapped 2026-06-24b)
+  Source: pantry/11-capstone-a-1d-quantum-sandbox-cajal.md
+-->
+<svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0" role="img" aria-labelledby="ft-04">
+  <title id="ft-04">Validation of the eigensolver: numerical eigenvalue ratios E_n/E_1 lie on the analytic n-squared parabola for the infinite square well.</title>
+  <desc>A plot of E_n/E_1 versus quantum number n. A solid blue curve is the analytic n-squared parabola; five filled vermillion circles are the numerical ratios for n=1..5, all on the curve. A 1 percent tolerance bracket (drawn 4x for visibility) sits above the n=5 point.</desc>
+  <metadata><cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="11-capstone-a-1d-quantum-sandbox" figure-number="04"
+      figure-title="Eigensolver Validation against the Infinite Square Well" figure-type="chart"
+      author="Humanitarians AI Incorporated" date-generated="2026-06-24"
+      source-file="pantry/11-capstone-a-1d-quantum-sandbox-cajal.md"/></metadata>
+  <rect width="700" height="480" fill="#FFFFFF"/>
+  <text x="350" y="32" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">Eigensolver validation: Eₙ/E₁ vs the analytic n²</text>
+  <rect x="96" y="76" width="540" height="296" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <line x1="96" y1="372.0" x2="636" y2="372.0" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="376.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">0</text>
+  <line x1="96" y1="317.2" x2="636" y2="317.2" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="321.2" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">5</text>
+  <line x1="96" y1="262.4" x2="636" y2="262.4" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="266.4" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">10</text>
+  <line x1="96" y1="207.6" x2="636" y2="207.6" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="211.6" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">15</text>
+  <line x1="96" y1="152.7" x2="636" y2="152.7" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="156.7" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">20</text>
+  <line x1="96" y1="97.9" x2="636" y2="97.9" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="88" y="101.9" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">25</text>
+  <line x1="192.4" y1="372" x2="192.4" y2="377" stroke="#545454" stroke-width="0.75"/>
+  <text x="192.4" y="392" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="middle">1</text>
+  <line x1="288.9" y1="372" x2="288.9" y2="377" stroke="#545454" stroke-width="0.75"/>
+  <text x="288.9" y="392" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="middle">2</text>
+  <line x1="385.3" y1="372" x2="385.3" y2="377" stroke="#545454" stroke-width="0.75"/>
+  <text x="385.3" y="392" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="middle">3</text>
+  <line x1="481.7" y1="372" x2="481.7" y2="377" stroke="#545454" stroke-width="0.75"/>
+  <text x="481.7" y="392" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="middle">4</text>
+  <line x1="578.1" y1="372" x2="578.1" y2="377" stroke="#545454" stroke-width="0.75"/>
+  <text x="578.1" y="392" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="middle">5</text>
+  <line x1="96" y1="372" x2="636" y2="372" stroke="#2a1a0e" stroke-width="0.75"/>
+  <line x1="96" y1="76" x2="96" y2="372" stroke="#2a1a0e" stroke-width="0.75"/>
+  <text x="366" y="412" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#545454" text-anchor="middle">quantum number n</text>
+  <text x="40" y="224" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#545454" text-anchor="middle" transform="rotate(-90,40,224)">Eₙ / E₁</text>
+  <polyline points="96.0,372.0 105.6,371.9 115.3,371.6 124.9,371.0 134.6,370.2 144.2,369.3 153.9,368.1 163.5,366.6 173.1,365.0 182.8,363.1 192.4,361.0 202.1,358.7 211.7,356.2 221.4,353.5 231.0,350.5 240.6,347.3 250.3,343.9 259.9,340.3 269.6,336.5 279.2,332.4 288.9,328.1 298.5,323.7 308.1,318.9 317.8,314.0 327.4,308.9 337.1,303.5 346.7,297.9 356.4,292.1 366.0,286.1 375.6,279.8 385.3,273.3 394.9,266.6 404.6,259.7 414.2,252.6 423.9,245.3 433.5,237.7 443.1,229.9 452.8,221.9 462.4,213.7 472.1,205.3 481.7,196.6 491.4,187.7 501.0,178.6 510.6,169.3 520.3,159.8 529.9,150.0 539.6,140.0 549.2,129.8 558.9,119.4 568.5,108.8 578.1,97.9 587.8,86.9 597.4,75.6 607.1,64.1" fill="none" stroke="#0072B2" stroke-width="2.5"/>
+  <line x1="578.1" y1="87.0" x2="578.1" y2="108.9" stroke="#BF7400" stroke-width="1.5"/>
+  <line x1="573.1" y1="87.0" x2="583.1" y2="87.0" stroke="#BF7400" stroke-width="1.5"/>
+  <line x1="573.1" y1="108.9" x2="583.1" y2="108.9" stroke="#BF7400" stroke-width="1.5"/>
+  <text x="562" y="100" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#BF7400" text-anchor="end">±1% (×4)</text>
+  <circle cx="192.4" cy="361.0" r="5.5" fill="#D55E00"/>
+  <circle cx="288.9" cy="328.1" r="5.5" fill="#D55E00"/>
+  <circle cx="385.3" cy="273.3" r="5.5" fill="#D55E00"/>
+  <circle cx="481.7" cy="196.6" r="5.5" fill="#D55E00"/>
+  <circle cx="578.1" cy="97.9" r="5.5" fill="#D55E00"/>
+  <line x1="132" y1="96" x2="158" y2="96" stroke="#0072B2" stroke-width="2.5"/><text x="166" y="100" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">analytic  Eₙ/E₁ = n²</text>
+  <circle cx="145" cy="118" r="5.5" fill="#D55E00"/><text x="166" y="122" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">numerical (N = 500 grid)</text>
+  <text x="350" y="464" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">Numerical ratios fall on the n² curve: E₅/E₁ = 24.998 vs 25 (−0.01%), well inside the 1% target.</text>
+</svg>

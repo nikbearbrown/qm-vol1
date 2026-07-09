@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction</title>
+<meta name="description" content="In 1989, a team at Hitachi's research laboratory led by Akira Tonomura aimed a beam of electrons at a detector, with an electron biprism — the electron-optics equivalent of a" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Introduction</h1>
+<p>In 1989, a team at Hitachi’s research laboratory led by Akira Tonomura aimed a beam of electrons at a detector, with an electron biprism — the electron-optics equivalent of a double slit — in between. They turned the beam intensity down so low that only one electron was in flight at a time. Each electron arrived as a single bright dot at one definite spot on the screen. A dot is what a particle does. Then they let the experiment run. Ten electrons: scattered dots, no pattern. A few hundred: still noise. Seventy thousand electrons later, the dots had organized themselves into clean, alternating stripes — an interference pattern, which is what a wave does. No electron interacted with any other electron. Each one, alone, somehow carried the wave pattern inside its own statistics. If your picture of the world is built from billiard balls and water waves, that video is a direct assault on it, and you can watch it today, frame by frame.</p>
+<p>The aim of this book is to make that strangeness comprehensible — to take the experiments that forced quantum mechanics into existence, and the mathematics that resolved them, and develop both carefully enough that the theory becomes something you can reason about and check for yourself, rather than a stack of equations to be trusted.</p>
+<p>The conviction behind the book is that quantum mechanics cannot be learned by recognition — by reading a derivation and nodding along. It has to be learned by doing, because its results are precisely the ones ordinary intuition votes against. So the book is built to be worked rather than watched: every important result is derived in full, you are expected to reproduce the steps, and the habits a physicist relies on to trust a result — checking limiting cases, confirming that a probability stays normalized, testing a hard answer against an easy special case — are treated as part of the physics rather than an afterthought.</p>
+<p>If you are a sophomore or junior who has finished introductory mechanics and waves, knows single-variable calculus, has met ordinary differential equations and complex numbers at least once, and is now facing a first real course in quantum mechanics — this book was written for you. It works equally well for the self-learner with no course at all, which is part of the point of the series it opens.</p>
+<p>What this book is: a complete first course in one-dimensional quantum mechanics — from the experimental wreckage of classical physics, through the wave function, the Schrödinger equation, the canonical solvable systems, operators and uncertainty, to a first encounter with measurement and the qubit. Each chapter develops its physics through standard derivations and worked examples, and closes with problems to work by hand. A chapter is roughly a week of a standard course.</p>
+<p>What this book is not: it is not a course in the formal machinery of quantum mechanics. Hilbert space, Dirac notation, the spectral theorem, three-dimensional problems, angular momentum, spin, and the hydrogen atom belong to later volumes of this series, and we resist the temptation to smuggle them in early. Nor does it pause to teach mathematics from scratch: when a gap opens between your calculus and what a derivation needs, Volume 5 of the series, <em>Math for Quantum Physics</em>, carries just-in-time support indexed to each chapter here.</p>
+<p>One concept recurs so often that you should start watching for it now: <strong>the wave function is the complete description of a quantum system, and yet you never observe it directly — only \(|\psi|^2\), the probability density, ever touches an experiment.</strong> Nearly every conceptual knot in this book — normalization, superposition, why \(\psi\) must be complex, what measurement does, what the qubit is — unties into some version of that one strange arrangement between the mathematics and the world.</p>
+<p>One thread runs quietly beneath the analytic development and surfaces fully only at the end. The solvable systems built along the way — wave packets, wells, barriers, the oscillator, measurement statistics — are exactly the pieces that Chapter 10 assembles into a single configurable solver for the one-dimensional Schrödinger equation, one that reproduces every spectrum derived in the book. That capstone is optional: a reader who stops at Chapter 9 has had a complete analytic course. But it is where the separate results are revealed to be one machine, checked against the exact answers you already hold.</p>
+<p><strong>How this book is organized.</strong> The ten chapters fall into three movements.</p>
+<p><em>Movement I — The world forces the issue (Chapters 1–3).</em> Chapter 1, <strong>How Classical Physics Failed, Leading to the Birth of the Quantum</strong>, shows exactly which experiment broke which classical assumption, and why Planck’s quantum was a desperate remedy rather than a bold guess. Chapter 2, <strong>Matter Waves: de Broglie, Davisson–Germer, and the Double Slit</strong>, reverses Einstein’s relation to give every particle a wavelength and confirms it with an accidental nickel crystal. Chapter 3, <strong>The Wave Function and the Schrödinger Equation</strong>, establishes what \(\psi\) means, why it must be complex, and how a probability density differs from a probability, then introduces the equation of motion that evolves \(\psi\) and the stationary states it singles out.</p>
+<p><em>Movement II — Free motion, confinement, and tunneling (Chapters 4–6).</em> Chapter 4, <strong>The Free Particle and Wave Packets</strong>, confronts the plane wave that cannot be normalized and builds the localized packet that can, complete with group velocity and spreading. Chapter 5, <strong>Bound States and Energy Spectra</strong>, traps a particle between impenetrable walls and derives energy quantization from nothing but confinement and boundary conditions. Chapter 6, <strong>Reflection, Transmission and Tunneling</strong>, lowers the walls and turns to scattering — partial reflection, evanescent penetration, and tunneling, from molecular inversion to alpha decay.</p>
+<p><em>Movement III — Operators, the oscillator, measurement, and the build (Chapters 7–10).</em> Chapter 7, <strong>Operators and Uncertainty</strong>, makes observables into Hermitian operators and derives the uncertainty principle as a theorem about states, not a statement about clumsy apparatus. Chapter 8, <strong>The Quantum Harmonic Oscillator</strong>, solves the most important potential in physics with the ladder-operator method just developed, building a spectrum of equally spaced levels, and explains why every stable equilibrium reduces to it. Chapter 9, <strong>Measurement, Superposition, and the Qubit</strong>, states the measurement postulate precisely and applies it to the two-level systems that power quantum computing. Chapter 10, <strong>Capstone: Building and Verifying a Schrödinger Solver</strong>, assembles everything into a general numerical solver and — the real lesson — validates it against the exact results you derived along the way.</p>
+<p><strong>How to read this book.</strong> In order. The chapters build, and Movement II leans hard on Movement I’s vocabulary. If you are reviewing rather than learning fresh, Chapters 1–2 can be skimmed and Chapter 10 deferred — though it is where the book pays off. Each chapter closes with worked problems and exercises; do them with pencil first, for the reason the short note below explains.</p>
+<h2>A Note on Using AI</h2>
+<p>You will have access to language models that can solve every standard problem in this book in seconds, and that is as much a hazard as a convenience. Learning happens during the struggle — the time spent stuck, when the integral will not come out or the boundary conditions contradict each other — and handing a problem to a machine before attempting it skips precisely the part that produces understanding. So the rule is simple. Attempt every problem honestly by hand first. Afterward a model is a useful colleague: ask it to find the error in <em>your</em> work, to give a second derivation of a result you already have, or to check what happens as \(\hbar \to 0\) or \(V_0 \to \infty\). But it is never an oracle. Language models produce confident errors — wrong signs, dropped factors of two, normalization constants quietly fudged — so treat every formula one hands you as a claim to be checked against a case you already trust, not a fact.</p>
+<p>Go back to the Hitachi laboratory for a moment. Seventy thousand electrons, one at a time, each arriving as a single dot, together painting a wave. By the end of this book you will be able to derive that pattern and predict the spacing of its fringes — and, if you take up the capstone, simulate it and check the simulation against your own prediction. The strangest experimental result of the twentieth century will be something you can work out rather than something you must believe. That is the offer of this book. Turn to Chapter 1, where the trouble starts with a glowing piece of iron.</p>
+<p>Tags: quantum mechanics, introductory quantum mechanics, wave function, Schrödinger equation, energy quantization, quantum tunneling, harmonic oscillator, uncertainty principle, qubit, measurement, undergraduate physics, self-study physics</p>
+
+</article>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 10-measurement-and-the-qubit-fig-03.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 10-measurement-and-the-qubit
+  Figure: 03 - The Bloch Sphere
+  Generated: 2026-06-06  (geometry regenerated 2026-06-23: poles corrected, |0> north; labels de-overlapped)
+  Source: pantry/10-measurement-and-the-qubit-cajal.md
+-->
+<svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-10-03">
+  <title id="fig-title-10-03">Bloch sphere representation of a qubit state with polar angle theta and azimuthal angle phi</title>
+  <desc>Unit sphere in orthographic projection. The vertical z-axis carries the north pole |0&#10217; (green, sigma-z = +1) at the top and the south pole |1&#10217; (red, sigma-z = -1) at the bottom. Four equatorial eigenstates are marked as amber diamonds. A blue state vector points at polar angle theta from the north pole and azimuthal angle phi around the equator, with dashed arcs marking both angles.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="10-measurement-and-the-qubit" figure-number="03"
+      figure-title="The Bloch Sphere" figure-slug="bloch-sphere" figure-type="diagram"
+      priority="Critical" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/10-measurement-and-the-qubit-cajal.md"/>
+  </metadata>
+  <defs>
+    <marker id="arr-10-03" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0072B2"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="450" fill="#FFFFFF"/>
+
+  <circle cx="350" cy="222" r="160" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+
+  <polyline points="190.1,220.1 190.6,217.2 191.6,214.4 192.9,211.6 194.8,208.8 197.0,206.0 199.6,203.3 202.7,200.6 206.2,198.0 210.1,195.5 214.3,193.0 218.9,190.6 223.9,188.3 229.2,186.1 234.9,184.0 240.9,182.0 247.2,180.1 253.7,178.3 260.5,176.6 267.6,175.1 274.9,173.7 282.4,172.4 290.1,171.3 297.9,170.3 305.9,169.4 314.0,168.7 322.2,168.1 330.5,167.7 338.8,167.4 347.2,167.3 355.6,167.3 363.9,167.5 372.3,167.8 380.5,168.3 388.7,168.9 396.8,169.7 404.7,170.6 412.5,171.6 420.1,172.8 427.6,174.1 434.8,175.6 441.8,177.2 448.5,178.9 455.0,180.7 461.1,182.6 467.0,184.7 472.6,186.8 477.8,189.1 482.6,191.4 487.1,193.8 491.3,196.3 495.0,198.9 498.3,201.5 501.3,204.2 503.8,206.9 505.9,209.7 507.6,212.5 508.8,215.3 509.6,218.2 510.0,221.0" fill="none" stroke="#BBBBBB" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <polyline points="493.8,246.0 489.9,248.5 485.7,251.0 481.1,253.4 476.1,255.7 470.8,257.9 465.1,260.0 459.1,262.0 452.8,263.9 446.3,265.7 439.5,267.4 432.4,268.9 425.1,270.3 417.6,271.6 409.9,272.7 402.1,273.7 394.1,274.6 386.0,275.3 377.8,275.9 369.5,276.3 361.2,276.6 352.8,276.7 344.4,276.7 336.1,276.5 327.7,276.2 319.5,275.7 311.3,275.1 303.2,274.3 295.3,273.4 287.5,272.4 279.9,271.2 272.4,269.9 265.2,268.4 258.2,266.8 251.5,265.1 245.0,263.3 238.9,261.4 233.0,259.3 227.4,257.2 222.2,254.9 217.4,252.6 212.9,250.2 208.7,247.7 205.0,245.1 201.7,242.5 198.7,239.8 196.2,237.1 194.1,234.3 192.4,231.5 191.2,228.7 190.4,225.8 190.0,223.0" fill="none" stroke="#888888" stroke-width="1"/>
+  <polyline points="509.9,223.9 509.4,226.8 508.4,229.6 507.1,232.4 505.2,235.2 503.0,238.0 500.4,240.7 497.3,243.4 493.8,246.0" fill="none" stroke="#888888" stroke-width="1"/>
+
+  <line x1="350" y1="222" x2="206.2" y2="198.0" stroke="#999999" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <line x1="350" y1="222" x2="420.1" y2="172.8" stroke="#999999" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <line x1="350" y1="222" x2="350" y2="372.4" stroke="#999999" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <line x1="350" y1="222" x2="493.8" y2="246.0" stroke="#888888" stroke-width="1"/>
+  <line x1="350" y1="222" x2="279.9" y2="271.2" stroke="#888888" stroke-width="1"/>
+  <line x1="350" y1="222" x2="350" y2="71.6" stroke="#2a1a0e" stroke-width="1"/>
+
+  <line x1="350" y1="222" x2="427.6" y2="269.9" stroke="#CC79A7" stroke-width="0.75" stroke-dasharray="3 2"/>
+  <line x1="413.5" y1="175.0" x2="427.6" y2="269.9" stroke="#999999" stroke-width="0.75" stroke-dasharray="3 2"/>
+
+  <polyline points="493.8,246.0 487.1,250.2 479.4,254.2 470.8,257.9 461.1,261.4 450.7,264.5 439.5,267.4 427.6,269.9" fill="none" stroke="#CC79A7" stroke-width="1.5"/>
+  <polyline points="350.0,71.6 356.8,76.4 363.5,82.2 370.1,89.2 376.5,97.1 382.8,106.0 388.8,115.7 394.5,126.3 399.9,137.6 404.8,149.5 409.4,162.0 413.5,175.0" fill="none" stroke="#0072B2" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <line x1="350" y1="222" x2="413.5" y2="175.0" stroke="#0072B2" stroke-width="2.5" marker-end="url(#arr-10-03)"/>
+  <circle cx="413.5" cy="175.0" r="4.5" fill="#0072B2"/>
+
+  <polygon points="493.8,241.0 498.8,246.0 493.8,251.0 488.8,246.0" fill="#FFFFFF" stroke="#BF7400" stroke-width="1.75"/>
+  <polygon points="206.2,193.0 211.2,198.0 206.2,203.0 201.2,198.0" fill="#FFFFFF" stroke="#BF7400" stroke-width="1.5"/>
+  <polygon points="279.9,266.2 284.9,271.2 279.9,276.2 274.9,271.2" fill="#FFFFFF" stroke="#BF7400" stroke-width="1.75"/>
+  <polygon points="420.1,167.8 425.1,172.8 420.1,177.8 415.1,172.8" fill="#FFFFFF" stroke="#BF7400" stroke-width="1.5"/>
+
+  <circle cx="350" cy="71.6" r="6.5" fill="#009E73"/>
+  <circle cx="350" cy="372.4" r="6.5" fill="#D55E00"/>
+
+  <!-- Pole labels placed outside the sphere rim -->
+  <text x="350" y="54" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#009E73" text-anchor="middle">|0&#10217;</text>
+  <text x="350" y="406" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#D55E00" text-anchor="middle">|1&#10217;</text>
+  <text x="324" y="92" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#0072B2" text-anchor="end">z (&#963;z)</text>
+
+  <!-- Equatorial eigenstate labels, clear of the equator line -->
+  <text x="520" y="243" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#56B4E9" text-anchor="start">|+x&#10217;</text>
+  <text x="520" y="261" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#56B4E9" text-anchor="start">&#963;x</text>
+  <text x="246" y="296" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#CC79A7" text-anchor="end">|+y&#10217;</text>
+  <text x="246" y="312" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#CC79A7" text-anchor="end">&#963;y</text>
+
+  <!-- Angle labels offset from their arcs -->
+  <text x="402" y="108" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#0072B2">&#952;</text>
+  <text x="470" y="242" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#CC79A7">&#966;</text>
+
+  <text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">The Bloch sphere</text>
+
+  <text x="350" y="434" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">|&#968;&#10217; = cos(&#952;/2)|0&#10217; + e^(i&#966;) sin(&#952;/2)|1&#10217;  &#183;  |0&#10217; north (&#963;z = +1), |1&#10217; south (&#963;z = &#8722;1), equator = equal superpositions</text>
+</svg>

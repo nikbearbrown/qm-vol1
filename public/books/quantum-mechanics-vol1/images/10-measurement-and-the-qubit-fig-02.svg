@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 10-measurement-and-the-qubit-fig-02.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 10-measurement-and-the-qubit
+  Figure: 02 - Sequential Stern-Gerlach: Three Experimental Configurations
+  Generated: 2026-06-06
+  Source: pantry/10-measurement-and-the-qubit-cajal.md
+-->
+<svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-10-02">
+  <title id="fig-title-10-02">Sequential Stern-Gerlach experiments: three configurations showing Z-Z certainty, Z-X equal split, and Z-X-Z equal split</title>
+  <desc>Three stacked horizontal panels each showing a beam source, apparatus blocks, and output beams. Panel 1 (Z then Z): one thick output beam confirming collapse stability. Panel 2 (Z then X): two equal thin output beams showing 50/50 uncertainty. Panel 3 (Z then X then Z): three apparatus blocks, two equal thin output beams showing the X measurement erases Z information.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="10-measurement-and-the-qubit" figure-number="02"
+      figure-title="Sequential Stern-Gerlach: Three Experimental Configurations"
+      figure-slug="sequential-stern-gerlach" figure-type="comparison-panels"
+      priority="Critical" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/10-measurement-and-the-qubit-cajal.md"/>
+  </metadata>
+
+  <rect width="700" height="470" fill="#FFFFFF"/>
+
+  <text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">Sequential Stern&#8211;Gerlach: three configurations</text>
+
+  <rect x="32" y="48" width="636" height="116" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <circle cx="64" cy="100" r="10" fill="#545454"/>
+  <text x="64" y="138" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="middle">source</text>
+  <line x1="74" y1="100" x2="140" y2="100" stroke="#545454" stroke-width="1.5"/>
+  <rect x="140" y="78" width="72" height="44" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="176" y="106" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="17" fill="#0072B2" text-anchor="middle">Z</text>
+  <rect x="226" y="78" width="30" height="22" fill="#FFFFFF" stroke="#545454" stroke-width="0.75"/>
+  <rect x="226" y="100" width="30" height="18" fill="#D55E00"/>
+  <line x1="256" y1="89" x2="328" y2="89" stroke="#545454" stroke-width="1.5"/>
+  <rect x="328" y="67" width="72" height="44" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="364" y="95" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="17" fill="#0072B2" text-anchor="middle">Z</text>
+  <line x1="400" y1="89" x2="646" y2="89" stroke="#009E73" stroke-width="3.5"/>
+  <text x="560" y="80" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#009E73" text-anchor="middle">P = 1 (one spot)</text>
+  <text x="46" y="156" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">Z &#8594; Z: collapse is stable &#8212; the second Z is certain</text>
+
+  <rect x="32" y="178" width="636" height="116" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <circle cx="64" cy="230" r="10" fill="#545454"/>
+  <text x="64" y="268" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="middle">source</text>
+  <line x1="74" y1="230" x2="140" y2="230" stroke="#545454" stroke-width="1.5"/>
+  <rect x="140" y="208" width="72" height="44" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="176" y="236" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="17" fill="#0072B2" text-anchor="middle">Z</text>
+  <rect x="226" y="208" width="30" height="22" fill="#FFFFFF" stroke="#545454" stroke-width="0.75"/>
+  <rect x="226" y="230" width="30" height="18" fill="#D55E00"/>
+  <line x1="256" y1="219" x2="328" y2="219" stroke="#545454" stroke-width="1.5"/>
+  <rect x="328" y="197" width="72" height="44" fill="#FBE9CC" stroke="#BF7400" stroke-width="1.5"/>
+  <text x="364" y="225" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="17" fill="#BF7400" text-anchor="middle">X</text>
+  <line x1="400" y1="212" x2="646" y2="198" stroke="#BF7400" stroke-width="2"/>
+  <line x1="400" y1="226" x2="646" y2="240" stroke="#BF7400" stroke-width="2"/>
+  <text x="566" y="190" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#BF7400" text-anchor="middle">50 / 50</text>
+  <text x="46" y="286" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">Z &#8594; X: the Z-up beam is an equal X superposition &#8212; 50/50 split</text>
+
+  <rect x="32" y="308" width="636" height="138" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+  <circle cx="60" cy="372" r="10" fill="#545454"/>
+  <text x="60" y="410" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="middle">source</text>
+  <line x1="70" y1="372" x2="118" y2="372" stroke="#545454" stroke-width="1.5"/>
+  <rect x="118" y="350" width="64" height="44" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="150" y="378" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#0072B2" text-anchor="middle">Z</text>
+  <rect x="190" y="350" width="26" height="22" fill="#FFFFFF" stroke="#545454" stroke-width="0.75"/>
+  <rect x="190" y="372" width="26" height="18" fill="#D55E00"/>
+  <line x1="216" y1="361" x2="262" y2="361" stroke="#545454" stroke-width="1.5"/>
+  <rect x="262" y="339" width="64" height="44" fill="#FBE9CC" stroke="#BF7400" stroke-width="1.5"/>
+  <text x="294" y="367" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#BF7400" text-anchor="middle">X</text>
+  <rect x="334" y="339" width="26" height="22" fill="#FFFFFF" stroke="#545454" stroke-width="0.75"/>
+  <rect x="334" y="361" width="26" height="18" fill="#D55E00"/>
+  <line x1="360" y1="350" x2="406" y2="350" stroke="#545454" stroke-width="1.5"/>
+  <rect x="406" y="328" width="64" height="44" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="438" y="356" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#0072B2" text-anchor="middle">Z</text>
+  <line x1="470" y1="342" x2="646" y2="328" stroke="#BF7400" stroke-width="2"/>
+  <line x1="470" y1="356" x2="646" y2="370" stroke="#BF7400" stroke-width="2"/>
+  <text x="582" y="320" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#BF7400" text-anchor="middle">50 / 50 again</text>
+  <text x="46" y="432" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#2a1a0e">Z &#8594; X &#8594; Z: the middle X erases the Z certainty &#8212; final Z is random again</text>
+</svg>

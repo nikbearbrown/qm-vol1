@@ -1,0 +1,107 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 01-why-classical-physics-failed
+     Figure: 02 — Photoelectric Stopping Potential vs. Frequency
+     Type: line-chart (PQ)
+     Priority: Critical
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-06
+     Source: pantry/01-why-classical-physics-failed-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="fig-title-02">
+  <title id="fig-title-02">Photoelectric stopping potential versus frequency for three metals</title>
+  <desc>Three metals (Na, Al, Cu) each show a threshold frequency below which no electrons are emitted, then a linear rise in stopping potential with identical slope h/e, demonstrating that the slope is independent of the metal.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1"
+      chapter="01-why-classical-physics-failed"
+      figure-number="02"
+      figure-title="Photoelectric Stopping Potential vs. Frequency"
+      figure-slug="photoelectric-stopping-potential"
+      figure-type="line-chart"
+      priority="Critical"
+      author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/01-why-classical-physics-failed-cajal.md"/>
+  </metadata>
+
+  <defs>
+    <marker id="arrow-02" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <clipPath id="plot-clip-02">
+      <rect x="60" y="30" width="580" height="350"/>
+    </clipPath>
+  </defs>
+
+  <!-- Chart background -->
+  <rect x="60" y="30" width="580" height="350" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+
+  <!-- Pre-threshold flat segments (V=0 region, dashed, each metal) -->
+  <!-- Na: from left edge to threshold x=113.9 -->
+  <line x1="60" y1="380" x2="113.9" y2="380" stroke="#2a1a0e" stroke-width="1.2" stroke-dasharray="4 3" clip-path="url(#plot-clip-02)"/>
+  <!-- Al: from left edge to threshold x=208.7 -->
+  <line x1="60" y1="380" x2="208.7" y2="380" stroke="#787878" stroke-width="1.2" stroke-dasharray="4 3" clip-path="url(#plot-clip-02)"/>
+  <!-- Cu: from left edge to threshold x=240.4 -->
+  <line x1="60" y1="380" x2="240.4" y2="380" stroke="#ADADAD" stroke-width="1.2" stroke-dasharray="4 3" clip-path="url(#plot-clip-02)"/>
+
+  <!-- Post-threshold lines: V = (h/e)(nu - nu_threshold) -->
+  <!-- Na (threshold x=113.9, line to (399.6,30)) -->
+  <line x1="113.9" y1="380" x2="399.6" y2="30" stroke="#2a1a0e" stroke-width="2" clip-path="url(#plot-clip-02)"/>
+  <!-- Al (threshold x=208.7, line to (494.3,30)) -->
+  <line x1="208.7" y1="380" x2="494.3" y2="30" stroke="#787878" stroke-width="1.5" clip-path="url(#plot-clip-02)"/>
+  <!-- Cu (threshold x=240.4, line to (526.1,30)) -->
+  <line x1="240.4" y1="380" x2="526.1" y2="30" stroke="#ADADAD" stroke-width="1.5" clip-path="url(#plot-clip-02)"/>
+
+  <!-- Threshold tick marks on x-axis -->
+  <line x1="113.9" y1="376" x2="113.9" y2="384" stroke="#2a1a0e" stroke-width="1.2"/>
+  <line x1="208.7" y1="376" x2="208.7" y2="384" stroke="#787878" stroke-width="1.2"/>
+  <line x1="240.4" y1="376" x2="240.4" y2="384" stroke="#ADADAD" stroke-width="1.2"/>
+
+  <!-- Rise-over-run triangle on Na line -->
+  <!-- P1=(167.4,314.5), P2=(253.3,314.5), P3=(253.3,209.2) -->
+  <polygon points="167.4,314.5 253.3,314.5 253.3,209.2" fill="none" stroke="#C8860E" stroke-width="1"/>
+  <!-- Small right-angle mark at P2 -->
+  <polyline points="243.3,314.5 243.3,304.5 253.3,304.5" fill="none" stroke="#C8860E" stroke-width="0.8"/>
+
+  <!-- Axes -->
+  <line x1="60" y1="380" x2="648" y2="380" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-02)"/>
+  <line x1="60" y1="380" x2="60" y2="22" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-02)"/>
+
+  <!-- Y-axis tick marks and labels -->
+  <!-- V=1 at y=314.5, V=2 at y=249.1, V=3 at y=183.6, V=4 at y=118.2, V=5 at y=52.7 -->
+  <line x1="56" y1="314.5" x2="64" y2="314.5" stroke="#2a1a0e" stroke-width="0.8"/>
+  <line x1="56" y1="249.1" x2="64" y2="249.1" stroke="#2a1a0e" stroke-width="0.8"/>
+  <line x1="56" y1="183.6" x2="64" y2="183.6" stroke="#2a1a0e" stroke-width="0.8"/>
+  <line x1="56" y1="118.2" x2="64" y2="118.2" stroke="#2a1a0e" stroke-width="0.8"/>
+  <text x="53" y="318" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">1</text>
+  <text x="53" y="253" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">2</text>
+  <text x="53" y="187" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">3</text>
+  <text x="53" y="122" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">4</text>
+  <text x="53" y="383" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0</text>
+
+  <!-- Axis labels -->
+  <text x="22" y="205" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle" transform="rotate(-90,22,205)">Stopping potential V (volts)</text>
+  <text x="354" y="415" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle">Frequency →</text>
+
+  <!-- Figure title -->
+  <text x="350" y="18" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" font-weight="400" fill="#2a1a0e" text-anchor="middle">Stopping potential vs. frequency — photoelectric effect</text>
+
+  <!-- Metal labels -->
+  <text x="404" y="45" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#2a1a0e">Na</text>
+  <text x="498" y="45" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#787878">Al</text>
+  <text x="530" y="45" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#909090">Cu</text>
+
+  <!-- Threshold labels below x-axis -->
+  <text x="113.9" y="398" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">ν₀(Na)</text>
+  <text x="208.7" y="398" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">ν₀(Al)</text>
+  <text x="240.4" y="408" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454" text-anchor="middle">ν₀(Cu)</text>
+
+  <!-- Slope label -->
+  <text x="220" y="255" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#C8860E">slope = h/e</text>
+  <!-- Arrow from label to triangle -->
+  <line x1="220" y1="260" x2="215" y2="280" stroke="#C8860E" stroke-width="0.8" marker-end="url(#arrow-02)"/>
+</svg>

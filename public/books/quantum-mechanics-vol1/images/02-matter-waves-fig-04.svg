@@ -1,0 +1,113 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 02-matter-waves
+     Figure: 04 — de Broglie Wavelength vs. Accelerating Voltage
+     Type: line-chart (PQ)
+     Priority: Important
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-06
+     Source: pantry/02-matter-waves-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="fig-title-04m">
+  <title id="fig-title-04m">de Broglie wavelength versus accelerating voltage</title>
+  <desc>The de Broglie wavelength λ = 1.226/√V nm decreases as a hyperbolic arc from roughly 0.25 nm at low voltage toward zero at high voltage. Three marked points at 54 V, 100 V, and 400 V correspond to chapter worked examples. A shaded horizontal band marks the crystal plane spacing range 0.09–0.25 nm where electron diffraction occurs.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1"
+      chapter="02-matter-waves"
+      figure-number="04"
+      figure-title="de Broglie Wavelength vs. Accelerating Voltage"
+      figure-slug="de-broglie-lambda-vs-voltage"
+      figure-type="line-chart"
+      priority="Important"
+      author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/02-matter-waves-cajal.md"/>
+  </metadata>
+
+  <defs>
+    <marker id="arrow-04m" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <clipPath id="plot-clip-04m">
+      <rect x="60" y="30" width="580" height="350"/>
+    </clipPath>
+  </defs>
+
+  <!-- Chart background -->
+  <rect x="60" y="30" width="580" height="350" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+
+  <!-- Crystal plane spacing band: lambda from 0.09 to 0.25 nm (chart max)
+       y at 0.09 nm = 254.0, y at 0.25 nm = 30 (top of chart) -->
+  <rect x="60" y="30" width="580" height="224" fill="#FBE9CC" clip-path="url(#plot-clip-04m)"/>
+
+  <!-- Main curve: lambda = 1.226/sqrt(V) for V=0.5 to 400 V -->
+  <polyline
+    points="60.7,30.0 66.5,30.0 72.4,30.0 78.2,30.0 84.0,30.0 89.8,30.0 95.7,33.9 101.5,59.1 107.3,79.5 113.1,96.4 118.9,110.8 124.8,123.2 130.6,134.0 136.4,143.6 142.2,152.1 148.1,159.7 153.9,166.7 159.7,173.0 165.5,178.8 171.3,184.1 177.2,189.1 183.0,193.6 188.8,197.9 194.6,201.9 200.4,205.6 206.3,209.1 212.1,212.4 217.9,215.5 223.7,218.5 229.6,221.3 235.4,223.9 241.2,226.5 247.0,228.9 252.8,231.2 258.7,233.4 264.5,235.5 270.3,237.5 276.1,239.4 282.0,241.3 287.8,243.1 293.6,244.8 299.4,246.4 305.2,248.0 311.1,249.6 316.9,251.0 322.7,252.5 328.5,253.9 334.4,255.2 340.2,256.5 346.0,257.8 351.8,259.0 357.6,260.2 363.5,261.4 369.3,262.5 375.1,263.6 380.9,264.6 386.7,265.7 392.6,266.7 398.4,267.6 404.2,268.6 410.0,269.5 415.9,270.4 421.7,271.3 427.5,272.2 433.3,273.0 439.1,273.9 445.0,274.7 450.8,275.4 456.6,276.2 462.4,277.0 468.3,277.7 474.1,278.4 479.9,279.1 485.7,279.8 491.5,280.5 497.4,281.2 503.2,281.8 509.0,282.5 514.8,283.1 520.7,283.7 526.5,284.3 532.3,284.9 538.1,285.5 543.9,286.0 549.8,286.6 555.6,287.2 561.4,287.7 567.2,288.2 573.0,288.8 578.9,289.3 584.7,289.8 590.5,290.3 596.3,290.8 602.2,291.2 608.0,291.7 613.8,292.2 619.6,292.6 625.4,293.1 631.3,293.5 637.1,294.0"
+    fill="none" stroke="#0072B2" stroke-width="2.5" clip-path="url(#plot-clip-04m)"/>
+
+  <!-- Three dot markers: 54V, 100V, 400V -->
+  <!-- 54V: (138.3, 146.4) -->
+  <circle cx="138.3" cy="146.4" r="5" fill="#2a1a0e" stroke="#FFFFFF" stroke-width="1.5"/>
+  <!-- 100V: (205.0, 208.4) -->
+  <circle cx="205.0" cy="208.4" r="5" fill="#2a1a0e" stroke="#FFFFFF" stroke-width="1.5"/>
+  <!-- 400V: (640.0, 294.2) — at far right -->
+  <circle cx="638.0" cy="294.0" r="5" fill="#2a1a0e" stroke="#FFFFFF" stroke-width="1.5"/>
+
+  <!-- Dashed drop lines for markers -->
+  <line x1="138.3" y1="146.4" x2="138.3" y2="380" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <line x1="205.0" y1="208.4" x2="205.0" y2="380" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <line x1="638.0" y1="294.0" x2="638.0" y2="380" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+
+  <!-- Axes -->
+  <line x1="60" y1="380" x2="648" y2="380" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-04m)"/>
+  <line x1="60" y1="380" x2="60" y2="22" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-04m)"/>
+
+  <!-- X-axis ticks: 0, 100, 200, 300, 400 V -->
+  <!-- x(V) = 60 + (V/400)*580 -->
+  <line x1="60" y1="376" x2="60" y2="384" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="205" y1="376" x2="205" y2="384" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="350" y1="376" x2="350" y2="384" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="495" y1="376" x2="495" y2="384" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="640" y1="376" x2="640" y2="384" stroke="#2a1a0e" stroke-width="1"/>
+
+  <text x="60" y="396" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">0</text>
+  <text x="205" y="396" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">100</text>
+  <text x="350" y="396" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">200</text>
+  <text x="495" y="396" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">300</text>
+  <text x="640" y="396" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">400</text>
+
+  <!-- Y-axis ticks: 0, 0.05, 0.10, 0.15, 0.20, 0.25 nm -->
+  <!-- y(lam) = 380 + (lam/0.25)*(30-380) = 380 - lam*1400 -->
+  <line x1="56" y1="380" x2="64" y2="380" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="56" y1="310" x2="64" y2="310" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="56" y1="240" x2="64" y2="240" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="56" y1="170" x2="64" y2="170" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="56" y1="100" x2="64" y2="100" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="56" y1="30" x2="64" y2="30" stroke="#2a1a0e" stroke-width="1"/>
+
+  <text x="53" y="383" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0</text>
+  <text x="53" y="313" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0.05</text>
+  <text x="53" y="243" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0.10</text>
+  <text x="53" y="173" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0.15</text>
+  <text x="53" y="103" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0.20</text>
+  <text x="53" y="33" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0.25</text>
+
+  <!-- Axis labels -->
+  <text x="22" y="205" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle" transform="rotate(-90,22,205)">de Broglie wavelength λ (nm)</text>
+  <text x="350" y="413" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle">Accelerating voltage V (volts)</text>
+
+  <!-- Figure title -->
+  <text x="350" y="18" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" font-weight="400" fill="#2a1a0e" text-anchor="middle">de Broglie wavelength λ = 1.226/√V nm</text>
+
+  <!-- Marker labels -->
+  <text x="155" y="131" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#2a1a0e" text-anchor="middle">54 V</text>
+  <text x="205" y="196" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#2a1a0e" text-anchor="middle">100 V</text>
+  <text x="620" y="288" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#2a1a0e" text-anchor="middle">400 V</text>
+
+  <!-- Crystal plane band label (single horizontal, in the empty right part of the band) -->
+  <text x="470" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#BF7400" text-anchor="middle">crystal plane spacing (0.09 – 0.25 nm)</text>
+</svg>

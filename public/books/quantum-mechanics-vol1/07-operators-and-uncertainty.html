@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 7 — Operators and Uncertainty</title>
+<meta name="description" content="Consider an experiment we can carry out, at least in principle. We take an electron and prepare it in exactly the same state a thousand times, using the same apparatus, the same" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Chapter 7 — Operators and Uncertainty</h1>
+<p>Consider an experiment we can carry out, at least in principle. We take an electron and prepare it in exactly the same state a thousand times, using the same apparatus, the same procedure, and identical initial conditions. Each time we measure its position, and we get a thousand different numbers. We collect them into a histogram, which has a mean \(\langle x\rangle\) and a spread \(\sigma_x\).</p>
+<p>Now we repeat the whole experiment with a thousand fresh, identically prepared copies, but this time we measure momentum instead. We get another histogram, another mean \(\langle p\rangle\), and another spread \(\sigma_p\).</p>
+<p>What we find is this: no matter how cleverly we prepare the state, the product \(\sigma_x\sigma_p\) never falls below \(\hbar/2\). We can narrow the position distribution as much as we wish, but the momentum distribution widens to compensate. No single copy of the electron is ever measured twice. No measurement disturbs any other measurement. The limitation lives in the state itself, before any apparatus touches it.</p>
+<p>The question we want to answer is what feature of the mathematics produces this bound. The answer lies in the structure of operators, and specifically in the relationship between the operators for position and momentum. That relationship has a name, and once we see it, the inequality follows in about half a page.</p>
+<hr>
+<h2>7.1 Observables as Operators</h2>
+<p>In quantum mechanics, every physical observable is represented by a linear operator \(\hat{A}\) that maps wave functions to wave functions:</p>
+<p>\[\hat{A}(\alpha\psi + \beta\phi) = \alpha\hat{A}\psi + \beta\hat{A}\phi. \tag{7.1}\]</p>
+<p>Why operators? Because we need a rule for extracting a number — an average measurement outcome — from a wave function. The expectation value \(\langle\hat{A}\rangle = \int\psi^*(\hat{A}\psi)\,dx\) is that rule.</p>
+<p>Not every linear operator qualifies as an observable, however. The requirement is <strong>Hermiticity</strong>: for any two normalizable wave functions \(\psi\) and \(\phi\),</p>
+<p>\[\int_{-\infty}^{\infty}\phi^*\,(\hat{A}\psi)\,dx = \int_{-\infty}^{\infty}(\hat{A}\phi)^*\,\psi\,dx. \tag{7.2}\]</p>
+<p>Hermiticity has three consequences that earn their place. First, the eigenvalues of a Hermitian operator are real, and since measurement outcomes are real numbers, this is not negotiable. Second, eigenstates with distinct eigenvalues are orthogonal, so the measurement outcomes live in an orthogonal basis. Third — this is the spectral theorem — the eigenstates form a complete set, so we can expand any state as \(|\psi\rangle = \sum_n c_n|a_n\rangle\), where the probability of obtaining outcome \(a_n\) is \(|c_n|^2\). This is the Born rule written in operator language.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">Classical observable</th>
+<th style="text-align:left">Quantum observable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mathematical object</strong></td>
+<td style="text-align:left">a real-valued function on phase space, \(f(x,p)\)</td>
+<td style="text-align:left">a Hermitian operator \(\hat{A}\) on Hilbert space</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Measurement outcome</strong></td>
+<td style="text-align:left">the value \(f(x,p)\) evaluated at the state’s phase point</td>
+<td style="text-align:left">an eigenvalue \(a_n\) of \(\hat{A}\), always real</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>State with a definite value</strong></td>
+<td style="text-align:left">every state — a point \((x,p)\) fixes all observables at once</td>
+<td style="text-align:left">only an eigenstate of \(\hat{A}\)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Two observables both definite</strong></td>
+<td style="text-align:left">always — a single point fixes both</td>
+<td style="text-align:left">only when \([\hat{A},\hat{B}] = 0\)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7.1 — Observables in classical and quantum mechanics. The shift from a number-valued function to a Hermitian operator is what introduces the possibility that two observables cannot be sharp at the same time: classically a state is a point that fixes every quantity, while quantum-mechanically a state has a definite value of \(\hat{A}\) only if it is an eigenstate of \(\hat{A}\), and of two observables only when their commutator vanishes.</em></p>
+<p>The position operator is the simplest case: \((\hat{x}\psi)(x) = x\psi(x)\), multiplication by the real number \(x\), Hermitian by inspection.</p>
+<p>The momentum operator is:</p>
+<p>\[\hat{p} = -i\hbar\frac{\partial}{\partial x}. \tag{7.3}\]</p>
+<p>The factors \(-i\) and \(\hbar\) are not decorative. We check Hermiticity by computing \(\int\phi^*(\hat{p}\psi)\,dx\):</p>
+<p>\[\int_{-\infty}^{\infty}\phi^*\!\left(-i\hbar\frac{\partial\psi}{\partial x}\right)dx.\]</p>
+<p>We integrate by parts. The boundary term \(\phi^*\psi\big|_{-\infty}^{\infty}\) vanishes because normalizable wave functions go to zero at \(\pm\infty\). What remains:</p>
+<p>\[= \int_{-\infty}^{\infty}\!\left(i\hbar\frac{\partial\phi^*}{\partial x}\right)\psi\,dx = \int_{-\infty}^{\infty}\!\left(-i\hbar\frac{\partial\phi}{\partial x}\right)^*\psi\,dx = \int_{-\infty}^{\infty}(\hat{p}\phi)^*\psi\,dx. \tag{7.4}\]</p>
+<p>This is Hermitian, and the factor of \(-i\) is what makes it work. Without it, the derivative \(\partial_x\) would be anti-Hermitian and its eigenvalues would be imaginary — not measurable.</p>
+<p>Why is this the right momentum operator, rather than some other Hermitian combination of derivatives? The cleanest reason comes from Fourier analysis. A plane wave \(e^{ipx/\hbar}\) is the eigenfunction of \(-i\hbar\partial_x\) with eigenvalue \(p\): differentiating \(e^{ipx/\hbar}\) pulls down \(ip/\hbar\), and \(-i\hbar \cdot ip/\hbar = p\). In momentum space, \(\hat{p}\) is multiplication by \(p\); in position space, it is differentiation. The Fourier transform connects the two representations, and \(-i\hbar\partial_x\) is the unique Hermitian first-order differential operator that matches \(\text{multiplication-}\text{by-}p\) in momentum space.</p>
+<figure class="qm-figure"><img src="images/09-operators-and-uncertainty-fig-01.svg" alt="Two panels, position space and momentum space, holding the same state and related by the Fourier transform." loading="lazy" /><figcaption>Figure 7.1 — The same physical state in two representations. In position space the state is \(\psi(x)\), where \(\hat{x}\) acts by multiplication and \(\hat{p} = -i\hbar\,\partial_x\) by differentiation; in momentum space it is \(\phi(p)\), where \(\hat{p}\) multiplies and \(\hat{x} = +i\hbar\,\partial_p\) differentiates. The Fourier transform carries one into the other, \(\phi = \mathcal{F}[\psi]\). Each operator is multiplication in the representation named for it and differentiation in the other — which is exactly why \(\hat{x}\) and \(\hat{p}\) do not commute.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=07-uncertainty-explorer.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/07-uncertainty-explorer.html" title="Interactive simulation: Position/momentum uncertainty explorer" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Position/momentum uncertainty explorer. If the embedded widget does not load, open <a href="simulations/07-uncertainty-explorer.html" target="_blank" rel="noopener">simulations/07-uncertainty-explorer.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=07-uncertainty-explorer.html -->
+<hr>
+<h2>7.2 Expectation Values and Variances</h2>
+<p>Given a Hermitian operator \(\hat{A}\) and a normalized state \(\psi\), the expectation value is:</p>
+<p>\[\langle\hat{A}\rangle = \int_{-\infty}^{\infty}\psi^*(x)\,(\hat{A}\psi)(x)\,dx. \tag{7.5}\]</p>
+<p>For position, \(\hat{A} = \hat{x}\), this reduces to \(\int x|\psi|^2\,dx\) — the centroid of the probability density. For momentum, \(\hat{A} = \hat{p}\), it becomes \(\int\psi^*(-i\hbar\partial_x\psi)\,dx\), and now the sign matters.</p>
+<figure class="qm-figure"><img src="images/09-operators-and-uncertainty-fig-04.svg" alt="Probability density bell curve with centroid marker and weighted vertical bars" loading="lazy" /><figcaption>Figure 7.2 — Expectation value as centroid of the probability density: the filled area under |ψ(x)|² is the probability distribution; the vertical dashed line and downward triangle mark ⟨x⟩, the weighted average whose offset from the panel center reflects that the centroid is a property of the distribution, not the coordinate origin.</figcaption></figure>
+<p>Take the Gaussian wave packet \(\psi = Ne^{-x^2/2a^2}e^{ik_0 x}\). Differentiating:</p>
+<p>\[\partial_x\psi = \psi\!\left(-\frac{x}{a^2} + ik_0\right), \qquad -i\hbar\partial_x\psi = \psi\!\left(\frac{i\hbar x}{a^2} + \hbar k_0\right). \tag{7.6}\]</p>
+<p>We integrate against \(\psi^*\). The term \(i\hbar x/a^2\) is odd times the symmetric density \(|\psi|^2\), so it integrates to zero. What survives is \(\hbar k_0 \int|\psi|^2\,dx = \hbar k_0\). A packet moving right with \(k_0 > 0\) has \(\langle p\rangle = \hbar k_0 > 0\).</p>
+<p>If we use \(+i\hbar\partial_x\) instead — the wrong sign — we get \(-\hbar k_0 < 0\), the wrong direction. The minus sign in \(\hat{p} = -i\hbar\partial_x\) is load-bearing, not a convention.</p>
+<p>The variance of observable \(\hat{A}\) in state \(\psi\) is:</p>
+<p>\[\sigma_A^2 = \langle\hat{A}^2\rangle - \langle\hat{A}\rangle^2 = \langle(\hat{A} - \langle\hat{A}\rangle)^2\rangle. \tag{7.7}\]</p>
+<p>This is the spread of measurement outcomes across many identically prepared copies of the state. It is not the uncertainty in any single measurement; it is the width of the histogram.</p>
+<hr>
+<h2>7.3 The Canonical Commutation Relation</h2>
+<p>The <strong>commutator</strong> of two operators is \([\hat{A}, \hat{B}] \equiv \hat{A}\hat{B} - \hat{B}\hat{A}\). If it is zero, the operators commute and share a common eigenbasis, so both observables can have definite values at the same time. If it is nonzero, they cannot.</p>
+<p>We compute \([\hat{x}, \hat{p}]\) by acting on a test function \(\psi\):</p>
+<p>\[[\hat{x},\hat{p}]\psi = \hat{x}(\hat{p}\psi) - \hat{p}(\hat{x}\psi). \tag{7.8}\]</p>
+<p>First term: \(\hat{p}\) differentiates, then \(\hat{x}\) multiplies:</p>
+<p>\[\hat{x}(\hat{p}\psi) = x\cdot\left(-i\hbar\frac{\partial\psi}{\partial x}\right) = -i\hbar x\frac{\partial\psi}{\partial x}. \tag{7.9}\]</p>
+<p>Second term: \(\hat{x}\) multiplies first, giving \(x\psi\), then \(\hat{p}\) differentiates the <em>product</em>:</p>
+<p>\[\hat{p}(\hat{x}\psi) = -i\hbar\frac{\partial}{\partial x}(x\psi) = -i\hbar\!\left(\psi + x\frac{\partial\psi}{\partial x}\right) = -i\hbar\psi - i\hbar x\frac{\partial\psi}{\partial x}. \tag{7.10}\]</p>
+<p>The product rule generates an extra \(-i\hbar\psi\). Subtracting the second term from the first:</p>
+<p>\[[\hat{x},\hat{p}]\psi = -i\hbar x\frac{\partial\psi}{\partial x} - \left(-i\hbar\psi - i\hbar x\frac{\partial\psi}{\partial x}\right) = i\hbar\psi. \tag{7.11}\]</p>
+<p>Since this holds for any \(\psi\):</p>
+<p>\[\boxed{[\hat{x}, \hat{p}] = i\hbar.} \tag{7.12}\]</p>
+<p>This is the <strong>canonical commutation relation</strong> — the single algebraic fact that separates quantum mechanics from classical mechanics. In classical mechanics the counterpart statement is the Poisson bracket \(\{x, p\} = 1\), a plain number with no factor of \(i\hbar\) and no incompatibility, because classical observables are ordinary functions that always commute. The canonical commutation relation is the quantum version, and the \(i\hbar\) cannot be removed. Everything that follows about uncertainty is a consequence of this one line.</p>
+<p>Because \([\hat{x}, \hat{p}] \neq 0\), position and momentum share no common eigenbasis. Any state with definite position (a Dirac delta in \(x\)) is infinitely spread in momentum, and any state with definite momentum (a plane wave) is infinitely spread in position. The incompatibility is not about measurement at all. It is algebraic, built into the operators themselves.</p>
+<figure class="qm-figure"><img src="images/09-operators-and-uncertainty-fig-02.svg" alt="Left: a classical phase-space point fixing x and p. Right: a position eigenstate and a plane wave, neither sharp in both." loading="lazy" /><figcaption>Figure 7.3 — Why position and momentum cannot both be definite. Classically (left) a state is a single point in phase space, which fixes \(x\) and \(p\) simultaneously. Quantum-mechanically (right) a state sharp in position is a narrow spike — a near-eigenstate of \(\hat{x}\) — whose momentum is completely spread, while a state sharp in momentum is a plane wave whose position is completely spread. No state is both, because \([\hat{x},\hat{p}] = i\hbar \neq 0\). The incompatibility is algebraic, built into the operators themselves, and has nothing to do with disturbance by measurement.</figcaption></figure>
+<hr>
+<h2>7.4 The Robertson Inequality</h2>
+<p>Here is the theorem that links the commutator to the uncertainty bound. No measurement is performed and no particle is disturbed. The proof is linear algebra.</p>
+<p><strong>Robertson inequality (1929).</strong> For any two Hermitian operators \(\hat{A}\), \(\hat{B}\) and any state \(\psi\):</p>
+<p>\[\sigma_A\,\sigma_B \geq \frac{1}{2}\bigl|\langle[\hat{A},\hat{B}]\rangle\bigr|. \tag{7.13}\]</p>
+<p>The proof has three moves. We define shifted operators \(\hat{A}' = \hat{A} - \langle\hat{A}\rangle\) and \(\hat{B}' = \hat{B} - \langle\hat{B}\rangle\), so that \(\sigma_A^2 = \|\hat{A}'|\psi\rangle\|^2\) and \(\sigma_B^2 = \|\hat{B}'|\psi\rangle\|^2\).</p>
+<p><strong>Move 1</strong> (Cauchy-Schwarz):</p>
+<p>\[\sigma_A^2\sigma_B^2 = \|\hat{A}'|\psi\rangle\|^2\|\hat{B}'|\psi\rangle\|^2 \geq |\langle\hat{A}'\hat{B}'\rangle|^2. \tag{7.14}\]</p>
+<p><strong>Move 2</strong> (decompose the inner product): we write \(\hat{A}'\hat{B}' = \tfrac{1}{2}\{\hat{A}',\hat{B}'\} + \tfrac{1}{2}[\hat{A}',\hat{B}']\). The anticommutator \(\{\hat{A}',\hat{B}'\}\) is Hermitian, so its expectation is real. The commutator \([\hat{A}',\hat{B}'] = [\hat{A},\hat{B}]\) is anti-Hermitian, so its expectation is purely imaginary. A real number and an imaginary number add in modulus:</p>
+<p>\[|\langle\hat{A}'\hat{B}'\rangle|^2 = \frac{1}{4}\langle\{\hat{A}',\hat{B}'\}\rangle^2 + \frac{1}{4}|\langle[\hat{A},\hat{B}]\rangle|^2. \tag{7.15}\]</p>
+<p><strong>Move 3</strong> (drop the non-negative anticommutator term to get a lower bound):</p>
+<p>\[\sigma_A^2\sigma_B^2 \geq \frac{1}{4}|\langle[\hat{A},\hat{B}]\rangle|^2. \tag{7.16}\]</p>
+<p>Taking the square root: \(\sigma_A\sigma_B \geq \tfrac{1}{2}|\langle[\hat{A},\hat{B}]\rangle|\). \(\square\)</p>
+<p>Now we plug in \(\hat{A} = \hat{x}\), \(\hat{B} = \hat{p}\), \([\hat{x},\hat{p}] = i\hbar\):</p>
+<p>\[\sigma_x\,\sigma_p \geq \frac{1}{2}|i\hbar| = \frac{\hbar}{2}. \tag{7.17}\]</p>
+<p>This is the <strong>Kennard inequality</strong> — proved by Kennard in 1927 and placed in this general algebraic framework by Robertson in 1929. It is a theorem derived from the canonical commutation relation and Cauchy-Schwarz. No experiment appears in the proof. The bound is fixed by how the state is prepared, not by any measurement.</p>
+<p>Notice what we dropped in Move 3: the anticommutator term \(\tfrac{1}{4}\langle\{\hat{A}',\hat{B}'\}\rangle^2\), which is non-negative. Dropping it weakens the bound. Schrödinger (1930) kept it and obtained a tighter inequality. The extra term is (twice) the position–momentum covariance of the state, and it vanishes for any state with a real wave function (the Gaussian at rest, and every square-well eigenstate alike), so for all of those the two bounds agree. It comes alive only for states with a genuine position–momentum correlation, such as the freely spreading Gaussian of Chapter 4 at \(t > 0\): the packet develops a chirp, the covariance grows, and there the Schrödinger bound is strictly tighter than Robertson. In fact the spreading Gaussian saturates it exactly. The exercises explore this.</p>
+<figure class="qm-figure"><img src="images/09-operators-and-uncertainty-fig-03.svg" alt="Log-log plot of momentum spread against position spread, with the Robertson boundary hyperbola and two marked states." loading="lazy" /><figcaption>Figure 7.4 — The Robertson boundary on log-log axes. The straight line is the hyperbola \(\sigma_x\sigma_p = \hbar/2\); the shaded region below it is forbidden. The Gaussian minimum-uncertainty state sits exactly on the line (ratio \(1.000\)), while the infinite-square-well ground state sits above it (ratio \(\approx 1.136\)). The upward arrow indicates that raising the well quantum number \(n\) moves the state steadily away from the bound, with \(\sigma_x\sigma_p/(\hbar/2) \to (\pi/\sqrt{3})\,n\) for large \(n\). Every physical state lies on or above the line; none lies below.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=07-robertson-boundary.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/07-robertson-boundary.html" title="Interactive simulation: Robertson boundary map" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Robertson boundary map. If the embedded widget does not load, open <a href="simulations/07-robertson-boundary.html" target="_blank" rel="noopener">simulations/07-robertson-boundary.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=07-robertson-boundary.html -->
+<hr>
+<h2>7.5 A Worked Calculation: The Infinite Square Well</h2>
+<p>In Chapter 3 we found \(\sigma_x\sigma_p = \hbar/2\) for the Gaussian. Let us now work it out for a different state — the infinite-square-well ground state — to see that the bound is satisfied but not saturated.</p>
+<p>The state on \([0,L]\) is \(\psi_1(x) = \sqrt{2/L}\,\sin(\pi x/L)\).</p>
+<p><strong>Position mean.</strong> By symmetry of \(\sin^2(\pi x/L)\) around \(x = L/2\): \(\langle x\rangle = L/2\).</p>
+<p>\(\langle x^2\rangle\). Integrating \(x^2\sin^2(\pi x/L)\) over \([0,L]\) (using \(\sin^2\theta = (1-\cos 2\theta)/2\) and integrating by parts twice) gives:</p>
+<p>\[\langle x^2\rangle = L^2\!\left(\frac{1}{3} - \frac{1}{2\pi^2}\right). \tag{7.18}\]</p>
+<p><strong>Position variance:</strong></p>
+<p>\[\sigma_x^2 = L^2\!\left(\frac{1}{3} - \frac{1}{2\pi^2}\right) - \frac{L^2}{4} = L^2\!\left(\frac{1}{12} - \frac{1}{2\pi^2}\right) \approx 0.0326\,L^2. \tag{7.19}\]</p>
+<p>So \(\sigma_x \approx 0.181\,L\).</p>
+<p><strong>Momentum mean.</strong> The ground state is a standing wave — an equal superposition of \(e^{i\pi x/L}\) (rightward) and \(e^{-i\pi x/L}\) (leftward). The equal and opposite contributions cancel: \(\langle p\rangle = 0\). We confirm by direct integral: the integrand \(\sin(\pi x/L)\cdot\cos(\pi x/L) = \tfrac{1}{2}\sin(2\pi x/L)\) integrates to zero over a full period.</p>
+<p>\(\langle p^2\rangle\). Here is an operator-algebra shortcut that beats direct integration. The TISE says \(\hat{H}\psi_1 = E_1\psi_1\) with \(E_1 = \pi^2\hbar^2/(2mL^2)\). Inside the well, \(\hat{H} = \hat{p}^2/2m\), so \(\hat{p}^2\psi_1 = 2mE_1\psi_1 = (\hbar\pi/L)^2\psi_1\). Therefore:</p>
+<p>\[\langle p^2\rangle = \left(\frac{\hbar\pi}{L}\right)^2\int|\psi_1|^2\,dx = \left(\frac{\hbar\pi}{L}\right)^2. \tag{7.20}\]</p>
+<p><strong>Momentum variance:</strong> \(\sigma_p^2 = \langle p^2\rangle - \langle p\rangle^2 = (\hbar\pi/L)^2\), so \(\sigma_p = \hbar\pi/L\).</p>
+<p><strong>The product:</strong></p>
+<p>\[\sigma_x\sigma_p \approx 0.181\,L \cdot \frac{\hbar\pi}{L} = 0.181\pi\hbar \approx 0.568\,\hbar. \tag{7.21}\]</p>
+<p>Since \(\hbar/2 = 0.500\,\hbar\), the product exceeds the bound. The ratio \(\sigma_x\sigma_p/(\hbar/2) \approx 1.136\).</p>
+<p>Why does the square-well ground state not saturate the bound? Saturation requires \(\hat{A}'|\psi\rangle = i\lambda\hat{B}'|\psi\rangle\) for some real \(\lambda\) — that is, the Cauchy-Schwarz step must hold with equality, which demands that the two vectors be proportional. For \(\hat{A}' = \hat{x} - \langle x\rangle\) and \(\hat{B}' = \hat{p} - \langle p\rangle\), this condition translates to a differential equation whose only normalizable solution is the Gaussian. The square-well ground state has hard walls requiring \(\psi(0) = \psi(L) = 0\), so it cannot be Gaussian. Its product \(\sigma_x\sigma_p\) therefore lies strictly above \(\hbar/2\).</p>
+<p>Open the <a href="simulations/07-robertson-boundary.html" target="_blank" rel="noopener">Robertson boundary</a> simulation from this chapter, select the infinite-well state with \(n = 1\): the ratio reads approximately \(1.136\), independent of \(L\). That number is this calculation, done numerically.</p>
+<hr>
+<h2>7.6 What the Uncertainty Principle Is Not About</h2>
+<p>Many textbooks tell a story — Heisenberg’s gamma-ray microscope — in which a photon used to locate an electron kicks it, disturbing its momentum in an uncontrollable way. The story is physically illuminating, but it describes a different statement from the Kennard inequality.</p>
+<p>The Kennard inequality is about <em>preparation</em>, not measurement. We prepare a million copies of the same state, measure position on half and momentum on the other half. No copy is measured twice. No particle is kicked by any photon. And yet \(\sigma_x\sigma_p \geq \hbar/2\). The bound is set by the shape of \(\psi\), before any measurement begins.</p>
+<p>The microscope story describes instead an <em>error-disturbance</em> relation: if we measure position with precision \(\epsilon\), the act of measurement introduces a momentum disturbance \(\eta\), and \(\epsilon\cdot\eta\) satisfies some bound. Ozawa formalized this in 2003 and proved that the relation takes a different form from Kennard’s. Erhart et al. tested both experimentally in 2012. They are different inequalities, with different mathematical forms and different physical meanings. Conflating them is the most persistent conceptual error in introductory quantum mechanics.</p>
+<hr>
+<h2>Looking Ahead</h2>
+<p>The next chapter, <strong>Chapter 8 — The Quantum Harmonic Oscillator</strong>, uses the operator formalism to solve the most important potential in physics by a purely algebraic method, building a ladder of equally spaced energy levels from a single commutator.</p>
+<hr>
+<h2>Interactive Simulations</h2>
+<p>These companion simulations run in the browser and accompany this chapter online.</p>
+<ul>
+<li><a href="simulations/07-uncertainty-explorer.html" target="_blank" rel="noopener">Uncertainty explorer</a> — compute σx, σp and their product for different states.</li>
+<li><a href="simulations/07-robertson-boundary.html" target="_blank" rel="noopener">Robertson boundary</a> — see how states sit relative to the Robertson/Kennard bound σxσp ≥ ħ/2.</li>
+</ul>
+<hr>
+<h2>Exercises</h2>
+<p><strong>Warm-up</strong></p>
+<ol>
+<li>
+<p><em>[Hermiticity of the momentum operator]</em> Prove that \(\hat{p} = -i\hbar\partial_x\) is Hermitian using integration by parts. (a) State explicitly what boundary condition on \(\psi\) and \(\phi\) is required for the boundary term to vanish, and why it holds for any normalizable state. (b) What would go wrong if you replaced \(\hat{p}\) with the real operator \(\hbar\partial_x\) (without the \(-i\))?
+<em>What this tests: tracing exactly why the</em> \(-i\) <em>is structural, not cosmetic — and what Hermiticity requires at the boundary.</em></p>
+</li>
+<li>
+<p><em>[Canonical commutation relation]</em> Derive \([\hat{x},\hat{p}] = i\hbar\) step by step, applying both operators to a test function \(\psi\). Show every product-rule term explicitly. (a) At which step does the \(i\hbar\) emerge? (b) What would \([\hat{x},\hat{p}]\) be if \(\hat{p}\) were defined as \(+i\hbar\partial_x\)? © Compute \([\hat{p},\hat{x}]\) and verify it equals \(-i\hbar\).
+<em>What this tests: mechanical fluency with commutators and the origin of the canonical relation in the product rule.</em></p>
+</li>
+<li>
+<p><em>[Expectation values for a Gaussian]</em> For \(\psi(x) = (1/\pi a^2)^{1/4}e^{-x^2/2a^2}e^{ik_0 x}\) with \(a = 2\) nm, \(k_0 = 3\) \(\text{nm}^{-1}\): (a) without computing integrals, state \(\langle x\rangle\) and \(\langle p\rangle\) and justify each in one sentence; (b) write the integrals for \(\langle x^2\rangle\) and \(\langle p^2\rangle\) and use the Chapter 3 results to evaluate them; © compute \(\sigma_x\), \(\sigma_p\), and their product.
+<em>What this tests: applying the expectation-value formalism without redundant integration, and verifying the Kennard bound is saturated.</em></p>
+</li>
+</ol>
+<p><strong>Application</strong></p>
+<ol start="4">
+<li>
+<p><em>[Infinite-square-well uncertainty for higher modes]</em> For \(\psi_n = \sqrt{2/L}\sin(n\pi x/L)\) on \([0,L]\): (a) show \(\langle p\rangle = 0\) for all \(n\); (b) use \(\hat{p}^2\psi_n = (n\hbar\pi/L)^2\psi_n\) to find \(\sigma_p = n\hbar\pi/L\); © show \(\sigma_x^2 = L^2(1/12 - 1/(2n^2\pi^2))\) and verify for \(n=1\); (d) show that \(\sigma_x\sigma_p/(\hbar/2) \approx (\pi/\sqrt{3})\,n\) for large \(n\) — so it grows without bound — and interpret why (the position spread saturates at \(L/\sqrt{12}\) while \(\sigma_p = n\hbar\pi/L\) grows linearly in \(n\)).
+<em>What this tests: using the TISE as an operator-algebra shortcut, and tracing the</em> \(\text{large-}n\) <em>behavior toward the classical limit.</em></p>
+</li>
+<li>
+<p><em>[Robertson bound from an eigenstate]</em> For any eigenstate \(\hat{A}\psi = \lambda\psi\): (a) show \(\sigma_A = 0\); (b) for \(\hat{A} = \hat{p}\) and \(\psi = e^{ik_0 x}\) (plane wave), what does Robertson say about \(\sigma_x\)? © Resolve the tension: \(e^{ik_0 x}\) is not normalizable, so \(\sigma_x\) is infinite. How does the Robertson inequality still hold?
+<em>What this tests: applying the inequality to a limiting case and confronting the normalizability requirement.</em></p>
+</li>
+<li>
+<p><em>[Robertson for Pauli operators]</em> The Pauli matrices satisfy \([\sigma_x, \sigma_z] = -2i\sigma_y\). For the qubit state \(|\psi\rangle = \cos(\theta/2)|0\rangle + e^{i\phi}\sin(\theta/2)|1\rangle\): (a) show \(\langle\sigma_y\rangle = \sin\theta\sin\phi\), and note that for real coefficients (\(\phi = 0\)) the Robertson bound is trivially zero even though both spreads are nonzero: the bound is state-dependent; (b) write down the Robertson bound \(\Delta\sigma_x\,\Delta\sigma_z \geq |\langle\sigma_y\rangle|\) (here \(\Delta\sigma_x\) is the standard deviation of the observable \(\sigma_x\)); © at \(\theta = \pi/2\), \(\phi = \pi/2\), compute \(\Delta\sigma_x\) and \(\Delta\sigma_z\) and verify that the bound is not only satisfied but saturated; (d) for which \(\theta\) and \(\phi\) is the bound saturated in general?
+<em>What this tests: applying Robertson to finite-dimensional operators and seeing the same structure in a different physical system.</em></p>
+</li>
+</ol>
+<p><strong>Synthesis</strong></p>
+<ol start="7">
+<li>
+<p><em>[The minimum-uncertainty state]</em> The saturation condition for Cauchy-Schwarz is \(\hat{A}'|\psi\rangle = c\hat{B}'|\psi\rangle\) for some complex constant \(c\). (a) Set \(\hat{A}' = \hat{x} - \langle x\rangle\) and \(\hat{B}' = \hat{p} - \langle p\rangle\), and write this as a differential equation for \(\psi(x)\). (b) Show the solution is a Gaussian. © For saturation of Robertson (not just Cauchy-Schwarz), \(c\) must be purely imaginary: \(c = i\lambda\), \(\lambda\in\mathbb{R}\). Show this forces the Gaussian to decay.
+<em>What this tests: working backward from the equality condition to characterize the minimum-uncertainty state as the Gaussian — not as a given, but as a derived result.</em></p>
+</li>
+<li>
+<p><em>[Ehrenfest’s theorem]</em> Ehrenfest’s theorem: \(d\langle x\rangle/dt = \langle p\rangle/m\) and \(d\langle p\rangle/dt = -\langle\partial V/\partial x\rangle\). (a) Derive the first by differentiating \(\langle x\rangle = \int x|\psi|^2\,dx\) and using the Schrödinger equation. (b) Derive the second by differentiating \(\langle p\rangle = \int\psi^*(-i\hbar\partial_x\psi)\,dx\). © For the free particle, what do these say about \(\langle x\rangle(t)\) and \(\langle p\rangle(t)\)? Connect to the group-velocity result from Chapter 4.
+<em>What this tests: connecting the operator formalism to the classical equations of motion and seeing where they agree and where they diverge.</em></p>
+</li>
+</ol>
+<p><strong>Challenge</strong></p>
+<ol start="9">
+<li><em>[The Schrödinger uncertainty relation]</em> (a) In the Robertson proof, show explicitly that the dropped anticommutator term \(\tfrac{1}{4}\langle\{\hat{x}',\hat{p}'\}\rangle^2\) is non-negative. (b) Retain it to obtain the Schrödinger bound: \(\sigma_x^2\sigma_p^2 \geq \tfrac{1}{4}|\langle\{\hat{x}',\hat{p}'\}\rangle|^2 + \hbar^2/4\). © Show by integration by parts that \(\langle\{\hat{x}',\hat{p}'\}\rangle = 0\) for <em>any</em> real normalizable wave function, so Robertson and Schrödinger agree for the Gaussian at rest and for every square-well eigenstate alike. (d) For the freely spreading Gaussian of Chapter 4 at \(t > 0\) (the chirped packet), argue that the anticommutator term is nonzero and growing, so the Schrödinger bound is strictly tighter than Robertson there, and show that the spreading Gaussian saturates the Schrödinger bound exactly.
+<em>What this tests: understanding why the dropped term makes Robertson a weaker bound, and seeing the hierarchy Robertson ≤ Schrödinger ≤ actual variance product.</em></li>
+</ol>
+<hr>
+<h2>References</h2>
+<p>Kennard, E. H. (1927). Zur Quantenmechanik einfacher Bewegungstypen. <em>Zeitschrift für Physik</em>, 44, 326–352.</p>
+<p>Robertson, H. P. (1929). The uncertainty principle. <em>Physical Review</em>, 34, 163–164.</p>
+<p>Schrödinger, E. (1930). Zum Heisenbergschen Unschärfeprinzip. <em>Sitzungsberichte der Preussischen Akademie der Wissenschaften</em>, Physikalisch-mathematische Klasse, 296–303.</p>
+<p>Ozawa, M. (2003). Universally valid reformulation of the Heisenberg uncertainty principle on noise and disturbance in measurement. <em>Physical Review A</em>, 67, 042105.</p>
+<p>Erhart, J., Sponar, S., Sulyok, G., Badurek, G., Ozawa, M., &amp; Hasegawa, Y. (2012). Experimental demonstration of a universally valid error-disturbance uncertainty relation in spin measurements. <em>Nature Physics</em>, 8, 185–189.</p>
+<p>Maassen, H., &amp; Uffink, J. B. M. (1988). Generalized entropic uncertainty relations. <em>Physical Review Letters</em>, 60, 1103–1106.</p>
+<p>Griffiths, D. J., &amp; Schroeter, D. F. (2018). <em>Introduction to Quantum Mechanics</em> (3rd ed.). Cambridge University Press. §1.6, §3.5.</p>
+<p>Townsend, J. S. (2012). <em>A Modern Approach to Quantum Mechanics</em> (2nd ed.). University Science Books. §3.5.</p>
+
+</article>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blackbody Spectrum Explorer — Quantum Mechanics Vol. 1, Chapter 1</title>
+<style>
+  :root{--ink:#2a1a0e;--red:#C8102E;--gray:#545454;--hair:#D4D4D4;--ochre:#C8860E;--chart:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);
+       font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:var(--chart);}
+  .controls{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;margin:16px 0 6px;}
+  .ctl{display:flex;align-items:center;gap:10px;font-size:14px;}
+  input[type=range]{width:200px;accent-color:var(--red);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--chart);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:96px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .swatch{width:26px;height:26px;border-radius:4px;border:1px solid var(--hair);display:inline-block;vertical-align:middle;}
+  label.tog{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--gray);cursor:pointer;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Blackbody spectrum explorer</h1>
+  <p class="sub">Drag the temperature. Watch the peak grow and slide toward the blue (Wien's law), and switch on the classical curve to see the ultraviolet catastrophe.</p>
+  <canvas id="plot" width="720" height="420" aria-label="Planck blackbody spectrum versus wavelength"></canvas>
+  <div class="controls">
+    <div class="ctl"><label for="T">Temperature</label>
+      <input type="range" id="T" min="1000" max="9000" step="50" value="5800">
+      <span id="Tout" style="font-weight:600;min-width:74px;">5800 K</span></div>
+    <label class="tog"><input type="checkbox" id="rj"> show classical (Rayleigh–Jeans)</label>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">Peak wavelength</div><div class="v" id="lpk">—</div></div>
+    <div class="card"><div class="l">Peak band</div><div class="v" id="band">—</div></div>
+    <div class="card"><div class="l">Apparent colour</div><div class="v"><span class="swatch" id="sw"></span></div></div>
+    <div class="card"><div class="l">Example source</div><div class="v" id="ex" style="font-size:15px;">—</div></div>
+  </div>
+  <p class="note">The shaded strip marks the visible band (380–740 nm). The red curve is Planck's law; the dashed grey curve is the classical Rayleigh–Jeans prediction, which diverges as the wavelength shrinks — the catastrophe Planck's quantum removed.</p>
+</div>
+<script>
+const cv=document.getElementById('plot'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height,mL=64,mR=24,mT=26,mB=52;
+const L0=300e-9,L1=2000e-9;            // wavelength range (m)
+const h=6.626e-34,c=3e8,kB=1.381e-23;
+const planck=(l,T)=>(2*h*c*c)/(Math.pow(l,5)*(Math.exp(h*c/(l*kB*T))-1));
+const rj=(l,T)=>(2*c*kB*T)/Math.pow(l,4);
+const xpix=l=>mL+(l-L0)/(L1-L0)*(W-mL-mR);
+const Tbl={Tslider:document.getElementById('T')};
+
+function wlColor(nm){ // approximate visible spectrum colour
+  let r=0,g=0,b=0;
+  if(nm>=380&&nm<440){r=-(nm-440)/60;b=1;}
+  else if(nm<490){g=(nm-440)/50;b=1;}
+  else if(nm<510){g=1;b=-(nm-510)/20;}
+  else if(nm<580){r=(nm-510)/70;g=1;}
+  else if(nm<645){r=1;g=-(nm-645)/65;}
+  else if(nm<=740){r=1;}
+  else return null;
+  let f=nm<420?0.3+0.7*(nm-380)/40:nm>700?0.3+0.7*(740-nm)/40:1;
+  const C=v=>Math.round(255*Math.pow(Math.max(v,0)*f,0.8));
+  return `rgb(${C(r)},${C(g)},${C(b)})`;
+}
+function draw(){
+  const T=+Tbl.Tslider.value;
+  document.getElementById('Tout').textContent=T+' K';
+  cx.clearRect(0,0,W,H);
+  // visible band strip
+  for(let nm=380;nm<=740;nm+=2){const col=wlColor(nm);if(!col)continue;
+    cx.fillStyle=col;cx.globalAlpha=0.18;
+    cx.fillRect(xpix(nm*1e-9),mT,(W-mL-mR)/((L1-L0)/1e-9)*2+1,H-mT-mB);}
+  cx.globalAlpha=1;
+  // peak scale (auto)
+  let pmax=0;for(let i=0;i<=400;i++){const l=L0+(L1-L0)*i/400;pmax=Math.max(pmax,planck(l,T));}
+  const ytop=pmax*1.08, ypix=v=>H-mB-(v/ytop)*(H-mT-mB);
+  // axes
+  cx.strokeStyle='#2a1a0e';cx.lineWidth=1.5;cx.beginPath();
+  cx.moveTo(mL,mT);cx.lineTo(mL,H-mB);cx.lineTo(W-mR,H-mB);cx.stroke();
+  cx.fillStyle='#545454';cx.font="12px 'JetBrains Mono',monospace";cx.textAlign='center';
+  for(let nm=400;nm<=2000;nm+=400){const x=xpix(nm*1e-9);
+    cx.strokeStyle='#D4D4D4';cx.lineWidth=0.5;cx.beginPath();cx.moveTo(x,mT);cx.lineTo(x,H-mB);cx.stroke();
+    cx.fillText(nm,x,H-mB+18);}
+  cx.fillStyle='#2a1a0e';cx.font="13px 'EB Garamond',Georgia,serif";
+  cx.fillText('Wavelength λ (nm)',(mL+W-mR)/2,H-12);
+  cx.save();cx.translate(18,(mT+H-mB)/2);cx.rotate(-Math.PI/2);
+  cx.fillText('Spectral radiance',0,0);cx.restore();
+  // Rayleigh–Jeans
+  if(document.getElementById('rj').checked){
+    cx.strokeStyle='#545454';cx.lineWidth=1.4;cx.setLineDash([6,4]);cx.beginPath();let st=false;
+    for(let i=0;i<=600;i++){const l=L0+(L1-L0)*i/600;let y=ypix(rj(l,T));if(y<mT)y=mT;
+      if(!st){cx.moveTo(xpix(l),y);st=true;}else cx.lineTo(xpix(l),y);}
+    cx.stroke();cx.setLineDash([]);
+    cx.fillStyle='#545454';cx.textAlign='left';cx.font="12px 'Inter',sans-serif";
+    cx.fillText('classical → ∞',mL+8,mT+14);
+  }
+  // Planck
+  cx.strokeStyle='#C8102E';cx.lineWidth=2.4;cx.beginPath();
+  for(let i=0;i<=600;i++){const l=L0+(L1-L0)*i/600;const x=xpix(l),y=ypix(planck(l,T));
+    if(i===0)cx.moveTo(x,y);else cx.lineTo(x,y);}
+  cx.stroke();
+  // peak marker (Wien)
+  const lpk=2.8977721e-3/T, xpk=xpix(lpk);
+  if(lpk>=L0&&lpk<=L1){cx.strokeStyle='#2a1a0e';cx.lineWidth=0.8;cx.setLineDash([3,3]);
+    cx.beginPath();cx.moveTo(xpk,ypix(planck(lpk,T)));cx.lineTo(xpk,H-mB);cx.stroke();cx.setLineDash([]);
+    cx.fillStyle='#C8102E';cx.beginPath();cx.arc(xpk,ypix(planck(lpk,T)),3.5,0,7);cx.fill();}
+  // stats
+  const nm=lpk*1e9;
+  document.getElementById('lpk').textContent=Math.round(nm)+' nm';
+  let band=nm<380?'ultraviolet':nm>740?'infrared':'visible';
+  document.getElementById('band').textContent=band;
+  const col=wlColor(Math.round(nm));
+  document.getElementById('sw').style.background = col||(nm<=380?'#6a3db8':'#3a0a0a');
+  document.getElementById('ex').textContent =
+    T<1500?'embers':T<2200?'candle flame':T<3200?'incandescent bulb':
+    T<4500?'sunrise sun':T<6500?'midday sun':T<8000?'blue-white star':'hot O-star';
+}
+['input','change'].forEach(e=>{Tbl.Tslider.addEventListener(e,draw);
+  document.getElementById('rj').addEventListener(e,draw);});
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 11-capstone-a-1d-quantum-sandbox-fig-01.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 11-capstone-a-1d-quantum-sandbox
+  Figure: 01 — The Finished 1D Schrödinger Solver (interface schematic)
+  Generated: 2026-06-06  (house SVG; eigenfunction amplitude reduced for clear separation 2026-06-24b)
+  Source: pantry/11-capstone-a-1d-quantum-sandbox-cajal.md
+-->
+<svg viewBox="0 0 700 458" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0" role="img" aria-labelledby="ft-01">
+  <title id="ft-01">Schematic of the finished one-dimensional Schrödinger solver interface.</title>
+  <desc>An application window titled 1D Schrodinger Solver, an Eigensolver tab active and a Time-evolution tab, and a normalization indicator reading 1.000. The main panel plots a parabolic potential with four energy levels as horizontal lines, each carrying its eigenfunction; a side panel lists numerical energies and ratios.</desc>
+  <metadata><cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="11-capstone-a-1d-quantum-sandbox" figure-number="01"
+      figure-title="The Finished 1D Schrodinger Solver" figure-type="mockup"
+      author="Humanitarians AI Incorporated" date-generated="2026-06-06"
+      source-file="pantry/11-capstone-a-1d-quantum-sandbox-cajal.md"/></metadata>
+  <rect width="700" height="458" fill="#FFFFFF"/>
+  <text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">The finished 1D Schrödinger solver</text>
+  <rect x="40" y="48" width="620" height="372" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <rect x="40" y="48" width="620" height="30" fill="#CCE5F1" stroke="#0072B2" stroke-width="1"/>
+  <text x="350" y="68" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">1D Schrödinger Solver</text>
+  <rect x="52" y="88" width="150" height="28" fill="#0072B2"/>
+  <text x="127" y="107" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">Eigensolver</text>
+  <rect x="206" y="88" width="150" height="28" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="281" y="107" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#545454" text-anchor="middle">Time evolution</text>
+  <rect x="486" y="88" width="162" height="28" fill="#CCEBE1" stroke="#009E73" stroke-width="1"/>
+  <text x="567" y="107" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#009E73" text-anchor="middle">∫|ψ|² dx = 1.000</text>
+  <rect x="52" y="126" width="382" height="284" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="247" y="144" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">Potential &amp; energy levels</text>
+  <polyline points="76.0,160.0 80.0,170.2 84.0,180.2 88.0,190.0 92.0,199.5 96.0,208.8 100.0,217.8 104.0,226.6 108.0,235.2 112.0,243.5 116.0,251.6 120.0,259.5 124.0,267.1 128.0,274.4 132.0,281.5 136.0,288.4 140.0,295.1 144.0,301.5 148.0,307.7 152.0,313.6 156.0,319.3 160.0,324.7 164.0,329.9 168.0,334.9 172.0,339.6 176.0,344.1 180.0,348.4 184.0,352.4 188.0,356.2 192.0,359.7 196.0,363.0 200.0,366.0 204.0,368.8 208.0,371.4 212.0,373.8 216.0,375.8 220.0,377.7 224.0,379.3 228.0,380.7 232.0,381.8 236.0,382.7 240.0,383.4 244.0,383.8 248.0,384.0 252.0,383.9 256.0,383.6 260.0,383.1 264.0,382.3 268.0,381.3 272.0,380.0 276.0,378.5 280.0,376.8 284.0,374.8 288.0,372.6 292.0,370.2 296.0,367.5 300.0,364.5 304.0,361.4 308.0,357.9 312.0,354.3 316.0,350.4 320.0,346.3 324.0,341.9 328.0,337.3 332.0,332.4 336.0,327.4 340.0,322.0 344.0,316.5 348.0,310.6 352.0,304.6 356.0,298.3 360.0,291.8 364.0,285.0 368.0,278.0 372.0,270.8 376.0,263.3 380.0,255.6 384.0,247.6 388.0,239.4 392.0,231.0 396.0,222.3 400.0,213.3 404.0,204.2 408.0,194.8 412.0,185.1 416.0,175.3 420.0,165.1" fill="none" stroke="#888888" stroke-width="2"/>
+  <text x="76" y="376" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">V(x)</text>
+  <line x1="175.9" y1="344" x2="322.1" y2="344" stroke="#0072B2" stroke-width="1.75"/>
+  <text x="170" y="348" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#0072B2" text-anchor="end">n = 0</text>
+  <polyline points="175.9,344.0 178.3,343.4 180.8,342.9 183.2,342.3 185.6,341.7 188.1,341.2 190.5,340.6 193.0,340.1 195.4,339.5 197.8,339.0 200.3,338.5 202.7,338.0 205.1,337.5 207.6,337.1 210.0,336.6 212.4,336.2 214.9,335.8 217.3,335.5 219.8,335.1 222.2,334.8 224.6,334.5 227.1,334.2 229.5,334.0 231.9,333.7 234.4,333.5 236.8,333.4 239.3,333.2 241.7,333.1 244.1,333.1 246.6,333.0 249.0,333.0 251.4,333.0 253.9,333.1 256.3,333.1 258.7,333.2 261.2,333.4 263.6,333.5 266.1,333.7 268.5,334.0 270.9,334.2 273.4,334.5 275.8,334.8 278.2,335.1 280.7,335.5 283.1,335.8 285.6,336.2 288.0,336.6 290.4,337.1 292.9,337.5 295.3,338.0 297.7,338.5 300.2,339.0 302.6,339.5 305.0,340.1 307.5,340.6 309.9,341.2 312.4,341.7 314.8,342.3 317.2,342.9 319.7,343.4 322.1,344.0" fill="none" stroke="#0072B2" stroke-width="1.5"/>
+  <line x1="143.1" y1="300" x2="354.9" y2="300" stroke="#BF7400" stroke-width="1.75"/>
+  <text x="138" y="304" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#BF7400" text-anchor="end">n = 1</text>
+  <polyline points="143.1,300.0 146.6,298.9 150.1,297.7 153.7,296.6 157.2,295.5 160.7,294.5 164.2,293.5 167.8,292.6 171.3,291.8 174.8,291.1 178.4,290.5 181.9,290.0 185.4,289.5 189.0,289.2 192.5,289.1 196.0,289.0 199.6,289.1 203.1,289.2 206.6,289.5 210.2,290.0 213.7,290.5 217.2,291.1 220.7,291.8 224.3,292.6 227.8,293.5 231.3,294.5 234.9,295.5 238.4,296.6 241.9,297.7 245.5,298.9 249.0,300.0 252.5,301.1 256.1,302.3 259.6,303.4 263.1,304.5 266.7,305.5 270.2,306.5 273.7,307.4 277.3,308.2 280.8,308.9 284.3,309.5 287.8,310.0 291.4,310.5 294.9,310.8 298.4,310.9 302.0,311.0 305.5,310.9 309.0,310.8 312.6,310.5 316.1,310.0 319.6,309.5 323.2,308.9 326.7,308.2 330.2,307.4 333.8,306.5 337.3,305.5 340.8,304.5 344.3,303.4 347.9,302.3 351.4,301.1 354.9,300.0" fill="none" stroke="#BF7400" stroke-width="1.5"/>
+  <line x1="116.2" y1="252" x2="381.8" y2="252" stroke="#009E73" stroke-width="1.75"/>
+  <text x="111" y="256" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#009E73" text-anchor="end">n = 2</text>
+  <polyline points="116.2,252.0 120.6,250.3 125.1,248.6 129.5,247.0 133.9,245.5 138.3,244.2 142.8,243.1 147.2,242.2 151.6,241.5 156.0,241.1 160.5,241.0 164.9,241.1 169.3,241.5 173.7,242.2 178.2,243.1 182.6,244.2 187.0,245.5 191.5,247.0 195.9,248.6 200.3,250.3 204.7,252.0 209.2,253.7 213.6,255.4 218.0,257.0 222.4,258.5 226.9,259.8 231.3,260.9 235.7,261.8 240.1,262.5 244.6,262.9 249.0,263.0 253.4,262.9 257.9,262.5 262.3,261.8 266.7,260.9 271.1,259.8 275.6,258.5 280.0,257.0 284.4,255.4 288.8,253.7 293.3,252.0 297.7,250.3 302.1,248.6 306.5,247.0 311.0,245.5 315.4,244.2 319.8,243.1 324.3,242.2 328.7,241.5 333.1,241.1 337.5,241.0 342.0,241.1 346.4,241.5 350.8,242.2 355.2,243.1 359.7,244.2 364.1,245.5 368.5,247.0 372.9,248.6 377.4,250.3 381.8,252.0" fill="none" stroke="#009E73" stroke-width="1.5"/>
+  <line x1="93.1" y1="202" x2="404.9" y2="202" stroke="#D55E00" stroke-width="1.75"/>
+  <text x="88" y="206" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#D55E00" text-anchor="end">n = 3</text>
+  <polyline points="93.1,202.0 98.3,199.7 103.5,197.5 108.7,195.5 113.9,193.8 119.0,192.5 124.2,191.5 129.4,191.1 134.6,191.1 139.8,191.5 145.0,192.5 150.2,193.8 155.4,195.5 160.6,197.5 165.8,199.7 171.0,202.0 176.2,204.3 181.4,206.5 186.6,208.5 191.8,210.2 197.0,211.5 202.2,212.5 207.4,212.9 212.6,212.9 217.8,212.5 223.0,211.5 228.2,210.2 233.4,208.5 238.6,206.5 243.8,204.3 249.0,202.0 254.2,199.7 259.4,197.5 264.6,195.5 269.8,193.8 275.0,192.5 280.2,191.5 285.4,191.1 290.6,191.1 295.8,191.5 301.0,192.5 306.2,193.8 311.4,195.5 316.6,197.5 321.8,199.7 327.0,202.0 332.2,204.3 337.4,206.5 342.6,208.5 347.8,210.2 353.0,211.5 358.2,212.5 363.4,212.9 368.6,212.9 373.8,212.5 379.0,211.5 384.1,210.2 389.3,208.5 394.5,206.5 399.7,204.3 404.9,202.0" fill="none" stroke="#D55E00" stroke-width="1.5"/>
+  <line x1="440" y1="126" x2="440" y2="410" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="547" y="146" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">Numerical output</text>
+  <text x="446" y="174" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#2a1a0e">n</text>
+  <text x="486" y="174" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#2a1a0e">Eₙ (eV)</text>
+  <text x="574" y="174" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#2a1a0e">Eₙ/E₁</text>
+  <line x1="446" y1="180" x2="636" y2="180" stroke="#D4D4D4" stroke-width="0.75"/>
+  <text x="446" y="202" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">1</text>
+  <text x="486" y="202" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">0.094</text>
+  <text x="574" y="202" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">1.00</text>
+  <text x="446" y="226" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">2</text>
+  <text x="486" y="226" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">0.376</text>
+  <text x="574" y="226" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">4.00</text>
+  <text x="446" y="250" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">3</text>
+  <text x="486" y="250" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">0.846</text>
+  <text x="574" y="250" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">9.00</text>
+  <text x="446" y="274" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">4</text>
+  <text x="486" y="274" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">1.504</text>
+  <text x="574" y="274" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454">16.00</text>
+  <text x="547" y="318" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#545454" text-anchor="middle">infinite well, L = 2 nm, electron</text>
+  <text x="350" y="446" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10.5" fill="#545454" text-anchor="middle">Eigensolver mode: V(x), bound-state energies Eₙ as levels, each carrying its eigenfunction; a live normalization check.</text>
+</svg>

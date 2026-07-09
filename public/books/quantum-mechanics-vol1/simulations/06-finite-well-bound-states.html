@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finite-well bound states — Quantum Mechanics Vol. 1, Chapter 6</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:200px;accent-color:var(--blue);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:120px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Finite-well bound states</h1>
+  <p class="sub">The bound states of a finite square well are the crossings of a quarter-circle of radius z&#8320; with the tangent (even) and cotangent (odd) branches, where z&#8320; = (L/2&#8463;)&radic;(2mV&#8320;) sets the well's depth&times;width. Slide z&#8320; and watch states appear from the top as the well deepens or widens &mdash; and notice that one state always survives.</p>
+  <canvas id="cv" width="760" height="380" aria-label="Graphical solution for finite-well bound states"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>&radic;(z&#8320;²&minus;z²)</span>
+    <span class="key"><span class="dot" style="background:var(--verm)"></span>z·tan z (even)</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>&minus;z·cot z (odd)</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="z0">z&#8320;</label><input type="range" id="z0" min="0.4" max="9" step="0.05" value="3.6"><span id="z0v" style="font-family:monospace">3.60</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">bound states</div><div class="v" id="N">&mdash;</div></div>
+    <div class="card"><div class="l">even / odd</div><div class="v" id="eo">&mdash;</div></div>
+    <div class="card"><div class="l">z&#8320; in units of &pi;/2</div><div class="v" id="z0u">&mdash;</div></div>
+  </div>
+  <p class="note">A new bound state appears every time z&#8320; passes a multiple of &pi;/2, alternating even, odd, even, odd, … The count is &lceil;2z&#8320;/&pi;&rceil;. However small z&#8320; becomes, the quarter-circle still meets the first tangent branch, so a finite well — no matter how shallow — always holds at least one bound state. (At exactly z&#8320; = n&pi;/2 a new state sits right at threshold, E &rarr; 0.)</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const z0EL=document.getElementById('z0');
+function bisect(f,a,b){let fa=f(a),fb=f(b);if(fa*fb>0)return null;for(let i=0;i<80;i++){const m=(a+b)/2,fm=f(m);if(fa*fm<=0){b=m;fb=fm;}else{a=m;fa=fm;}}return (a+b)/2;}
+function roots(z0){
+  const out=[];
+  // even on (mπ, mπ+π/2)
+  let m=0;
+  while(m*Math.PI<z0){
+    const lo=m*Math.PI+1e-4, hi=Math.min(m*Math.PI+Math.PI/2-1e-3,z0-1e-5);
+    if(lo<hi){const r=bisect(z=>Math.sqrt(Math.max(0,z0*z0-z*z))-z*Math.tan(z),lo,hi); if(r&&r<z0)out.push({z:r,par:'even'});}
+    m++;
+  }
+  m=0;
+  while(m*Math.PI+Math.PI/2<z0){
+    const lo=m*Math.PI+Math.PI/2+1e-3, hi=Math.min((m+1)*Math.PI-1e-4,z0-1e-5);
+    if(lo<hi){const r=bisect(z=>Math.sqrt(Math.max(0,z0*z0-z*z))+z/Math.tan(z),lo,hi); if(r&&r<z0)out.push({z:r,par:'odd'});}
+    m++;
+  }
+  return out.sort((a,b)=>a.z-b.z);
+}
+function draw(){
+  const z0=+z0EL.value; document.getElementById('z0v').textContent=z0.toFixed(2);
+  cx.clearRect(0,0,W,H);
+  const px0=46,px1=W-16,py0=20,py1=H-34;
+  const zmax=Math.max(z0+0.5, 2.2), ymax=Math.max(z0*1.04, 2.2);
+  const xz=z=>px0+(px1-px0)*(z/zmax), yv=v=>py1-(py1-py0)*(v/ymax);
+  cx.fillStyle=C('--plot');cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  // quarter circle
+  cx.strokeStyle=C('--blue');cx.lineWidth=2.4;cx.beginPath();
+  for(let i=0;i<=240;i++){const z=z0*i/240;const X=xz(z),Y=yv(Math.sqrt(Math.max(0,z0*z0-z*z)));i?cx.lineTo(X,Y):cx.moveTo(X,Y);}
+  cx.stroke();
+  // tan branches
+  cx.strokeStyle=C('--verm');cx.lineWidth=1.8;
+  let m=0;
+  while(m*Math.PI<zmax){
+    const lo=m*Math.PI+1e-3, hi=Math.min(m*Math.PI+Math.PI/2-2e-3,zmax);
+    if(lo<hi){cx.beginPath();let started=false;
+      for(let z=lo;z<=hi;z+=(hi-lo)/160){const v=z*Math.tan(z);if(v>=0&&v<=ymax){const X=xz(z),Y=yv(v);started?cx.lineTo(X,Y):cx.moveTo(X,Y);started=true;}else started=false;}
+      cx.stroke();}
+    m++;
+  }
+  // cot branches
+  cx.strokeStyle=C('--amber');cx.lineWidth=1.8;
+  m=0;
+  while(m*Math.PI+Math.PI/2<zmax){
+    const lo=m*Math.PI+Math.PI/2+2e-3, hi=Math.min((m+1)*Math.PI-1e-3,zmax);
+    if(lo<hi){cx.beginPath();let started=false;
+      for(let z=lo;z<=hi;z+=(hi-lo)/160){const v=-z/Math.tan(z);if(v>=0&&v<=ymax){const X=xz(z),Y=yv(v);started?cx.lineTo(X,Y):cx.moveTo(X,Y);started=true;}else started=false;}
+      cx.stroke();}
+    m++;
+  }
+  // crossings
+  const rs=roots(z0);
+  cx.fillStyle=C('--ink');
+  rs.forEach((r,i)=>{const yy=Math.sqrt(Math.max(0,z0*z0-r.z*r.z));cx.beginPath();cx.arc(xz(r.z),yv(yy),5,0,7);cx.fill();
+    cx.font="12px 'Inter',sans-serif";cx.textAlign="left";cx.fillStyle=C('--ink');cx.fillText("E"+(i+1),xz(r.z)+7,yv(yy)-6);});
+  // axis ticks
+  cx.fillStyle=C('--gray');cx.font="12px 'JetBrains Mono',monospace";cx.textAlign="center";
+  for(let zt=0;zt<=Math.floor(zmax);zt++)cx.fillText(zt,xz(zt),py1+18);
+  cx.fillStyle=C('--ink');cx.font="14px 'Inter',sans-serif";cx.fillText("z = kL/2",(px0+px1)/2,py1+34);
+  // stats
+  const ne=rs.filter(r=>r.par==='even').length, no=rs.filter(r=>r.par==='odd').length;
+  document.getElementById('N').textContent=rs.length;
+  document.getElementById('eo').textContent=ne+" / "+no;
+  document.getElementById('z0u').textContent=(z0/(Math.PI/2)).toFixed(2);
+}
+z0EL.addEventListener('input',draw);
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 09-operators-and-uncertainty-fig-01.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 09-operators-and-uncertainty
+  Figure: 01 — Fourier duality of position and momentum representations
+  Generated: 2026-06-22
+  Source: hand-authored house SVG (replaces off-style PNG-only original)
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-09-01">
+  <title id="fig-title-09-01">Fourier duality: position space and momentum space are two representations of the same state</title>
+  <desc>Two panels side by side. The left panel, position space, holds the state psi(x) with the position operator acting as multiplication by x and the momentum operator as minus i h-bar times the x-derivative. The right panel, momentum space, holds phi(p) with momentum acting as multiplication by p and position as plus i h-bar times the p-derivative. A green arrow labeled Fourier transform runs from position to momentum space; a purple arrow labeled inverse Fourier transform runs back. A note states both panels describe the same physical state.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="09-operators-and-uncertainty" figure-number="01"
+      figure-title="Fourier duality of position and momentum representations"
+      figure-slug="fourier-duality" figure-type="diagram"
+      priority="High" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-22"
+      source-file="hand-authored"/>
+  </metadata>
+  <defs>
+    <marker id="arr-09-01-g" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#009E73"/>
+    </marker>
+    <marker id="arr-09-01-p" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#CC79A7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="420" fill="#FFFFFF"/>
+
+  <!-- Figure title -->
+  <text x="350" y="34" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">The same state in two representations</text>
+
+  <!-- ===== Position-space panel (left) ===== -->
+  <rect x="40" y="72" width="262" height="248" rx="0" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="171" y="104" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#0072B2" text-anchor="middle">Position space</text>
+  <text x="171" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">state:  &#968;(x)</text>
+
+  <text x="171" y="208" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">x&#770; &#160;=&#160; x &#183;</text>
+  <text x="171" y="252" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">p&#770; &#160;=&#160; &#8722;i&#8463; &#8706;<tspan dy="4" font-size="11">x</tspan></text>
+  <text x="171" y="294" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">momentum = differentiate</text>
+
+  <!-- ===== Momentum-space panel (right) ===== -->
+  <rect x="398" y="72" width="262" height="248" rx="0" fill="#FBE9CC" stroke="#BF7400" stroke-width="1.5"/>
+  <text x="529" y="104" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="16" fill="#BF7400" text-anchor="middle">Momentum space</text>
+  <text x="529" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">state:  &#966;(p)</text>
+
+  <text x="529" y="208" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">p&#770; &#160;=&#160; p &#183;</text>
+  <text x="529" y="252" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">x&#770; &#160;=&#160; +i&#8463; &#8706;<tspan dy="4" font-size="11">p</tspan></text>
+  <text x="529" y="294" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">position = differentiate</text>
+
+  <!-- ===== Transform arrows between panels ===== -->
+  <line x1="306" y1="158" x2="394" y2="158" stroke="#009E73" stroke-width="2" marker-end="url(#arr-09-01-g)"/>
+  <text x="350" y="132" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#009E73" text-anchor="middle">Fourier</text>
+  <text x="350" y="146" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#009E73" text-anchor="middle">transform</text>
+
+  <line x1="394" y1="234" x2="306" y2="234" stroke="#CC79A7" stroke-width="2" marker-end="url(#arr-09-01-p)"/>
+  <text x="350" y="258" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#CC79A7" text-anchor="middle">inverse</text>
+  <text x="350" y="272" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#CC79A7" text-anchor="middle">transform</text>
+
+  <!-- ===== Bottom note ===== -->
+  <text x="350" y="358" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13.5" fill="#2a1a0e" text-anchor="middle">Both panels describe the <tspan font-style="italic">same</tspan> physical state &#8212; related by &#966;(p) = &#8497;[&#968;].</text>
+  <text x="350" y="380" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">Each operator is multiplication in one representation and differentiation in the other.</text>
+</svg>

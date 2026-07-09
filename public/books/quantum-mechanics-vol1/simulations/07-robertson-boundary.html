@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robertson boundary explorer — Quantum Mechanics Vol. 1, Chapter 7</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--paleorange:#FBE9CC;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  .ctl.off{opacity:0.32;}
+  input[type=range]{width:150px;accent-color:var(--blue);}
+  select{font-family:inherit;font-size:14px;padding:4px 8px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .card.hl{background:#eef6ec;border-color:var(--green);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Robertson boundary explorer</h1>
+  <p class="sub">Every quantum state lives on or above the hyperbola &sigma;<sub>x</sub>&sigma;<sub>p</sub> = &#8463;/2. Pick a state and watch where it lands. The Gaussian rides exactly on the bound; the infinite-square-well states sit strictly above it, and climbing the ladder in n drives the point further away. Lengths in nm, momenta in &#8463;/nm (&#8463; = 1, so the bound is 1/2).</p>
+  <canvas id="cv" width="760" height="430" aria-label="Log-log plot of momentum spread versus position spread with the Robertson boundary"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>boundary &sigma;<sub>x</sub>&sigma;<sub>p</sub> = &#8463;/2</span>
+    <span class="key"><span class="dot" style="background:var(--green)"></span>Gaussian (saturates)</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>infinite-well state</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="type">state</label>
+      <select id="type">
+        <option value="gauss">Gaussian packet</option>
+        <option value="well" selected>infinite well, level n</option>
+      </select>
+    </div>
+    <div class="ctl" id="ca"><label for="a">a (nm)</label><input type="range" id="a" min="0.3" max="3" step="0.05" value="1.0"><span id="av" style="font-family:monospace">1.00</span></div>
+    <div class="ctl" id="cn"><label for="n">level n</label><input type="range" id="n" min="1" max="8" step="1" value="1"><span id="nv" style="font-family:monospace">1</span></div>
+    <div class="ctl" id="cL"><label for="L">well width L (nm)</label><input type="range" id="L" min="0.4" max="6" step="0.1" value="2.0"><span id="Lv" style="font-family:monospace">2.0</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">&sigma;<sub>x</sub></div><div class="v" id="sx">&mdash;</div></div>
+    <div class="card"><div class="l">&sigma;<sub>p</sub></div><div class="v" id="sp">&mdash;</div></div>
+    <div class="card"><div class="l">&sigma;<sub>x</sub>&sigma;<sub>p</sub> (&#8463;)</div><div class="v" id="prod">&mdash;</div></div>
+    <div class="card hl"><div class="l">&sigma;<sub>x</sub>&sigma;<sub>p</sub> &divide; (&#8463;/2)</div><div class="v" id="ratio">&mdash;</div></div>
+  </div>
+  <p class="note" id="msg"></p>
+  <p class="note">For the well, &sigma;<sub>x</sub> = L&radic;(1/12 &minus; 1/(2n&sup2;&pi;&sup2;)) and &sigma;<sub>p</sub> = n&pi;&#8463;/L, so the ratio is 2n&pi;&radic;(1/12 &minus; 1/(2n&sup2;&pi;&sup2;)). It equals 1.136 at n = 1 and grows like (&pi;/&radic;3)&middot;n &asymp; 1.81n for large n &mdash; the position spread saturates at L/&radic;12 while the momentum spread keeps rising. The Gaussian gives &sigma;<sub>x</sub> = a/&radic;2, &sigma;<sub>p</sub> = 1/(a&radic;2), a product of exactly &#8463;/2 for every a.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tEL=document.getElementById('type'),aEL=document.getElementById('a'),nEL=document.getElementById('n'),LEL=document.getElementById('L');
+const SQ2=Math.SQRT2, PI=Math.PI;
+
+function wellSig(n,L){
+  const sx=L*Math.sqrt(1/12 - 1/(2*n*n*PI*PI));
+  const sp=n*PI/L;
+  return [sx,sp];
+}
+function gaussSig(a){return [a/SQ2, 1/(a*SQ2)];}
+
+// log-log mapping
+const XMIN=0.05,XMAX=50,YMIN=0.02,YMAX=50;
+const padL=64,padR=20,padT=20,padB=48;
+const lx0=padL,lx1=W-padR,ly0=padT,ly1=H-padB;
+const L10=Math.log10;
+function PX(sx){return lx0+(lx1-lx0)*(L10(sx)-L10(XMIN))/(L10(XMAX)-L10(XMIN));}
+function PY(sp){return ly1-(ly1-ly0)*(L10(sp)-L10(YMIN))/(L10(YMAX)-L10(YMIN));}
+
+function draw(){
+  const type=tEL.value;
+  document.getElementById('ca').classList.toggle('off',type!=='gauss');
+  document.getElementById('cn').classList.toggle('off',type!=='well');
+  document.getElementById('cL').classList.toggle('off',type!=='well');
+  aEL.disabled=type!=='gauss'; nEL.disabled=LEL.disabled=type!=='well';
+  document.getElementById('av').textContent=(+aEL.value).toFixed(2);
+  document.getElementById('nv').textContent=nEL.value;
+  document.getElementById('Lv').textContent=(+LEL.value).toFixed(1);
+  cx.clearRect(0,0,W,H);
+  // plot bg
+  cx.fillStyle=C('--plot');cx.fillRect(lx0,ly0,lx1-lx0,ly1-ly0);
+  // forbidden region (below boundary sx*sp=0.5): shade pale orange
+  cx.fillStyle="rgba(213,94,0,0.10)";
+  cx.beginPath();cx.moveTo(lx0,ly1);
+  for(let i=0;i<=200;i++){const sx=Math.pow(10,L10(XMIN)+(L10(XMAX)-L10(XMIN))*i/200);let sp=0.5/sx;sp=Math.max(YMIN,Math.min(YMAX,sp));cx.lineTo(PX(sx),PY(sp));}
+  cx.lineTo(lx1,ly1);cx.closePath();cx.fill();
+  // grid at powers of 10
+  cx.strokeStyle="#E6E6E6";cx.lineWidth=0.5;cx.fillStyle=C('--gray');cx.font="13px 'JetBrains Mono',monospace";
+  for(const g of [0.1,1,10]){
+    if(g>=XMIN&&g<=XMAX){const X=PX(g);cx.beginPath();cx.moveTo(X,ly0);cx.lineTo(X,ly1);cx.stroke();cx.textAlign="center";cx.fillText(g.toString(),X,ly1+18);}
+    if(g>=YMIN&&g<=YMAX){const Y=PY(g);cx.beginPath();cx.moveTo(lx0,Y);cx.lineTo(lx1,Y);cx.stroke();cx.textAlign="right";cx.fillText(g.toString(),lx0-6,Y+4);}
+  }
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(lx0,ly0,lx1-lx0,ly1-ly0);
+  // boundary hyperbola
+  cx.strokeStyle=C('--blue');cx.lineWidth=2.2;cx.beginPath();let st=false;
+  for(let i=0;i<=300;i++){const sx=Math.pow(10,L10(XMIN)+(L10(XMAX)-L10(XMIN))*i/300);const sp=0.5/sx;if(sp<YMIN||sp>YMAX)continue;const X=PX(sx),Y=PY(sp);st?cx.lineTo(X,Y):cx.moveTo(X,Y);st=true;}
+  cx.stroke();
+  // axis labels
+  cx.fillStyle=C('--ink');cx.font="15px 'Inter',sans-serif";cx.textAlign="center";
+  cx.fillText("position spread  σₓ (nm)",(lx0+lx1)/2,H-12);
+  cx.save();cx.translate(18,(ly0+ly1)/2);cx.rotate(-PI/2);cx.fillText("momentum spread  σₚ (ħ/nm)",0,0);cx.restore();
+  cx.fillStyle=C('--verm');cx.font="13px 'Inter',sans-serif";cx.textAlign="left";
+  cx.fillText("forbidden:  σₓσₚ < ħ/2",PX(0.07),PY(0.05));
+  // well-state trail n=1..8 at current L (faint) -- only for the well
+  if(type==='well'){
+    const Lc=+LEL.value;
+    for(let k=1;k<=8;k++){const [sx,sp]=wellSig(k,Lc);cx.fillStyle="rgba(191,116,0,0.30)";cx.beginPath();cx.arc(PX(sx),PY(sp),3.5,0,7);cx.fill();}
+  }
+  // current state
+  let sx,sp,col;
+  if(type==='gauss'){[sx,sp]=gaussSig(+aEL.value);col=C('--green');}
+  else{[sx,sp]=wellSig(+nEL.value,+LEL.value);col=C('--amber');}
+  const X=PX(sx),Y=PY(sp);
+  cx.fillStyle=col;cx.beginPath();cx.arc(X,Y,7.5,0,7);cx.fill();
+  cx.strokeStyle="#fff";cx.lineWidth=1.5;cx.stroke();
+  // label
+  cx.fillStyle=col;cx.font="bold 13px 'Inter',sans-serif";cx.textAlign="left";
+  const lbl=type==='gauss'?"Gaussian":("well n="+nEL.value);
+  cx.fillText(lbl,X+12,Y-6);
+  // stats
+  const prod=sx*sp,ratio=prod/0.5;
+  document.getElementById('sx').textContent=sx.toFixed(3)+' nm';
+  document.getElementById('sp').textContent=sp.toFixed(3);
+  document.getElementById('prod').textContent=prod.toFixed(3);
+  document.getElementById('ratio').textContent=ratio.toFixed(3);
+  document.getElementById('msg').textContent=
+    (ratio<1.0005? "On the bound: this Gaussian saturates σₓσₚ = ħ/2 exactly (ratio 1.000)."
+     : "Above the bound by a factor "+ratio.toFixed(3)+": σₓσₚ = "+prod.toFixed(3)+" ħ > ħ/2. The state cannot be Gaussian, so it cannot saturate Cauchy–Schwarz.");
+}
+[tEL,aEL,nEL,LEL].forEach(el=>el.addEventListener('input',draw));
+draw();
+</script>
+</body>
+</html>

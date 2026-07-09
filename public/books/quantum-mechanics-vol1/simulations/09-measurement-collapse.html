@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measurement &amp; collapse — Quantum Mechanics Vol. 1, Chapter 9</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:800px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:8px 0;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:150px;accent-color:var(--blue);}
+  select,button{font-family:inherit;font-size:14px;padding:5px 10px;border:0.75px solid var(--hair);background:var(--plot);border-radius:6px;cursor:pointer;}
+  button:hover{background:#ececec;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;margin-top:14px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:120px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .last{font-size:14px;margin:12px 0 0;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  code{font-family:'JetBrains Mono',monospace;font-size:0.92em;}
+  .pill{display:inline-block;padding:2px 9px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Measurement &amp; collapse</h1>
+  <p class="sub">Prepare a qubit, pick a Pauli observable, and measure. Each shot returns a single eigenvalue &plusmn;1 with the Born-rule probability <code>|&lang;a|&psi;&rang;|<sup>2</sup></code>, and the state collapses onto that eigenstate. Fire many shots (re-preparing the same state each time) and watch the tallies converge to the theoretical probabilities.</p>
+  <div class="controls">
+    <div class="ctl"><label for="th">&theta;</label><input type="range" id="th" min="0" max="180" step="1" value="60"><span id="thv" style="font-family:monospace">60&deg;</span></div>
+    <div class="ctl"><label for="ph">&phi;</label><input type="range" id="ph" min="0" max="360" step="1" value="90"><span id="phv" style="font-family:monospace">90&deg;</span></div>
+    <div class="ctl"><label for="ax">measure</label>
+      <select id="ax"><option value="z">&sigma;z</option><option value="x">&sigma;x</option><option value="y">&sigma;y</option></select>
+    </div>
+    <button id="one">Measure 1</button>
+    <button id="many">Measure 200&times;</button>
+    <button id="reset">Reset tallies</button>
+  </div>
+  <p class="last">Last outcome: <span id="last" class="pill" style="background:var(--plot)">&mdash;</span> &nbsp; then state collapses to <span id="coll" style="font-family:monospace">&mdash;</span></p>
+  <canvas id="cv" width="760" height="220" aria-label="Histogram of measurement outcomes versus theoretical probabilities"></canvas>
+  <div class="stats">
+    <div class="card"><div class="l">P(+1) theory</div><div class="v" id="pth">&mdash;</div></div>
+    <div class="card"><div class="l">+1 count</div><div class="v" id="cp">0</div></div>
+    <div class="card"><div class="l">&minus;1 count</div><div class="v" id="cm">0</div></div>
+    <div class="card"><div class="l">measured P(+1)</div><div class="v" id="pmeas">&mdash;</div></div>
+  </div>
+  <p class="note">The dashed lines are the exact Born probabilities; the solid bars are the running frequencies. They agree only in the long run &mdash; a single measurement is irreducibly random. Re-measuring the <em>same</em> axis right after a shot would repeat the collapsed value with certainty; here every shot starts from the freshly prepared state so the statistics build up.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+let cntP=0,cntM=0;
+function probs(th,ph,ax){
+  const rx=Math.sin(th)*Math.cos(ph),ry=Math.sin(th)*Math.sin(ph),rz=Math.cos(th);
+  const r=ax==='z'?rz:ax==='x'?rx:ry;
+  return (1+r)/2; // P(+1)
+}
+function collapsed(ax,out){
+  const s=out>0?'+':'−';
+  return ax==='z'?(out>0?'|0⟩':'|1⟩'):'|'+s+ax+'⟩';
+}
+function draw(pth){
+  cx.clearRect(0,0,W,H);
+  const x0=120,bw=180,gap=160,base=H-40,top=20,scale=(base-top);
+  const groups=[['+1',cntP,'#009E73'],['−1',cntM,'#D55E00']];
+  const tot=cntP+cntM;
+  cx.strokeStyle='#2a1a0e';cx.lineWidth=0.75;
+  cx.beginPath();cx.moveTo(80,base);cx.lineTo(W-40,base);cx.stroke();
+  // y ticks 0,0.5,1
+  cx.fillStyle='#545454';cx.font='12px JetBrains Mono,monospace';cx.textAlign='right';
+  for(const f of [0,0.5,1]){const y=base-f*scale;cx.strokeStyle='#DDD';cx.beginPath();cx.moveTo(80,y);cx.lineTo(W-40,y);cx.stroke();cx.fillText(f.toFixed(1),74,y+4);}
+  cx.textAlign='center';
+  groups.forEach((g,i)=>{
+    const cxg=x0+i*(bw+gap);
+    const frac=tot?g[1]/tot:0;
+    const h=frac*scale;
+    cx.fillStyle=g[2];cx.fillRect(cxg,base-h,bw,h);
+    // theory dashed line
+    const pth_i=i===0?pth:1-pth;
+    const yt=base-pth_i*scale;
+    cx.strokeStyle=g[2];cx.setLineDash([6,4]);cx.lineWidth=2;
+    cx.beginPath();cx.moveTo(cxg-14,yt);cx.lineTo(cxg+bw+14,yt);cx.stroke();cx.setLineDash([]);
+    cx.fillStyle='#2a1a0e';cx.font='15px Inter,Arial';cx.fillText('outcome '+g[0],cxg+bw/2,base+24);
+    cx.fillStyle=g[2];cx.font='13px JetBrains Mono,monospace';
+    cx.fillText('theory '+pth_i.toFixed(3),cxg+bw/2,yt-6);
+  });
+}
+function curTh(){return +document.getElementById('th').value*Math.PI/180;}
+function curPh(){return +document.getElementById('ph').value*Math.PI/180;}
+function curAx(){return document.getElementById('ax').value;}
+function refresh(){
+  document.getElementById('thv').textContent=document.getElementById('th').value+'°';
+  document.getElementById('phv').textContent=document.getElementById('ph').value+'°';
+  const pth=probs(curTh(),curPh(),curAx());
+  document.getElementById('pth').textContent=pth.toFixed(3);
+  const tot=cntP+cntM;
+  document.getElementById('cp').textContent=cntP;document.getElementById('cm').textContent=cntM;
+  document.getElementById('pmeas').textContent=tot?(cntP/tot).toFixed(3):'—';
+  draw(pth);
+}
+function shot(){
+  const pth=probs(curTh(),curPh(),curAx());
+  const out=Math.random()<pth?1:-1;
+  if(out>0)cntP++;else cntM++;
+  const ax=curAx();
+  document.getElementById('last').textContent=(out>0?'+1':'−1');
+  document.getElementById('last').style.background=out>0?'#CCEBE1':'#F7DDCC';
+  document.getElementById('coll').textContent=collapsed(ax,out);
+}
+document.getElementById('one').onclick=()=>{shot();refresh();};
+document.getElementById('many').onclick=()=>{for(let i=0;i<200;i++)shot();refresh();};
+document.getElementById('reset').onclick=()=>{cntP=0;cntM=0;refresh();};
+['th','ph','ax'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{cntP=0;cntM=0;refresh();}));
+refresh();
+</script>
+</body>
+</html>

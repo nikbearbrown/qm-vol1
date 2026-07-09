@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time evolution: unitary vs unstable — Quantum Mechanics Vol. 1, Chapter 10</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--plot:#F5F5F5;--paleblue:#CCE5F1;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 16px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px;}
+  button{font-family:inherit;font-size:13px;padding:6px 11px;border:0.75px solid var(--hair);background:var(--plot);border-radius:6px;cursor:pointer;}
+  button.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .seg{display:inline-flex;border:0.75px solid var(--hair);border-radius:6px;overflow:hidden;}
+  .seg button{border:0;border-radius:0;border-right:0.75px solid var(--hair);}
+  .seg button:last-child{border-right:0;}
+  label{font-size:13px;}
+  input[type=range]{width:120px;accent-color:var(--blue);vertical-align:middle;}
+  .ind{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:14px;padding:6px 11px;border-radius:6px;font-weight:600;}
+  .ok{background:#CCEBE1;color:var(--green);}
+  .bad{background:#F7DDCC;color:var(--verm);}
+  .note{font-size:13px;color:var(--gray);margin:14px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Time evolution: unitary vs unstable</h1>
+  <p class="sub">A Gaussian wave packet evolving under the time-dependent Schrödinger equation. The <b>Crank–Nicolson</b> stepper is exactly unitary — the norm holds at 1.000 forever. Switch to <b>explicit Euler</b> and watch the normalization indicator climb past 1 within a few steps and the packet blow up: explicit Euler is unconditionally unstable for the Schrödinger equation, the chapter's central warning made visible.</p>
+  <div class="controls">
+    <span class="seg"><button id="cn" class="on">Crank–Nicolson</button><button id="eu">Explicit Euler</button></span>
+    <span class="seg"><button id="p_free" class="on">Free</button><button id="p_bar">Barrier</button><button id="p_well">Well</button></span>
+    <span class="ind ok" id="ind">∫|Ψ|² dx = 1.000</span>
+  </div>
+  <div class="controls" style="margin-top:0;">
+    <button id="play">▶ Play</button>
+    <button id="reset">Reset</button>
+    <label>k₀ <input type="range" id="k0" min="1" max="8" step="0.5" value="4"><span id="k0v" style="font-family:monospace">4.0</span> nm⁻¹</label>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gray)">t = <span id="tval">0.0</span> fs</span>
+  </div>
+  <canvas id="cv" width="760" height="360" aria-label="Probability density of the evolving wave packet"></canvas>
+  <p class="note" id="msg">Crank–Nicolson: norm conserved at machine precision regardless of step size. Try the barrier (set k₀ high enough and watch part of the packet tunnel through) and the well. Then switch to Euler to see why the stepper choice is not optional.</p>
+</div>
+<script>
+const A=0.0381, HBAR=0.6582; // eV*nm^2 ; eV*fs
+const M=400, xmin=-10, xmax=10, h=(xmax-xmin)/(M-1), tk=A/(h*h);
+let re=new Array(M), im=new Array(M), V=new Array(M);
+let stepper='cn', pot='free', k0=4, t=0, playing=false, diverged=false;
+function Vfun(x){ if(pot==='free')return 0; if(pot==='bar')return Math.abs(x-0)<0.4?0.6:0; if(pot==='well')return Math.abs(x)<1.0?-0.8:0; return 0; }
+function buildV(){ for(let j=0;j<M;j++) V[j]=Vfun(xmin+j*h); }
+function init(){ t=0;diverged=false; let nrm=0; const x0=-5,a=0.9;
+  for(let j=0;j<M;j++){const x=xmin+j*h; const g=Math.exp(-((x-x0)**2)/(2*a*a)); re[j]=g*Math.cos(k0*x); im[j]=g*Math.sin(k0*x); nrm+=g*g;}
+  nrm=Math.sqrt(nrm*h); for(let j=0;j<M;j++){re[j]/=nrm;im[j]/=nrm;} buildV(); draw(); updateInd(); }
+function norm(){let s=0;for(let j=0;j<M;j++)s+=re[j]*re[j]+im[j]*im[j];return s*h;}
+function Hpsi(pr,pi){const ar=new Array(M),ai=new Array(M);
+  for(let j=0;j<M;j++){const d=2*tk+V[j]; let r=d*pr[j],i=d*pi[j];
+    if(j>0){r+=-tk*pr[j-1];i+=-tk*pi[j-1];}
+    if(j<M-1){r+=-tk*pr[j+1];i+=-tk*pi[j+1];} ar[j]=r;ai[j]=i;} return [ar,ai];}
+function euler(dt){const [hr,hi]=Hpsi(re,im);const c=dt/HBAR;
+  for(let j=0;j<M;j++){re[j]+=c*hi[j];im[j]-=c*hr[j];}}
+function cn(dt){const r=dt/(2*HBAR);
+  const [hr,hi]=Hpsi(re,im); const br=new Array(M),bi=new Array(M);
+  for(let j=0;j<M;j++){br[j]=re[j]+r*hi[j];bi[j]=im[j]-r*hr[j];}
+  const offi=-r*tk;
+  const cr=new Array(M),ci=new Array(M),dr=new Array(M),di=new Array(M);
+  const cdiv=(ar,ai,Br,Bi)=>{const d=Br*Br+Bi*Bi;return [(ar*Br+ai*Bi)/d,(ai*Br-ar*Bi)/d];};
+  const cmul=(ar,ai,Br,Bi)=>[ar*Br-ai*Bi,ar*Bi+ai*Br];
+  let d0r=1,d0i=r*(2*tk+V[0]);
+  let [a0,b0]=cdiv(0,offi,d0r,d0i);cr[0]=a0;ci[0]=b0;
+  let [v0,w0]=cdiv(br[0],bi[0],d0r,d0i);dr[0]=v0;di[0]=w0;
+  for(let j=1;j<M;j++){const ajr=1,aji=r*(2*tk+V[j]);
+    let [ocr,oci]=cmul(0,offi,cr[j-1],ci[j-1]);const mr=ajr-ocr,mi=aji-oci;
+    let [ccr,cci]=cdiv(0,offi,mr,mi);cr[j]=ccr;ci[j]=cci;
+    let [obr,obi]=cmul(0,offi,dr[j-1],di[j-1]);
+    let [ddr,ddi]=cdiv(br[j]-obr,bi[j]-obi,mr,mi);dr[j]=ddr;di[j]=ddi;}
+  re[M-1]=dr[M-1];im[M-1]=di[M-1];
+  for(let j=M-2;j>=0;j--){let [pr,pi]=cmul(cr[j],ci[j],re[j+1],im[j+1]);re[j]=dr[j]-pr;im[j]=di[j]-pi;}}
+function step(){
+  if(stepper==='cn'){const dt=0.15;for(let s=0;s<4;s++){cn(dt);t+=dt;}}
+  else{const dt=0.005;euler(dt);t+=dt;}
+}
+const cv=document.getElementById('cv'),cx=cv.getContext('2d'),W=cv.width,Hc=cv.height;
+const L=46,R=W-16,T=16,B=Hc-30;
+function draw(){
+  cx.clearRect(0,0,W,Hc);
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(R-L);
+  // potential (scaled to a band)
+  let Vmin=Math.min(...V),Vmax=Math.max(...V); if(Vmax===Vmin){Vmax=Vmin+1;}
+  const Vy=v=>B-((v-Vmin)/(Vmax-Vmin))*0.28*(B-T)-2;
+  cx.strokeStyle='#bbb';cx.lineWidth=1.25;cx.beginPath();
+  for(let j=0;j<M;j++){const px=X(xmin+j*h),py=Vy(V[j]); if(j===0)cx.moveTo(px,py);else cx.lineTo(px,py);}
+  cx.stroke();
+  cx.fillStyle='#888';cx.font="12px Inter";cx.textAlign='left';cx.fillText('V(x)',L+2,Vy(Vmax)-2);
+  // |psi|^2 (filled), auto-scale to current max (cap when diverged)
+  let dens=new Array(M),mx=1e-9; for(let j=0;j<M;j++){dens[j]=re[j]*re[j]+im[j]*im[j];mx=Math.max(mx,dens[j]);}
+  const dy=d=>B-(d/mx)*(B-T)*0.82;
+  cx.fillStyle='rgba(0,114,178,0.18)';cx.strokeStyle='#0072B2';cx.lineWidth=2;
+  cx.beginPath();cx.moveTo(X(xmin),B);
+  for(let j=0;j<M;j++) cx.lineTo(X(xmin+j*h),dy(dens[j]));
+  cx.lineTo(X(xmax),B);cx.closePath();cx.fill();
+  cx.beginPath();for(let j=0;j<M;j++){const px=X(xmin+j*h),py=dy(dens[j]);if(j===0)cx.moveTo(px,py);else cx.lineTo(px,py);}cx.stroke();
+  // axis
+  cx.strokeStyle='#2a1a0e';cx.lineWidth=0.75;cx.beginPath();cx.moveTo(L,B);cx.lineTo(R,B);cx.stroke();
+  cx.fillStyle='#545454';cx.textAlign='center';cx.font="13px Inter";cx.fillText('x (nm)',(L+R)/2,Hc-8);
+  cx.textAlign='left';cx.fillText('|Ψ(x,t)|²',L+2,T+12);
+}
+function updateInd(){const nn=norm();const el=document.getElementById('ind');
+  if(!isFinite(nn)||nn>1.02){el.className='ind bad';el.textContent='∫|Ψ|² dx = '+(isFinite(nn)?nn.toFixed(3):'∞')+'  ✗';}
+  else {el.className='ind ok';el.textContent='∫|Ψ|² dx = '+nn.toFixed(3);}
+  document.getElementById('tval').textContent=t.toFixed(1);
+}
+function frame(){ if(!playing)return;
+  step(); const nn=norm();
+  if(!isFinite(nn)||nn>1e3){diverged=true;playing=false;document.getElementById('play').textContent='▶ Play';
+    document.getElementById('msg').textContent='Explicit Euler has diverged: the norm blew up past any bound, exactly as predicted — every energy component grows by √(1+(ΔtEₖ/ħ)²) > 1 each step. This is why the solver forbids it. Hit Reset and use Crank–Nicolson.';}
+  draw();updateInd();
+  if(playing)requestAnimationFrame(frame);
+}
+const playBtn=document.getElementById('play');
+function doReset(){playing=false;playBtn.textContent='▶ Play';init();}
+function setStepper(s){stepper=s;document.getElementById('cn').classList.toggle('on',s==='cn');document.getElementById('eu').classList.toggle('on',s==='eu');doReset();}
+function setPot(p){pot=p;['free','bar','well'].forEach(k=>document.getElementById('p_'+k).classList.toggle('on',k===p));doReset();}
+document.getElementById('cn').onclick=()=>setStepper('cn');
+document.getElementById('eu').onclick=()=>setStepper('eu');
+document.getElementById('p_free').onclick=()=>setPot('free');
+document.getElementById('p_bar').onclick=()=>setPot('bar');
+document.getElementById('p_well').onclick=()=>setPot('well');
+playBtn.onclick=function(){playing=!playing;this.textContent=playing?'❚❚ Pause':'▶ Play';if(playing){if(!isFinite(norm()))init();requestAnimationFrame(frame);}};
+document.getElementById('reset').onclick=()=>doReset();
+document.getElementById('k0').oninput=function(){k0=+this.value;document.getElementById('k0v').textContent=k0.toFixed(1);doReset();};
+init();
+</script>
+</body>
+</html>

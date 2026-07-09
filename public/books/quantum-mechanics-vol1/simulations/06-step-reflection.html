@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potential step: reflection &amp; transmission — Quantum Mechanics Vol. 1, Chapter 6</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:220px;accent-color:var(--blue);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:110px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Potential step: reflection &amp; transmission</h1>
+  <p class="sub">A particle arrives from the left at a step of height V&#8320;. The real part of the wave function is shown: a standing interference pattern builds on the left from the incident and reflected waves, while on the right the wave either travels on (E &gt; V&#8320;) or decays as an evanescent tail (E &lt; V&#8320;). Even with energy to spare, some reflection always remains.</p>
+  <canvas id="cv" width="760" height="300" aria-label="Wave function at a potential step"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>Re&nbsp;&psi;(x)</span>
+    <span class="key"><span class="dot" style="background:var(--paleblue)"></span>step region V&#8320;</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="r">E / V&#8320;</label><input type="range" id="r" min="0.05" max="4" step="0.01" value="1.6"><span id="rv" style="font-family:monospace">1.60</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">R (reflection)</div><div class="v" id="R">&mdash;</div></div>
+    <div class="card"><div class="l">T (transmission)</div><div class="v" id="T">&mdash;</div></div>
+    <div class="card"><div class="l">R + T</div><div class="v" id="sum">1.000</div></div>
+    <div class="card"><div class="l">regime</div><div class="v" id="reg" style="font-size:14px">&mdash;</div></div>
+  </div>
+  <p class="note">For E &lt; V&#8320; the reflection is total (R = 1), yet an evanescent tail still penetrates the step &mdash; probability is present there, but no current flows through. For E &gt; V&#8320; transmission turns on, but R stays above zero: any abrupt change in the wavelength reflects part of the wave, just like an impedance mismatch on a transmission line. Reflection vanishes only when the step disappears.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const rEL=document.getElementById('r');
+function draw(){
+  const r=+rEL.value; document.getElementById('rv').textContent=r.toFixed(2);
+  const V0=1, E=r*V0;
+  const k0=Math.sqrt(E);
+  cx.clearRect(0,0,W,H);
+  const px0=20,px1=W-16,py0=16,py1=H-26;
+  const midY=(py0+py1)/2;
+  const xstep=(px0+px1)/2; // x=0 at canvas middle
+  // step shading on right
+  cx.fillStyle=C('--paleblue'); cx.fillRect(xstep,py0,px1-xstep,py1-py0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=1;cx.beginPath();cx.moveTo(px0,midY);cx.lineTo(px1,midY);cx.stroke();
+  // map: x in [-Xl,0] left, [0,Xr] right; choose scale so a few wavelengths show
+  const scaleX=40; // px per unit length
+  const Xl=(xstep-px0)/scaleX, Xr=(px1-xstep)/scaleX;
+  let R,T,reg;
+  cx.strokeStyle=C('--blue');cx.lineWidth=2;cx.beginPath();
+  let first=true;
+  if(E>=V0){
+    const k1=Math.sqrt(E-V0);
+    const B=(k0-k1)/(k0+k1), Cc=2*k0/(k0+k1);
+    R=B*B; T=4*k0*k1/((k0+k1)*(k0+k1)); reg="E > V₀";
+    for(let xp=px0;xp<=px1;xp++){
+      const x=(xp-xstep)/scaleX; let re;
+      if(x<0){ re=Math.cos(k0*x)+B*Math.cos(-k0*x); } // incident e^{ik0x}+B e^{-ik0x}, real part at t=0
+      else { re=Cc*Math.cos(k1*x); }
+      const Y=midY-46*re/1.6; first?(cx.moveTo(xp,Y),first=false):cx.lineTo(xp,Y);
+    }
+  } else {
+    const kap=Math.sqrt(V0-E);
+    // B=(k0-iκ)/(k0+iκ) -> |B|=1; C=2k0/(k0+iκ)
+    const den=k0*k0+kap*kap;
+    const Bre=(k0*k0-kap*kap)/den, Bim=(-2*k0*kap)/den;
+    const Cre=2*k0*k0/den; // Re(C), with C = 2k0/(k0+iκ) = 2k0(k0−iκ)/den
+    R=1; T=0; reg="E < V₀";
+    for(let xp=px0;xp<=px1;xp++){
+      const x=(xp-xstep)/scaleX; let re;
+      if(x<0){ // Re(e^{ik0x}+B e^{-ik0x}) = cos(k0x)+ Re(B(cos k0x - i sin k0x))
+        re=Math.cos(k0*x)+(Bre*Math.cos(k0*x)+Bim*Math.sin(k0*x));
+      } else { // Re(C e^{-κx}) = e^{-κx} * Re(C)
+        re=Math.exp(-kap*x)*Cre;
+      }
+      const Y=midY-46*re/2.0; first?(cx.moveTo(xp,Y),first=false):cx.lineTo(xp,Y);
+    }
+  }
+  cx.stroke();
+  // step marker line
+  cx.strokeStyle=C('--gray');cx.lineWidth=1;cx.setLineDash([4,3]);cx.beginPath();cx.moveTo(xstep,py0);cx.lineTo(xstep,py1);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=C('--gray');cx.font="12px 'JetBrains Mono',monospace";cx.textAlign="center";cx.fillText("x = 0",xstep,py1+18);
+  cx.fillStyle=C('--gray');cx.font="13px 'Inter',sans-serif";cx.textAlign="left";cx.fillText("V₀",xstep+8,py0+14);
+  cx.textAlign="left";cx.fillText("incident →",px0+6,py0+14);
+  document.getElementById('R').textContent=R.toFixed(3);
+  document.getElementById('T').textContent=T.toFixed(3);
+  document.getElementById('sum').textContent=(R+T).toFixed(3);
+  document.getElementById('reg').textContent=reg;
+}
+rEL.addEventListener('input',draw);
+draw();
+</script>
+</body>
+</html>

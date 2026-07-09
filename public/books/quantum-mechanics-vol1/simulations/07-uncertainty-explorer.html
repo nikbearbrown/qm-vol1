@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uncertainty explorer — Quantum Mechanics Vol. 1, Chapter 7</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--paleorange:#FBE9CC;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:160px;accent-color:var(--blue);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .card.hl{background:#eef6ec;border-color:var(--green);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  .dash{width:20px;height:0;border-top:2px dashed var(--purple);display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-2px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Uncertainty explorer</h1>
+  <p class="sub">A Gaussian wave packet &psi;(x) = (1/&pi;a&sup2;)<sup>1/4</sup> e<sup>&minus;x&sup2;/2a&sup2;</sup> e<sup>ik&#8320;x</sup>, shown in position space (top) and momentum space (bottom). Widen the packet in x and it narrows in p, and conversely &mdash; but the product &sigma;<sub>x</sub>&sigma;<sub>p</sub> never moves: the Gaussian sits exactly on the Kennard bound &#8463;/2. Lengths in nm, momenta in units of &#8463;/nm (so &#8463; = 1 and the bound is 1/2).</p>
+  <canvas id="cv" width="760" height="400" aria-label="Position-space and momentum-space probability densities of a Gaussian packet"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>|&psi;(x)|&sup2; (position)</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>|&phi;(p)|&sup2; (momentum)</span>
+    <span class="key"><span class="dash"></span>mean &plusmn; &sigma;</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="a">packet width a (nm)</label><input type="range" id="a" min="0.3" max="3.0" step="0.05" value="1.0"><span id="av" style="font-family:monospace">1.00</span></div>
+    <div class="ctl"><label for="k0">mean wavenumber k&#8320; (nm&#8315;&sup1;)</label><input type="range" id="k0" min="0" max="6" step="0.25" value="2.0"><span id="k0v" style="font-family:monospace">2.00</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">&sigma;<sub>x</sub> = a/&radic;2</div><div class="v" id="sx">&mdash;</div></div>
+    <div class="card"><div class="l">&sigma;<sub>p</sub> = 1/(a&radic;2)</div><div class="v" id="sp">&mdash;</div></div>
+    <div class="card"><div class="l">&#10216;p&#10217; = &#8463;k&#8320;</div><div class="v" id="pmean">&mdash;</div></div>
+    <div class="card"><div class="l">&sigma;<sub>x</sub>&sigma;<sub>p</sub> (&#8463;)</div><div class="v" id="prod">&mdash;</div></div>
+    <div class="card hl"><div class="l">&sigma;<sub>x</sub>&sigma;<sub>p</sub> &divide; (&#8463;/2)</div><div class="v" id="ratio">&mdash;</div></div>
+  </div>
+  <p class="note" id="msg"></p>
+  <p class="note">Why does the product stay pinned at &#8463;/2? Because the Gaussian is the unique minimum-uncertainty state &mdash; the one state for which the Cauchy&ndash;Schwarz step in the Robertson proof holds with equality. Every other shape (try the infinite-well states in the companion Robertson-boundary explorer) sits strictly above the bound. Changing k&#8320; shifts the momentum distribution to &#10216;p&#10217; = &#8463;k&#8320; without changing either width.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const aEL=document.getElementById('a'),kEL=document.getElementById('k0');
+const SQ2=Math.SQRT2;
+
+function gauss(mu,sig,t){const z=(t-mu)/sig;return Math.exp(-z*z/2);}
+
+function panel(px0,px1,py0,py1,title,xlabel){
+  cx.fillStyle=C('--plot');cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  cx.fillStyle=C('--ink');cx.font="14px 'Inter',sans-serif";cx.textAlign="left";
+  cx.fillText(title,px0+8,py0+19);
+  cx.fillStyle=C('--gray');cx.textAlign="right";cx.font="13px 'Inter',sans-serif";
+  cx.fillText(xlabel,px1-6,py1+19);
+}
+
+function curve(px0,px1,py0,py1,xmin,xmax,fn,color,fill,mu,sig){
+  const xx=t=>px0+(px1-px0)*(t-xmin)/(xmax-xmin);
+  const clampX=v=>Math.max(px0,Math.min(px1,v));
+  let m=0;const Ns=400;
+  for(let i=0;i<=Ns;i++){const t=xmin+(xmax-xmin)*i/Ns;m=Math.max(m,fn(t));}
+  const yy=v=>py1-(py1-py0-16)*v/m;
+  // filled density
+  cx.beginPath();cx.moveTo(xx(xmin),py1);
+  for(let i=0;i<=Ns;i++){const t=xmin+(xmax-xmin)*i/Ns;cx.lineTo(xx(t),yy(fn(t)));}
+  cx.lineTo(xx(xmax),py1);cx.closePath();
+  cx.fillStyle=fill;cx.fill();
+  cx.beginPath();
+  for(let i=0;i<=Ns;i++){const t=xmin+(xmax-xmin)*i/Ns;const X=xx(t),Y=yy(fn(t));i?cx.lineTo(X,Y):cx.moveTo(X,Y);}
+  cx.strokeStyle=color;cx.lineWidth=2.4;cx.stroke();
+  // mean line (solid, thin, purple)
+  cx.strokeStyle=C('--purple');cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(xx(mu),py0+4);cx.lineTo(xx(mu),py1);cx.stroke();
+  // +/- sigma lines (dashed, purple)
+  cx.setLineDash([5,4]);cx.lineWidth=1.4;
+  for(const xs of [mu-sig,mu+sig]){
+    const X=clampX(xx(xs));
+    cx.beginPath();cx.moveTo(X,py0+4);cx.lineTo(X,py1);cx.stroke();
+  }
+  cx.setLineDash([]);
+  // sigma span bracket + labels near top
+  const yb=py0+12;
+  cx.strokeStyle=C('--purple');cx.lineWidth=1.2;
+  cx.beginPath();cx.moveTo(clampX(xx(mu-sig)),yb);cx.lineTo(clampX(xx(mu+sig)),yb);cx.stroke();
+  cx.fillStyle=C('--purple');cx.font="12px 'Inter',sans-serif";cx.textAlign="center";
+  cx.fillText("2σ",clampX(xx(mu)),yb-3);
+}
+
+function draw(){
+  const a=+aEL.value,k0=+kEL.value;
+  document.getElementById('av').textContent=a.toFixed(2);
+  document.getElementById('k0v').textContent=k0.toFixed(2);
+  cx.clearRect(0,0,W,H);
+  const sx=a/SQ2, sp=1/(a*SQ2);
+  const padL=40,padR=20;
+  const px0=padL,px1=W-padR;
+  // top panel: |psi(x)|^2
+  panel(px0,px1,16,166,"|ψ(x)|²   —   position space","position  x (nm)");
+  curve(px0,px1,16,166,-6,6,t=>gauss(0,sx,t),C('--blue'),"rgba(0,114,178,0.16)",0,sx);
+  // bottom panel: |phi(p)|^2
+  panel(px0,px1,212,362,"|φ(p)|²   —   momentum space","momentum  p (ħ/nm)");
+  curve(px0,px1,212,362,-8,8,t=>gauss(k0,sp,t),C('--amber'),"rgba(191,116,0,0.16)",k0,sp);
+  // stats
+  document.getElementById('sx').textContent=sx.toFixed(3)+' nm';
+  document.getElementById('sp').textContent=sp.toFixed(3);
+  document.getElementById('pmean').textContent=k0.toFixed(2)+' ħ/nm';
+  const prod=sx*sp;
+  document.getElementById('prod').textContent=prod.toFixed(3);
+  document.getElementById('ratio').textContent=(prod/0.5).toFixed(3);
+  document.getElementById('msg').textContent=
+    "σₓ = "+sx.toFixed(3)+" nm and σₚ = "+sp.toFixed(3)+" ħ/nm give σₓσₚ = "+prod.toFixed(3)+" ħ = ħ/2 exactly. Widen a and the position spread grows while the momentum spread shrinks in lockstep; the product is fixed.";
+}
+[aEL,kEL].forEach(el=>el.addEventListener('input',draw));
+draw();
+</script>
+</body>
+</html>

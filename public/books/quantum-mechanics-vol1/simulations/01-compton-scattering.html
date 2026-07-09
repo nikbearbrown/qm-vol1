@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compton Scattering — Quantum Mechanics Vol. 1, Chapter 1</title>
+<style>
+  :root{--ink:#2a1a0e;--red:#C8102E;--gray:#545454;--hair:#D4D4D4;--chart:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:var(--chart);}
+  .controls{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:10px;font-size:14px;}
+  input[type=range]{width:220px;accent-color:var(--red);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--chart);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:96px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Compton scattering</h1>
+  <p class="sub">A single X-ray photon strikes a resting electron. Sweep the scattering angle: the wavelength shift Δλ depends only on the angle, not on the incident wavelength.</p>
+  <canvas id="plot" width="720" height="360" aria-label="Compton scattering geometry"></canvas>
+  <div class="controls">
+    <div class="ctl"><label for="th">Scattering angle θ</label>
+      <input type="range" id="th" min="0" max="180" step="1" value="60">
+      <span id="thout" style="font-weight:600;min-width:44px;">60°</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">Δλ</div><div class="v" id="dl">—</div></div>
+    <div class="card"><div class="l">λ′ (scattered)</div><div class="v" id="lp">—</div></div>
+    <div class="card"><div class="l">Shift</div><div class="v" id="pct">—</div></div>
+    <div class="card"><div class="l">Photon energy</div><div class="v" id="en">—</div></div>
+  </div>
+  <p class="note">Incident: Mo Kα X-ray, λ = 0.0709 nm (E ≈ 17.5 keV). Δλ = (h/mₑc)(1 − cos θ) with h/mₑc = 0.002426 nm. Maximum shift is at θ = 180° (back-scatter); zero at θ = 0°.</p>
+</div>
+<script>
+const cv=document.getElementById('plot'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height,ox=300,oy=200;
+const lam0=0.0709, lc=0.002426;          // nm
+const th=document.getElementById('th');
+function arrow(x1,y1,x2,y2,col,wd){cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=wd;
+  cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1);cx.beginPath();
+  cx.moveTo(x2,y2);cx.lineTo(x2-10*Math.cos(a-0.4),y2-10*Math.sin(a-0.4));
+  cx.lineTo(x2-10*Math.cos(a+0.4),y2-10*Math.sin(a+0.4));cx.closePath();cx.fill();}
+function draw(){
+  const t=+th.value, tr=t*Math.PI/180;
+  const dl=lc*(1-Math.cos(tr)), lp=lam0+dl;
+  const E=1.24/lam0, Ep=1.24/lp;         // keV (E[keV]=1.24/λ[nm])
+  document.getElementById('thout').textContent=t+'°';
+  cx.clearRect(0,0,W,H);
+  // dashed incident axis
+  cx.setLineDash([5,4]);cx.strokeStyle='#D4D4D4';cx.lineWidth=0.8;
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox+150,oy);cx.stroke();cx.setLineDash([]);
+  // incoming photon
+  arrow(90,oy,ox-16,oy,'#C8102E',2.4);
+  cx.fillStyle='#C8102E';cx.font="12px 'Inter',sans-serif";cx.textAlign='left';
+  cx.fillText('incoming photon',120,oy-12);
+  cx.fillStyle='#545454';cx.font="11px 'JetBrains Mono',monospace";cx.fillText('λ = 0.0709 nm',120,oy+20);
+  // electron
+  cx.fillStyle='#2a1a0e';cx.beginPath();cx.arc(ox,oy,6,0,7);cx.fill();
+  cx.fillStyle='#545454';cx.font="11px 'Inter',sans-serif";cx.textAlign='center';cx.fillText('electron at rest',ox,oy+24);
+  // scattered photon
+  const Ls=150, sx=ox+Ls*Math.cos(tr), sy=oy-Ls*Math.sin(tr);
+  arrow(ox+16*Math.cos(tr),oy-16*Math.sin(tr),sx,sy,'#C8102E',2.4);
+  const rs=Math.cos(tr)>=0, lxs=sx+(rs?8:-8);
+  cx.textAlign=rs?'left':'right';
+  cx.fillStyle='#C8102E';cx.font="12px 'Inter',sans-serif";cx.fillText('scattered photon',lxs,sy-4);
+  cx.fillStyle='#545454';cx.font="11px 'JetBrains Mono',monospace";cx.fillText("λ′ = "+lp.toFixed(4)+' nm',lxs,sy+11);
+  cx.textAlign='left';
+  // recoil electron (opposite transverse)
+  const Lr=110, rr=-(Math.PI/180)*(t*0.45+8), rx=ox+Lr*Math.cos(rr), ry=oy-Lr*Math.sin(rr);
+  arrow(ox+10,oy+6,rx,ry,'#2a1a0e',1.6);
+  cx.fillStyle='#545454';cx.font="11px 'Inter',sans-serif";cx.fillText('recoil electron',rx+4,ry+4);
+  // angle arc
+  if(t>2){cx.strokeStyle='#545454';cx.lineWidth=1;cx.beginPath();cx.arc(ox,oy,40,-tr,0);cx.stroke();
+    cx.fillStyle='#545454';cx.font="italic 12px 'Inter',sans-serif";cx.textAlign='left';
+    cx.fillText('θ',ox+46*Math.cos(-tr/2),oy+46*Math.sin(-tr/2)+4);}
+  // stats
+  document.getElementById('dl').textContent=dl.toFixed(5)+' nm';
+  document.getElementById('lp').textContent=lp.toFixed(4)+' nm';
+  document.getElementById('pct').textContent=(dl/lam0*100).toFixed(2)+' %';
+  document.getElementById('en').textContent=Ep.toFixed(2)+' keV';
+}
+['input','change'].forEach(e=>th.addEventListener(e,draw));
+draw();
+</script>
+</body>
+</html>

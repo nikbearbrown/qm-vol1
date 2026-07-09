@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infinite square well explorer — Quantum Mechanics Vol. 1, Chapter 5</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:150px;accent-color:var(--blue);}
+  select{font-family:inherit;font-size:14px;padding:4px 8px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:96px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Infinite square well explorer</h1>
+  <p class="sub">A single particle confined to a box of width L with infinitely high walls. Pick the level n, the box width, and the particle; the wave function &psi;<sub>n</sub>, the probability density |&psi;<sub>n</sub>|&sup2;, and the energy ladder update together. Energies are computed from E<sub>n</sub> = n&sup2;&pi;&sup2;&#8463;&sup2;/2mL&sup2;.</p>
+  <canvas id="cv" width="760" height="360" aria-label="Wave function, probability density and energy ladder of the infinite square well"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>&psi;<sub>n</sub>(x)</span>
+    <span class="key"><span class="dot" style="background:var(--verm)"></span>|&psi;<sub>n</sub>(x)|&sup2;</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>selected level n</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="n">level n</label><input type="range" id="n" min="1" max="8" step="1" value="1"><span id="nv" style="font-family:monospace">1</span></div>
+    <div class="ctl"><label for="L">well width L (nm)</label><input type="range" id="L" min="0.2" max="5" step="0.1" value="1.0"><span id="Lv" style="font-family:monospace">1.0</span></div>
+    <div class="ctl"><label for="part">particle</label>
+      <select id="part">
+        <option value="1">electron</option>
+        <option value="1836.15">proton</option>
+        <option value="0.067">electron in GaAs (m* = 0.067 m&#8323;)</option>
+      </select>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">E<sub>n</sub></div><div class="v" id="En">&mdash;</div></div>
+    <div class="card"><div class="l">E<sub>1</sub> (ground)</div><div class="v" id="E1">&mdash;</div></div>
+    <div class="card"><div class="l">E<sub>n</sub> / E<sub>1</sub></div><div class="v" id="ratio">&mdash;</div></div>
+    <div class="card"><div class="l">interior nodes</div><div class="v" id="nodes">&mdash;</div></div>
+    <div class="card"><div class="l">wavelength &lambda;<sub>n</sub></div><div class="v" id="lam">&mdash;</div></div>
+  </div>
+  <p class="note">The energies climb as n&sup2;, so the gaps widen as you go up the ladder. Doubling the box width quarters every level (E &prop; 1/L&sup2;); a heavier particle lowers the whole ladder (E &prop; 1/m). The state &psi;<sub>n</sub> has exactly n&minus;1 interior nodes and carries momentum p = n&pi;&#8463;/L. Room-temperature thermal energy is about 0.025 eV &mdash; compare it with E<sub>1</sub> to see whether confinement effects dominate.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const hbar=1.054571817e-34, me=9.1093837015e-31, eV=1.602176634e-19;
+const nEL=document.getElementById('n'),LEL=document.getElementById('L'),pEL=document.getElementById('part');
+function fmtE(e){ // e in eV
+  if(e>=1) return e.toFixed(3)+' eV';
+  if(e>=1e-3) return (e*1e3).toFixed(2)+' meV';
+  return (e*1e6).toFixed(2)+' µeV';
+}
+function En(n,Lnm,mrel){ const L=Lnm*1e-9,m=mrel*me; return (n*n*Math.PI*Math.PI*hbar*hbar)/(2*m*L*L)/eV; }
+function draw(){
+  const n=+nEL.value, Lnm=+LEL.value, mrel=+pEL.value;
+  document.getElementById('nv').textContent=n;
+  document.getElementById('Lv').textContent=Lnm.toFixed(1);
+  cx.clearRect(0,0,W,H);
+  // layout: left plot area for psi/|psi|^2, right narrow energy ladder
+  const padL=46,padR=18,padT=18,padB=34, ladderW=150;
+  const px0=padL, px1=W-padR-ladderW-30, py0=padT, py1=H-padB;
+  const midY=(py0+py1)/2;
+  // plot background
+  cx.fillStyle=C('--plot'); cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair'); cx.lineWidth=0.75; cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  // walls (thick)
+  cx.strokeStyle=C('--ink'); cx.lineWidth=4;
+  cx.beginPath(); cx.moveTo(px0,py0); cx.lineTo(px0,py1); cx.moveTo(px1,py0); cx.lineTo(px1,py1); cx.stroke();
+  // zero axis for psi
+  cx.strokeStyle=C('--hair'); cx.lineWidth=1; cx.beginPath(); cx.moveTo(px0,midY); cx.lineTo(px1,midY); cx.stroke();
+  const xx=xi=>px0+(px1-px0)*xi;
+  // |psi|^2 (verm) on lower portion baseline py1, scaled to max 2
+  cx.strokeStyle=C('--verm'); cx.lineWidth=2.4; cx.beginPath();
+  for(let i=0;i<=300;i++){ const xi=i/300, v=2*Math.sin(n*Math.PI*xi)**2; const y=py1-(py1-midY-6)*v/2.0; i?cx.lineTo(xx(xi),y):cx.moveTo(xx(xi),y); }
+  cx.stroke();
+  // psi (blue) about midY, amp fixed
+  const amp=(midY-py0)*0.82;
+  cx.strokeStyle=C('--blue'); cx.lineWidth=2.4; cx.beginPath();
+  for(let i=0;i<=300;i++){ const xi=i/300, v=Math.SQRT2*Math.sin(n*Math.PI*xi); const y=midY-amp*v/Math.SQRT2; i?cx.lineTo(xx(xi),y):cx.moveTo(xx(xi),y); }
+  cx.stroke();
+  // x ticks
+  cx.fillStyle=C('--gray'); cx.font="13px 'JetBrains Mono',monospace"; cx.textAlign="center";
+  cx.fillText("0",px0,py1+20); cx.fillText("L",px1,py1+20);
+  cx.fillStyle=C('--ink'); cx.font="14px 'Inter',sans-serif"; cx.fillText("position  x",(px0+px1)/2,py1+20);
+  // energy ladder on right
+  const lx0=W-padR-ladderW, lx1=W-padR-8, lyTop=py0+6, lyBot=py1;
+  const maxN=8; const Emax=maxN*maxN; // in E1 units up to n=8 -> 64; show up to current max(9,n^2) but compact: use sqrt scale? keep linear to n^2 of 8 =64 too tall. Use levels 1..8 with n^2 but cap display to show ladder; scale by 64.
+  cx.fillStyle=C('--ink'); cx.font="14px 'Inter',sans-serif"; cx.textAlign="center";
+  cx.fillText("energy ladder",(lx0+lx1)/2,py0-2);
+  for(let k=1;k<=maxN;k++){
+    const frac=(k*k)/(maxN*maxN);
+    const y=lyBot-(lyBot-lyTop)*frac;
+    const sel=(k===n);
+    cx.strokeStyle=sel?C('--amber'):C('--hair'); cx.lineWidth=sel?3:1;
+    cx.beginPath(); cx.moveTo(lx0,y); cx.lineTo(lx1,y); cx.stroke();
+    cx.fillStyle=sel?C('--amber'):C('--gray'); cx.font=(sel?"bold ":"")+"12px 'JetBrains Mono',monospace"; cx.textAlign="left";
+    cx.fillText("n="+k,lx0+2,y-3);
+  }
+  // stats
+  const e=En(n,Lnm,mrel), e1=En(1,Lnm,mrel);
+  document.getElementById('En').textContent=fmtE(e);
+  document.getElementById('E1').textContent=fmtE(e1);
+  document.getElementById('ratio').textContent=(n*n)+" : 1";
+  document.getElementById('nodes').textContent=(n-1);
+  const lam=(2*Lnm/n); document.getElementById('lam').textContent=lam.toFixed(3)+' nm';
+}
+[nEL,LEL,pEL].forEach(el=>el.addEventListener('input',draw));
+draw();
+</script>
+</body>
+</html>

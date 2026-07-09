@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sequential Stern–Gerlach — Quantum Mechanics Vol. 1, Chapter 9</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--paleamber:#FBE9CC;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  .controls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin:8px 0 4px;}
+  .stage{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 12px;}
+  .stage h3{margin:0 0 6px;font-size:13px;color:var(--gray);font-weight:600;}
+  select,button{font-family:inherit;font-size:14px;padding:4px 8px;border:0.75px solid var(--hair);background:#fff;border-radius:5px;cursor:pointer;}
+  .keep{margin-top:6px;font-size:13px;display:flex;gap:6px;align-items:center;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;margin-top:14px;}
+  .preset{margin-top:6px;}
+  .preset button{font-size:12px;margin-right:6px;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  code{font-family:'JetBrains Mono',monospace;font-size:0.92em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Sequential Stern&ndash;Gerlach</h1>
+  <p class="sub">A spin-up beam |0&rang; enters a chain of Stern&ndash;Gerlach analysers. Each one measures spin along its axis, splitting the beam; you keep one output and pass it on. The relative beam intensities are exact Born probabilities. Set the chain to <strong>Z &rarr; X &rarr; Z</strong> and watch the middle X erase the original Z certainty &mdash; the final Z comes out 50/50.</p>
+  <div class="preset">
+    Presets:
+    <button data-seq="z+,z,_">Z &rarr; Z</button>
+    <button data-seq="z+,x,_">Z &rarr; X</button>
+    <button data-seq="z+,x+,z">Z &rarr; X &rarr; Z</button>
+  </div>
+  <div class="controls" id="stages"></div>
+  <canvas id="cv" width="760" height="300" aria-label="Beam path through the Stern-Gerlach chain"></canvas>
+  <p class="note">Intensities are relative to the entering |0&rang; beam (set to 1). A keep-toggle collapses the state onto that eigenstate before the next analyser; the final analyser shows <em>both</em> of its outputs. Because |+x&rang; and |&minus;x&rang; are each a 50/50 mix of |0&rang; and |1&rang;, any X stage between two Z stages wipes out the Z memory: <code>[&sigma;<sub>x</sub>,&sigma;<sub>z</sub>] &ne; 0</code> made tangible.</p>
+</div>
+<script>
+const R2=1/Math.SQRT2;
+// complex helpers: c=[re,im]
+const cadd=(a,b)=>[a[0]+b[0],a[1]+b[1]];
+const cmul=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]];
+const cconj=a=>[a[0],-a[1]];
+const cabs2=a=>a[0]*a[0]+a[1]*a[1];
+// eigenstates as 2-vectors of complex
+const EIG={
+  z:{'+':[[1,0],[0,0]], '-':[[0,0],[1,0]]},
+  x:{'+':[[R2,0],[R2,0]], '-':[[R2,0],[-R2,0]]},
+  y:{'+':[[R2,0],[0,R2]], '-':[[R2,0],[0,-R2]]},
+};
+function inner(e,psi){ // <e|psi>
+  return cadd(cmul(cconj(e[0]),psi[0]),cmul(cconj(e[1]),psi[1]));
+}
+function prob(axis,sign,psi){ return cabs2(inner(EIG[axis][sign],psi)); }
+
+const stagesEl=document.getElementById('stages');
+const cfg=[{axis:'z',keep:'+',final:false},{axis:'x',keep:'+',final:false},{axis:'z',keep:'+',final:true}];
+function buildUI(){
+  stagesEl.innerHTML='';
+  cfg.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='stage';
+    const isFinal=(i===2);
+    d.innerHTML='<h3>Analyser '+(i+1)+(isFinal?' (final — shows both)':'')+'</h3>';
+    const sel=document.createElement('select');
+    [['_','— none —'],['z','Z axis'],['x','X axis'],['y','Y axis']].forEach(o=>{const op=document.createElement('option');op.value=o[0];op.textContent=o[1];if(o[0]===s.axis)op.selected=true;sel.appendChild(op);});
+    sel.onchange=()=>{s.axis=sel.value;render();};
+    d.appendChild(sel);
+    if(!isFinal){
+      const kp=document.createElement('div');kp.className='keep';
+      kp.innerHTML='keep: ';
+      ['+','-'].forEach(sg=>{const b=document.createElement('button');b.textContent=sg==='+'?'+1':'−1';b.style.fontWeight=s.keep===sg?'700':'400';b.style.borderColor=s.keep===sg?'#0072B2':'';b.onclick=()=>{s.keep=sg;render();};kp.appendChild(b);});
+      d.appendChild(kp);
+    }
+    stagesEl.appendChild(d);
+  });
+}
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+function axColor(ax){return ax==='z'?'#0072B2':ax==='x'?'#BF7400':'#CC79A7';}
+function axFill(ax){return ax==='z'?'#CCE5F1':ax==='x'?'#FBE9CC':'#F2E0EA';}
+function render(){
+  buildUIflags();
+  cx.clearRect(0,0,W,H);
+  let psi=[[1,0],[0,0]]; // |0>
+  let I=1.0; const yc=150;
+  let x=40;
+  // source
+  cx.fillStyle='#545454';cx.beginPath();cx.arc(x,yc,9,0,2*Math.PI);cx.fill();
+  cx.fillStyle='#545454';cx.font='12px Inter,Arial';cx.textAlign='center';cx.fillText('source |0⟩',x,yc+28);
+  let bx=x+9;
+  const active=cfg.filter(s=>s.axis!=='_');
+  const n=active.length;
+  const slotW=(W-90)/Math.max(n,1);
+  for(let i=0;i<cfg.length;i++){
+    const s=cfg[i]; if(s.axis==='_')continue;
+    const isFinalActive=(i===2)|| (active[active.length-1]===s);
+    const boxX=bx+slotW*0.35, boxW=66, boxY=yc-26;
+    // incoming beam
+    cx.strokeStyle='#888';cx.lineWidth=Math.max(1.5,I*7);cx.beginPath();cx.moveTo(bx,yc);cx.lineTo(boxX,yc);cx.stroke();
+    // box
+    cx.fillStyle=axFill(s.axis);cx.strokeStyle=axColor(s.axis);cx.lineWidth=1.5;
+    cx.fillRect(boxX,boxY,boxW,52);cx.strokeRect(boxX,boxY,boxW,52);
+    cx.fillStyle=axColor(s.axis);cx.font='18px Inter,Arial';cx.textAlign='center';cx.fillText(s.axis.toUpperCase(),boxX+boxW/2,yc+6);
+    const outX=boxX+boxW;
+    const pp=prob(s.axis,'+',psi), pm=prob(s.axis,'-',psi);
+    if(isFinalActive){
+      // show both outputs
+      const endX=W-40;
+      drawBeam(outX,yc,endX,yc-34,I*pp,axColor(s.axis),'+1 : '+(I*pp).toFixed(3));
+      drawBeam(outX,yc,endX,yc+34,I*pm,axColor(s.axis),'−1 : '+(I*pm).toFixed(3));
+      break;
+    } else {
+      const keep=s.keep, pk=keep==='+'?pp:pm;
+      // kept beam continues straight; rejected goes off
+      const rej=keep==='+'?pm:pp;
+      drawBeam(outX,yc,outX+slotW*0.3,yc+ (keep==='+'?40:-40), I*rej, '#bbb','');
+      I=I*pk; psi=EIG[s.axis][keep];
+      bx=outX+slotW*0.32;
+      // label kept
+      cx.fillStyle=axColor(s.axis);cx.font='11px JetBrains Mono,monospace';cx.fillText('keep '+(keep==='+'?'+1':'−1'),outX+30,yc-30);
+    }
+  }
+}
+function drawBeam(x0,y0,x1,y1,intensity,color,label){
+  cx.strokeStyle=color;cx.lineWidth=Math.max(1,intensity*7);
+  cx.beginPath();cx.moveTo(x0,y0);cx.lineTo(x1,y1);cx.stroke();
+  if(label){cx.fillStyle=color;cx.font='13px JetBrains Mono,monospace';cx.textAlign='left';cx.fillText(label,x1-92,y1+(y1<y0?-6:16));}
+}
+function buildUIflags(){/* keeps third stage as final visually */}
+document.querySelectorAll('button[data-seq]').forEach(b=>b.addEventListener('click',()=>{
+  const parts=b.dataset.seq.split(',');
+  parts.forEach((p,i)=>{
+    if(p==='_'){cfg[i].axis='_';}
+    else{cfg[i].axis=p[0];if(p[1])cfg[i].keep=p[1];}
+  });
+  buildUI();render();
+}));
+buildUI();render();
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!-- CAJAL SVG Figure
+     Book: Quantum Mechanics — Foundations: The Quantum World
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 01-why-classical-physics-failed
+     Figure: 01 — Planck vs. Rayleigh–Jeans Spectral Distribution
+     Type: line-chart (PQ)
+     Priority: Critical
+     Author: Humanitarians AI Incorporated
+     Date-generated: 2026-06-06
+     Source: pantry/01-why-classical-physics-failed-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="fig-title-01">
+  <title id="fig-title-01">Planck vs. Rayleigh–Jeans spectral energy density</title>
+  <desc>The Planck distribution forms a finite hump peaking at an intermediate frequency, while the Rayleigh–Jeans law rises steeply and diverges at high frequencies — the ultraviolet catastrophe. The two curves agree at low frequencies.</desc>
+  <metadata>
+    <cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book="Quantum Mechanics — Foundations: The Quantum World"
+      book-slug="quantum-mechanics-vol1"
+      chapter="01-why-classical-physics-failed"
+      figure-number="01"
+      figure-title="Planck vs. Rayleigh–Jeans Spectral Distribution"
+      figure-slug="planck-vs-rayleigh-jeans"
+      figure-type="line-chart"
+      priority="Critical"
+      author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/01-why-classical-physics-failed-cajal.md"/>
+  </metadata>
+
+  <defs>
+    <marker id="arrow-01" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <marker id="arrow-up-01" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="270">
+      <polygon points="0 0, 8 3, 0 6" fill="#0072B2"/>
+    </marker>
+    <!-- clip path for plot area -->
+    <clipPath id="plot-clip-01">
+      <rect x="60" y="30" width="580" height="350"/>
+    </clipPath>
+  </defs>
+
+  <!-- Chart background -->
+  <rect x="60" y="30" width="580" height="350" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+
+  <!-- Low-frequency agreement zone shading -->
+  <rect x="60" y="30" width="42" height="350" fill="#ECECEC" clip-path="url(#plot-clip-01)"/>
+
+  <!-- Planck curve filled area -->
+  <polygon
+    points="61.9,379.9 67.7,379.1 73.5,377.2 79.3,374.5 85.1,371.1 90.8,366.9 96.6,362.0 102.4,356.6 108.2,350.7 114.0,344.4 119.7,337.7 125.5,330.7 131.3,323.5 137.1,316.0 142.9,308.4 148.6,300.7 154.4,293.0 160.2,285.2 166.0,277.4 171.8,269.7 177.5,262.1 183.3,254.6 189.1,247.2 194.9,240.0 200.7,233.0 206.4,226.2 212.2,219.6 218.0,213.3 223.8,207.2 229.6,201.4 235.4,195.8 241.1,190.6 246.9,185.6 252.7,181.0 258.5,176.6 264.3,172.5 270.0,168.8 275.8,165.3 281.6,162.2 287.4,159.4 293.2,156.8 298.9,154.6 304.7,152.6 310.5,151.0 316.3,149.6 322.1,148.5 327.8,147.6 333.6,147.1 339.4,146.7 345.2,146.7 351.0,146.8 356.7,147.2 362.5,147.8 368.3,148.6 374.1,149.6 379.9,150.8 385.7,152.2 391.4,153.8 397.2,155.5 403.0,157.4 408.8,159.4 414.6,161.6 420.3,163.9 426.1,166.3 431.9,168.8 437.7,171.5 443.5,174.2 449.2,177.0 455.0,179.9 460.8,182.9 466.6,185.9 472.4,189.0 478.1,192.1 483.9,195.3 489.7,198.5 495.5,201.8 501.3,205.1 507.0,208.4 512.8,211.7 518.6,215.0 524.4,218.3 530.2,221.7 535.9,225.0 541.7,228.3 547.5,231.6 553.3,234.9 559.1,238.2 564.9,241.5 570.6,244.7 576.4,247.9 582.2,251.1 588.0,254.2 593.8,257.3 599.5,260.4 605.3,263.4 611.1,266.4 616.9,269.4 622.7,272.3 628.4,275.1 634.2,277.9 640.0,280.7
+    640.0,380.0 61.9,380.0"
+    fill="#CCE5F1" stroke="none" clip-path="url(#plot-clip-01)"/>
+
+  <!-- Planck curve stroke -->
+  <polyline
+    points="61.9,379.9 67.7,379.1 73.5,377.2 79.3,374.5 85.1,371.1 90.8,366.9 96.6,362.0 102.4,356.6 108.2,350.7 114.0,344.4 119.7,337.7 125.5,330.7 131.3,323.5 137.1,316.0 142.9,308.4 148.6,300.7 154.4,293.0 160.2,285.2 166.0,277.4 171.8,269.7 177.5,262.1 183.3,254.6 189.1,247.2 194.9,240.0 200.7,233.0 206.4,226.2 212.2,219.6 218.0,213.3 223.8,207.2 229.6,201.4 235.4,195.8 241.1,190.6 246.9,185.6 252.7,181.0 258.5,176.6 264.3,172.5 270.0,168.8 275.8,165.3 281.6,162.2 287.4,159.4 293.2,156.8 298.9,154.6 304.7,152.6 310.5,151.0 316.3,149.6 322.1,148.5 327.8,147.6 333.6,147.1 339.4,146.7 345.2,146.7 351.0,146.8 356.7,147.2 362.5,147.8 368.3,148.6 374.1,149.6 379.9,150.8 385.7,152.2 391.4,153.8 397.2,155.5 403.0,157.4 408.8,159.4 414.6,161.6 420.3,163.9 426.1,166.3 431.9,168.8 437.7,171.5 443.5,174.2 449.2,177.0 455.0,179.9 460.8,182.9 466.6,185.9 472.4,189.0 478.1,192.1 483.9,195.3 489.7,198.5 495.5,201.8 501.3,205.1 507.0,208.4 512.8,211.7 518.6,215.0 524.4,218.3 530.2,221.7 535.9,225.0 541.7,228.3 547.5,231.6 553.3,234.9 559.1,238.2 564.9,241.5 570.6,244.7 576.4,247.9 582.2,251.1 588.0,254.2 593.8,257.3 599.5,260.4 605.3,263.4 611.1,266.4 616.9,269.4 622.7,272.3 628.4,275.1 634.2,277.9 640.0,280.7"
+    fill="none" stroke="#0072B2" stroke-width="2" clip-path="url(#plot-clip-01)"/>
+
+  <!-- Rayleigh-Jeans curve (clipped, with upward arrow stub) -->
+  <polyline
+    points="61.9,379.9 79.3,374.0 96.6,358.3 114.0,332.9 131.3,297.8 148.6,252.9 166.0,198.3 183.3,134.0 200.7,59.9"
+    fill="none" stroke="#787878" stroke-width="1.5" clip-path="url(#plot-clip-01)"/>
+  <!-- Arrow stub showing RJ continues to infinity -->
+  <line x1="201" y1="52" x2="203" y2="31" stroke="#787878" stroke-width="1.5" marker-end="url(#arrow-01)"/>
+
+  <!-- Wien peak dashed vertical line -->
+  <line x1="345.2" y1="146.7" x2="345.2" y2="380" stroke="#2a1a0e" stroke-width="0.75" stroke-dasharray="4 3"/>
+
+  <!-- Axes -->
+  <line x1="60" y1="380" x2="648" y2="380" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-01)"/>
+  <line x1="60" y1="380" x2="60" y2="22" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow-01)"/>
+
+  <!-- Agreement bracket below both curves in low-freq overlap -->
+  <line x1="62" y1="395" x2="102" y2="395" stroke="#ADADAD" stroke-width="1"/>
+  <line x1="62" y1="390" x2="62" y2="400" stroke="#ADADAD" stroke-width="1"/>
+  <line x1="102" y1="390" x2="102" y2="400" stroke="#ADADAD" stroke-width="1"/>
+
+  <!-- Labels -->
+  <!-- Y axis label -->
+  <text x="20" y="210" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle" transform="rotate(-90,20,210)">Spectral energy density</text>
+  <!-- X axis label -->
+  <text x="354" y="415" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="13" fill="#2a1a0e" text-anchor="middle">Frequency →</text>
+
+  <!-- Figure title -->
+  <text x="350" y="18" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" font-weight="400" fill="#2a1a0e" text-anchor="middle">Planck distribution vs. Rayleigh–Jeans law</text>
+
+  <!-- Curve labels -->
+  <text x="390" y="140" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#0072B2">Planck</text>
+  <text x="225" y="128" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#545454">Rayleigh–Jeans</text>
+  <!-- Arrow from RJ label to curve -->
+  <line x1="223" y1="125" x2="198" y2="85" stroke="#545454" stroke-width="0.75" marker-end="url(#arrow-01)"/>
+
+  <!-- Wien peak label -->
+  <text x="348" y="138" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="10" fill="#545454">ν<tspan font-size="7.5" dy="3">peak</tspan></text>
+
+  <!-- Agreement zone label -->
+  <text x="82" y="408" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle">agreement</text>
+
+  <!-- Divergence label -->
+  <text x="240" y="55" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454">diverges →∞</text>
+
+  <!-- Zero on y axis -->
+  <text x="53" y="383" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="end">0</text>
+</svg>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 8 — The Quantum Harmonic Oscillator</title>
+<meta name="description" content="Imagine pulling a guitar string sideways by a small amount and letting go. The restoring force grows in proportion to the displacement, which is Hooke's law, and Hooke's law gives" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Chapter 8 — The Quantum Harmonic Oscillator</h1>
+<p>Imagine pulling a guitar string sideways by a small amount and letting go. The restoring force grows in proportion to the displacement, which is Hooke’s law, and Hooke’s law gives simple harmonic motion. The same structure appears far more generally. Take any smooth potential with a minimum and expand it in a Taylor series about that minimum. The first derivative vanishes, because that is what a minimum means, and the constant term only shifts where we place the energy zero. What survives at leading order is a quadratic:</p>
+<p>\[V(x) \approx \frac{1}{2}V''(x_0)\,(x-x_0)^2 = \frac{1}{2}m\omega^2(x-x_0)^2, \tag{8.1}\]</p>
+<p>where \(\omega = \sqrt{V''(x_0)/m}\) is fixed by the curvature of the potential at its minimum. For small enough displacements, every stable equilibrium in every physical system behaves as a harmonic oscillator. A guitar string, a diatomic molecule, an electromagnetic mode in a laser cavity, the vibrations of a crystal lattice, the quantized field of the vacuum — all of them reduce to the same Hamiltonian:</p>
+<p>\[\hat{H} = \frac{\hat{p}^2}{2m} + \frac{1}{2}m\omega^2\hat{x}^2. \tag{8.2}\]</p>
+<p>This is not a narrow special case. It is the generic situation for any quantum system near equilibrium. Solving it once solves every system in the whole class, so the only real question is how to solve it.</p>
+<hr>
+<h2>8.1 The Ladder-Operator Method</h2>
+<p>The most direct method is to write \(\hat{p} = -i\hbar\,\partial_x\), substitute it into (8.2), and solve a second-order differential equation. That route works, it produces the Hermite polynomials, and we describe it below. But there is a more elegant method, one that delivers the entire spectrum without our solving any differential equation at all.</p>
+<p>Define two operators:</p>
+<p>\[\hat{a}_\pm = \frac{1}{\sqrt{2\hbar m\omega}}\!\left(\mp i\hat{p} + m\omega\hat{x}\right). \tag{8.3}\]</p>
+<p>These are the <strong>raising</strong> (\(\hat{a}_+\)) and <strong>lowering</strong> (\(\hat{a}_-\)) operators, also called ladder operators. We compute the product \(\hat{a}_-\hat{a}_+\) by expanding:</p>
+<p>\[\hat{a}_-\hat{a}_+ = \frac{1}{2\hbar m\omega}\!\left(i\hat{p} + m\omega\hat{x}\right)\!\left(-i\hat{p} + m\omega\hat{x}\right). \tag{8.4}\]</p>
+<p>The \(\hat{p}^2\) and \(m^2\omega^2\hat{x}^2\) terms reassemble into \(\hat{H}/(\hbar\omega)\). The cross terms give \(im\omega(\hat{p}\hat{x} - \hat{x}\hat{p}) = im\omega(-i\hbar) = m\omega\hbar\), contributing \(1/2\). So:</p>
+<p>\[\hat{a}_-\hat{a}_+ = \frac{\hat{H}}{\hbar\omega} + \frac{1}{2}, \qquad \hat{a}_+\hat{a}_- = \frac{\hat{H}}{\hbar\omega} - \frac{1}{2}. \tag{8.5}\]</p>
+<p>Subtract:</p>
+<p>\[\boxed{[\hat{a}_-, \hat{a}_+] = 1.} \tag{8.6}\]</p>
+<p>The bracket \([\hat{a}_-,\hat{a}_+] \equiv \hat{a}_-\hat{a}_+ - \hat{a}_+\hat{a}_-\) is a <em>commutator</em>: it measures how much the outcome depends on the order in which the two operators act, and a nonzero value means the order matters. This single commutator contains the entire algebraic content of the problem. Every energy level, every relation between eigenstates, every expectation value follows from it. In quantum field theory, this same relation — now with \(\hat{a}_-\) as the annihilation operator and \(\hat{a}_+\) as the creation operator — is the opening line of quantum electrodynamics. Here we meet it in the simplest possible setting.</p>
+<hr>
+<h2>8.2 Climbing the Ladder</h2>
+<p>Suppose \(|n\rangle\) is an energy eigenstate with \(\hat{H}|n\rangle = E_n|n\rangle\). From the commutator (8.6) and \(\hat{H} = \hbar\omega(\hat{a}_+\hat{a}_- + \tfrac{1}{2})\), we can derive:</p>
+<p>\[[\hat{H}, \hat{a}_+] = \hbar\omega\,\hat{a}_+, \qquad [\hat{H}, \hat{a}_-] = -\hbar\omega\,\hat{a}_-. \tag{8.7}\]</p>
+<p>Now we ask what energy \(\hat{a}_+|n\rangle\) has:</p>
+<p>\[\hat{H}(\hat{a}_+|n\rangle) = (\hat{a}_+\hat{H} + [\hat{H},\hat{a}_+])|n\rangle = (E_n + \hbar\omega)\,\hat{a}_+|n\rangle. \tag{8.8}\]</p>
+<p>Applying \(\hat{a}_+\) to an eigenstate produces a new eigenstate whose energy is \(\hbar\omega\) higher. Applying \(\hat{a}_-\) produces one whose energy is \(\hbar\omega\) lower. Together the operators form a ladder: we can climb up one rung at a time or step down one rung at a time, and each rung sits exactly \(\hbar\omega\) above the one below it.</p>
+<p>The ladder cannot descend forever. The Hamiltonian (8.2) is a sum of squares of Hermitian operators, so \(\langle\hat{H}\rangle \geq 0\) in every state. But \(\hat{a}_-\) removes \(\hbar\omega\) each time it is applied, and if we could keep applying it, we would eventually reach negative energies, which is impossible. The way out is that there exists a ground state \(|0\rangle\) that the lowering operator annihilates:</p>
+<p>\[\hat{a}_-|0\rangle = 0. \tag{8.9}\]</p>
+<p>We apply \(\hat{H} = \hbar\omega(\hat{a}_+\hat{a}_- + \tfrac{1}{2})\) to this state:</p>
+<p>\[\hat{H}|0\rangle = \hbar\omega\!\left(\hat{a}_+\underbrace{(\hat{a}_-|0\rangle)}_{=\,0} + \tfrac{1}{2}|0\rangle\right) = \tfrac{1}{2}\hbar\omega\,|0\rangle. \tag{8.10}\]</p>
+<p>The ground-state energy is \(E_0 = \hbar\omega/2\). Not zero, but \(\hbar\omega/2\). Starting from \(|0\rangle\) and applying \(\hat{a}_+\) repeatedly:</p>
+<p>\[\boxed{E_n = \left(n + \frac{1}{2}\right)\hbar\omega, \quad n = 0, 1, 2, \ldots} \tag{8.11}\]</p>
+<p>The spectrum consists of equally spaced levels with gap \(\hbar\omega\), and the ground state sits \(\hbar\omega/2\) above the classical minimum of the potential. We solved no differential equation. The whole spectrum followed from one commutator together with the requirement that the energy be non-negative.</p>
+<figure class="qm-figure"><img src="images/07-the-harmonic-oscillator-fig-01.svg" alt="Energy levels n=0 through n=5 as horizontal lines inside the parabolic potential" loading="lazy" /><figcaption>Figure 8.1 — Equally spaced energy spectrum of the quantum harmonic oscillator: six levels E_n = (n+½)ℏω drawn inside the parabola V(x) = ½mω²x², with the zero-point energy bracket showing E₀ = ℏω/2 above the classical minimum and the uniform spacing bracket showing ΔE = ℏω.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=08-harmonic-oscillator-explorer.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/08-harmonic-oscillator-explorer.html" title="Interactive simulation: Harmonic-oscillator explorer" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Harmonic-oscillator explorer. If the embedded widget does not load, open <a href="simulations/08-harmonic-oscillator-explorer.html" target="_blank" rel="noopener">simulations/08-harmonic-oscillator-explorer.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=08-harmonic-oscillator-explorer.html -->
+<hr>
+<h2>8.3 Zero-Point Energy Is Real</h2>
+<p>The ground-state energy \(E_0 = \hbar\omega/2 \neq 0\) is not a bookkeeping technicality. Classically, a harmonic oscillator can have zero energy — the particle simply rests at the bottom of the well. Quantum mechanically, the uncertainty principle rules this out. A particle pinned to \(x = 0\) with \(\sigma_x \to 0\) would require \(\sigma_p \to \infty\) by the Kennard inequality \(\sigma_x\sigma_p \geq \hbar/2\). The zero-point energy is the minimum kinetic energy that confinement itself imposes.</p>
+<p>This energy has measurable consequences. Liquid helium does not solidify under atmospheric pressure at any temperature, because the zero-point kinetic energy of helium atoms, confined to the spacing between neighbors, exceeds the interatomic binding energy. The atoms cannot settle into a fixed lattice. Helium remains a liquid down to absolute zero precisely because of zero-point motion, not in spite of it.</p>
+<p>A still more direct example is the Casimir force between two conducting plates, which arises from the difference in zero-point energies of the electromagnetic modes with and without the plates present. Lamoreaux measured this force in 1997 and found agreement with the theoretical prediction to within five percent. Zero-point energy is not an artifact of the formalism. It comes with a measurable bill, and we can read that bill in the laboratory.</p>
+<hr>
+<h2>8.4 The Normalized Ladder</h2>
+<p>The normalized eigenstates satisfy:</p>
+<p>\[\hat{a}_+|n\rangle = \sqrt{n+1}\,|n+1\rangle, \qquad \hat{a}_-|n\rangle = \sqrt{n}\,|n-1\rangle. \tag{8.12}\]</p>
+<p>The prefactors \(\sqrt{n+1}\) and \(\sqrt{n}\) are essential, not optional. Omit them and every expectation value you compute comes out wrong. They arise because \(\hat{a}_+|n\rangle\) has norm \(\sqrt{n+1}\) (from \(\langle n|\hat{a}_-\hat{a}_+|n\rangle = n+1\)), so dividing by that norm gives the unit-normalized \(|n+1\rangle\).</p>
+<p>We can express \(\hat{x}\) and \(\hat{p}\) directly in terms of the ladder operators:</p>
+<p>\[\hat{x} = \sqrt{\frac{\hbar}{2m\omega}}\!\left(\hat{a}_+ + \hat{a}_-\right), \qquad \hat{p} = i\sqrt{\frac{m\hbar\omega}{2}}\!\left(\hat{a}_+ - \hat{a}_-\right). \tag{8.13}\]</p>
+<p>With these, the expectation values in any energy eigenstate \(|n\rangle\) become straightforward. Since \(\hat{a}_\pm|n\rangle\) is orthogonal to \(|n\rangle\):</p>
+<p>\[\langle n|\hat{x}|n\rangle = 0, \qquad \langle n|\hat{p}|n\rangle = 0. \tag{8.14}\]</p>
+<p>For \(\hat{x}^2\), we write \(\hat{x}^2 = (\hbar/2m\omega)(\hat{a}_+ + \hat{a}_-)^2\). The terms \(\hat{a}_+^2\) and \(\hat{a}_-^2\) connect \(|n\rangle\) to \(|n\pm 2\rangle\) and contribute nothing. The surviving terms give:</p>
+<p>\[\langle n|\hat{x}^2|n\rangle = \frac{\hbar}{2m\omega}\!\left(n + n + 1\right) = \frac{\hbar(2n+1)}{2m\omega}. \tag{8.15}\]</p>
+<p>The uncertainty product:</p>
+<p>\[\sigma_x\sigma_p = \left(n + \frac{1}{2}\right)\hbar. \tag{8.16}\]</p>
+<p>At \(n = 0\): \(\sigma_x\sigma_p = \hbar/2\), the smallest value the Kennard inequality allows, saturated exactly. Among the oscillator’s energy eigenstates, only the ground state saturates the bound; the coherent states we meet later in this chapter share the minimum-uncertainty property.</p>
+<p>For the off-diagonal matrix element, \(\langle m|\hat{x}|n\rangle \propto \delta_{m,n\pm 1}\). Position connects only states that differ by a single quantum. This is the selection rule for dipole transitions: only \(\Delta n = \pm 1\) transitions are allowed. That rule is why the vibrational absorption spectrum of an ideal diatomic oscillator is a single line at frequency \(\omega\): every allowed step \(\Delta n = \pm 1\) costs the same energy \(\hbar\omega\), so all the transitions coincide.</p>
+<hr>
+<h2>8.5 What the Eigenstates Look Like</h2>
+<p>The algebra hands us the spectrum. The wave functions follow from the condition \(\hat{a}_-|0\rangle = 0\), which in position space reads:</p>
+<p>\[\left(\hbar\frac{\partial}{\partial x} + m\omega x\right)\psi_0(x) = 0. \tag{8.17}\]</p>
+<p>We solve by separation and normalize:</p>
+<p>\[\psi_0(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\exp\!\left(-\frac{m\omega x^2}{2\hbar}\right). \tag{8.18}\]</p>
+<p>A Gaussian — the same minimum-uncertainty shape we met in Chapter 3, but now appearing as an energy eigenstate of the oscillator rather than as a free-particle wave packet. The distinction matters. The free-particle Gaussian spreads over time, because it is not an eigenstate of the free Hamiltonian. The harmonic-oscillator ground state stays Gaussian forever, because the potential supplies a restoring force that exactly counteracts the tendency to spread.</p>
+<p>Higher states are built by applying \(\hat{a}_+\) to \(\psi_0\). Each application multiplies the Gaussian by a polynomial one degree higher in \(x\). Those polynomials are the Hermite polynomials \(H_n(\xi)\), with \(\xi = \sqrt{m\omega/\hbar}\,x\):</p>
+<p>\[\psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\frac{1}{\sqrt{2^n n!}}\,H_n(\xi)\,e^{-\xi^2/2}, \tag{8.19}\]</p>
+<p>with recursion \(H_{n+1}(\xi) = 2\xi H_n(\xi) - 2n H_{n-1}(\xi)\), starting from \(H_0 = 1\), \(H_1 = 2\xi\).</p>
+<p>Two features are worth highlighting. First, \(\psi_n\) has exactly \(n\) nodes: the ground state has none, the first excited state has one, and so on — the same node-counting rule we found for the infinite square well. Second, roughly 16% of the ground-state probability density lies outside the classical turning points \(x = \pm\sqrt{\hbar/m\omega}\). Penetration into the classically forbidden region is not some exotic high-energy phenomenon. It is already present in the very first eigenstate, a standard feature of the quantum ground state.</p>
+<figure class="qm-figure"><img src="images/07-the-harmonic-oscillator-fig-02.svg" alt="Four stacked panels showing Hermite-Gauss eigenfunctions ψ₀ through ψ₃" loading="lazy" /><figcaption>Figure 8.2 — Hermite-Gauss eigenfunctions ψ₀ through ψ₃ as stacked comparison panels: node count increases by one per level, the classical turning points (marked) widen with n, and the evanescent tails extend visibly beyond those turning points in each panel.</figcaption></figure>
+<hr>
+<h2>8.6 Eigenstates Do Not Oscillate</h2>
+<p>There is a misconception worth clearing up here.</p>
+<p>A harmonic oscillator is, classically, an oscillator, so it is natural to expect the quantum version to oscillate as well. But consider the time-dependent eigenstate:</p>
+<p>\[\Psi_n(x,t) = \psi_n(x)\,e^{-iE_n t/\hbar}. \tag{8.20}\]</p>
+<p>The probability density:</p>
+<p>\[|\Psi_n(x,t)|^2 = |\psi_n(x)|^2 \cdot |e^{-iE_n t/\hbar}|^2 = |\psi_n(x)|^2. \tag{8.21}\]</p>
+<p>It is static. The phase rotates in the complex plane at frequency \(E_n/\hbar\), but \(|\Psi|^2\) — everything a position detector could ever register — does not change at all. Energy eigenstates are stationary states. If quantum mechanics contained nothing but eigenstates, classical oscillation would never appear.</p>
+<p>Classical oscillation lives in superpositions. Take the equal mixture \(|\Psi\rangle = (|0\rangle + |1\rangle)/\sqrt{2}\):</p>
+<p>\[|\Psi(x,t)|^2 = \tfrac{1}{2}(|\psi_0|^2 + |\psi_1|^2) + \psi_0\psi_1\cos\!\left(\frac{(E_1-E_0)t}{\hbar}\right). \tag{8.22}\]</p>
+<p>The cross term beats at frequency \((E_1 - E_0)/\hbar = \omega\), exactly the classical oscillation frequency. The packet sloshes, but it also deforms: rather than a rigid shape sliding back and forth, it is a superposition whose interference pattern shifts continuously.</p>
+<p>The contrast is the whole point. A single eigenstate holds perfectly still, while a superposition of two of them sloshes at the beat frequency \(\omega\). Anything that made a lone eigenstate’s \(|\Psi|^2\) appear to move would have to be an error in the phase bookkeeping, since the rotating phase \(e^{-iE_n t/\hbar}\) cancels exactly when we form \(|\Psi|^2\).</p>
+<hr>
+<h2>8.7 Coherent States</h2>
+<p>A <strong>coherent state</strong> \(|\alpha\rangle\) is the eigenstate of the lowering operator:</p>
+<p>\[\hat{a}_-|\alpha\rangle = \alpha\,|\alpha\rangle \tag{8.23}\]</p>
+<p>for any complex number \(\alpha\). In the energy basis:</p>
+<p>\[|\alpha\rangle = e^{-|\alpha|^2/2}\sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}\,|n\rangle. \tag{8.24}\]</p>
+<p>Coherent states are not energy eigenstates. They are superpositions of all the \(|n\rangle\) with Poisson-distributed weights \(P(n) = e^{-|\alpha|^2}|\alpha|^{2n}/n!\) and mean quantum number \(\langle n\rangle = |\alpha|^2\) — so a coherent state holds no definite number of quanta, only a definite average.</p>
+<p>Under time evolution, a coherent state stays a coherent state, with its amplitude simply rotating:</p>
+<p>\[\langle\hat{x}(t)\rangle = \sqrt{\frac{2\hbar}{m\omega}}\,|\alpha|\cos(\omega t - \arg\alpha), \qquad \langle\hat{p}(t)\rangle = -\sqrt{2m\hbar\omega}\,|\alpha|\sin(\omega t - \arg\alpha). \tag{8.25}\]</p>
+<p>Position and momentum oscillate sinusoidally at frequency \(\omega\), just as they do for a classical oscillator. And the wave packet keeps its shape throughout — \(\sigma_x\sigma_p = \hbar/2\) at all times. The coherent state is the minimum-uncertainty Gaussian riding its classical orbit forever without spreading.</p>
+<p>This is the sharpest possible contrast with the free particle of Chapter 4. There, a Gaussian packet with a constant momentum spread broadens without limit, because nothing pulls its spreading components back together. Here the harmonic potential supplies exactly that restoring force, cancelling the dispersion at every instant, so the coherent state keeps its width forever while its center traces the classical orbit. The same minimum-uncertainty Gaussian meets opposite fates, and the difference is entirely the presence or absence of a confining potential.</p>
+<p>Roy Glauber introduced coherent states in 1963 to describe the quantum state of laser light. An ideal laser produces field modes in coherent states. The photon-counting statistics of ideal laser light follow a Poisson distribution, not because lasers are classical, but because Poisson is the photon-number distribution of a coherent state. The harmonic-oscillator algebra is not a loose analogy for laser physics; it is the physics of lasers. Glauber received the Nobel Prize in 2005 for making this connection.</p>
+<hr>
+<h2>8.8 Worked Example — Ladder Algebra for HCl</h2>
+<p>The HCl molecule vibrates near the bottom of its internuclear potential with \(\omega \approx 5.63 \times 10^{14}\) rad/s and reduced mass \(\mu \approx 1.63 \times 10^{-27}\) kg.</p>
+<p><strong>Zero-point energy:</strong></p>
+<p>\[E_0 = \tfrac{1}{2}\hbar\omega = \tfrac{1}{2}(1.055\times10^{-34})(5.63\times10^{14}) \approx 2.97\times10^{-20}\ \text{J} \approx 0.185\ \text{eV}. \tag{8.26}\]</p>
+<p><strong>Level spacing:</strong> \(\hbar\omega \approx 0.37\) eV. Thermal energy at 300 K: \(k_BT \approx 0.025\) eV. Since \(k_BT \ll \hbar\omega\), essentially all HCl molecules are in the vibrational ground state at room temperature. The infrared spectrum shows a single absorption line at \(\lambda = hc/(\hbar\omega) \approx 3.4\ \mu\text{m}\) — precisely what is observed.</p>
+<p><strong>Selection rule from ladder algebra.</strong> The dipole transition matrix element is \(\langle m|\hat{x}|n\rangle\). Write \(\hat{x} = \ell(\hat{a}_+ + \hat{a}_-)\) with \(\ell = \sqrt{\hbar/2\mu\omega}\). Then \(\hat{a}_+|n\rangle \propto |n+1\rangle\) and \(\hat{a}_-|n\rangle \propto |n-1\rangle\), both orthogonal to any \(|m\rangle\) unless \(m = n\pm 1\). The matrix element is zero for all other transitions:</p>
+<p>\[\langle m|\hat{x}|n\rangle = \ell\!\left(\sqrt{n+1}\,\delta_{m,n+1} + \sqrt{n}\,\delta_{m,n-1}\right). \tag{8.27}\]</p>
+<p>Only \(\Delta n = \pm 1\) transitions are allowed. The vibrational spectrum is a single frequency, not a forest of lines — a ruler in frequency space, confirmed by the HCl absorption spectrum.</p>
+<p><strong>Expectation value</strong> \(\langle\hat{x}^2\rangle\) <strong>for</strong> \(n = 0\), <strong>no integrals.</strong> From equation (8.15):</p>
+<p>\[\langle 0|\hat{x}^2|0\rangle = \frac{\hbar}{2\mu\omega} = \ell^2. \tag{8.28}\]</p>
+<p>The root-mean-square displacement of HCl in its ground state is \(\ell = \sqrt{\hbar/2\mu\omega} \approx 7.6\) pm — about 6% of the bond length (0.13 nm). Small, but not zero, and not obtainable by setting \(E = 0\).</p>
+<hr>
+<h2>8.9 Where the Ladder Leads</h2>
+<p>It all came from one commutator: \([\hat{a}_-,\hat{a}_+] = 1\). From it we obtained a complete, equally spaced spectrum, the selection rules, the zero-point energy, the coherent states, and the minimum-uncertainty states. The method itself — factor the Hamiltonian into operators whose commutator is a scalar, then derive everything algebraically — is not tied to this one problem.</p>
+<figure class="qm-figure"><img src="images/07-the-harmonic-oscillator-fig-03.svg" alt="Ladder diagram showing raising arrows on the left and lowering arrows on the right between five equally spaced energy levels" loading="lazy" /><figcaption>Figure 8.3 — Ladder operator action on the harmonic oscillator spectrum: â₊ (green arcs, left) raises by ℏω per step; â₋ (red arcs, right) lowers by ℏω per step; the floor termination at n=0 shows â₋|0⟩ = 0 with a blocking symbol, preventing descent below the ground state.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=08-coherent-state-animator.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/08-coherent-state-animator.html" title="Interactive simulation: Coherent-state animator" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Coherent-state animator. If the embedded widget does not load, open <a href="simulations/08-coherent-state-animator.html" target="_blank" rel="noopener">simulations/08-coherent-state-animator.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=08-coherent-state-animator.html -->
+<p>Angular momentum, taken up later in the series, reappears with a ladder structure of its own: the operators \(\hat{L}_\pm\) obey a different algebra, but the reasoning runs along the same lines — a commutator with \(\hat{L}_z\) fixes the rung spacing, a non-negativity argument terminates the ladder, and the spectrum follows without our solving any differential equation. In quantum field theory, \(\hat{a}_+\) becomes the creation operator that adds one particle to the vacuum. The state with \(n\) photons is \((\hat{a}_+)^n/\sqrt{n!}\) applied to the vacuum, where the vacuum \(|0\rangle\) is exactly the ground state annihilated by \(\hat{a}_-\). The commutator \([\hat{a},\hat{a}^\dagger] = 1\) is the foundation of quantum electrodynamics. This chapter is the template for all of it.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Molecule</th>
+<th style="text-align:center">\(\omega\) (\(10^{14}\) rad/s)</th>
+<th style="text-align:center">\(\hbar\omega\) (eV)</th>
+<th style="text-align:center">\(E_0 = \tfrac{1}{2}\hbar\omega\) (eV)</th>
+<th style="text-align:center">\(\lambda = hc/\hbar\omega\) (μm)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">H₂</td>
+<td style="text-align:center">8.28</td>
+<td style="text-align:center">0.545</td>
+<td style="text-align:center">0.272</td>
+<td style="text-align:center">2.28</td>
+</tr>
+<tr>
+<td style="text-align:left">HCl</td>
+<td style="text-align:center">5.63</td>
+<td style="text-align:center">0.371</td>
+<td style="text-align:center">0.185</td>
+<td style="text-align:center">3.35</td>
+</tr>
+<tr>
+<td style="text-align:left">N₂</td>
+<td style="text-align:center">4.45</td>
+<td style="text-align:center">0.293</td>
+<td style="text-align:center">0.146</td>
+<td style="text-align:center">4.23</td>
+</tr>
+<tr>
+<td style="text-align:left">CO</td>
+<td style="text-align:center">4.09</td>
+<td style="text-align:center">0.269</td>
+<td style="text-align:center">0.135</td>
+<td style="text-align:center">4.61</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 8.1 — Vibrational parameters of four diatomic molecules, ordered by stiffness. Each \(\hbar\omega\) is the gap between adjacent levels; \(E_0 = \tfrac{1}{2}\hbar\omega\) is the zero-point energy; \(\lambda = hc/\hbar\omega\) is the photon wavelength matching one quantum of vibration. Every spacing dwarfs the room-temperature thermal energy \(k_BT \approx 0.025\) eV — by a factor of about 11 (CO) up to 22 (H₂) — so at 300 K essentially every molecule sits in its vibrational ground state. Note that H₂ and N₂ are homonuclear and have no permanent dipole, so these transitions are infrared-inactive (they appear in Raman scattering instead); HCl and CO, being heteronuclear, absorb directly in the infrared at the wavelengths shown.</em></p>
+<figure class="qm-figure"><img src="images/07-the-harmonic-oscillator-fig-04.svg" alt="Dot-plot of vibrational level spacing ℏω and infrared wavelength for four diatomic molecules" loading="lazy" /><figcaption>Figure 8.4 — Vibrational parameters of four diatomic molecules: the upper panel shows ℏω in eV with a reference line at the room-temperature thermal energy kT ≈ 0.025 eV (all four molecules are far into the quantum regime); the lower panel shows the photon wavelength λ = hc/ℏω that matches one quantum of vibration. Only the heteronuclear HCl and CO actually absorb at these wavelengths in the infrared — the homonuclear H₂ and N₂ have no dipole-allowed vibrational transition, so their vibrations appear in Raman scattering rather than infrared absorption.</figcaption></figure>
+<hr>
+<h2>Looking Ahead</h2>
+<p>The next chapter, <strong>Chapter 9 — Measurement, Superposition, and the Qubit</strong>, finally asks what happens when we look. It states the measurement postulate precisely and applies it to the two-level systems at the heart of quantum computing.</p>
+<hr>
+<h2>Interactive Simulations</h2>
+<p>These companion simulations run in the browser and accompany this chapter online.</p>
+<ul>
+<li><a href="simulations/08-harmonic-oscillator-explorer.html" target="_blank" rel="noopener">Harmonic-oscillator explorer</a> — pick a level n to see the Hermite–Gauss eigenfunction on its ħω rung, the turning points and the forbidden-region tail.</li>
+<li><a href="simulations/08-coherent-state-animator.html" target="_blank" rel="noopener">Coherent-state animator</a> — compare a stationary eigenstate, a sloshing two-state superposition, and a rigid coherent state riding the classical orbit.</li>
+</ul>
+<hr>
+<h2>Exercises</h2>
+<p><strong>Warm-up</strong></p>
+<ol>
+<li>
+<p><em>Difficulty: Warm-up — tests the energy spectrum and zero-point energy.</em>
+An electron is confined in a one-dimensional harmonic trap with \(\omega = 2.0\times10^{15}\) rad/s. (a) Compute the zero-point energy \(E_0\) and the level spacing \(\hbar\omega\), both in eV. (b) What are \(E_1\) and \(E_2\)? © State, in one sentence, the two ways the quantum spectrum differs from a classical oscillator’s continuum of energies.
+<em>Tests: command of \(E_n = (n+\tfrac{1}{2})\hbar\omega\) and the meaning of the zero-point offset.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests ladder-operator bookkeeping.</em>
+Using \(\hat{a}_+|n\rangle = \sqrt{n+1}\,|n+1\rangle\) and \(\hat{a}_-|n\rangle = \sqrt{n}\,|n-1\rangle\): (a) evaluate \(\hat{a}_+\hat{a}_-|3\rangle\) and \(\hat{a}_-\hat{a}_+|3\rangle\), and confirm their difference is \(|3\rangle\). (b) Evaluate \(\hat{a}_-|0\rangle\) and explain why it is not simply a state \(|{-1}\rangle\). © Express \(|3\rangle\) in terms of \(|0\rangle\) and powers of \(\hat{a}_+\), including the correct normalization factor.
+<em>Tests: fluency with the \(\sqrt{n+1}\), \(\sqrt{n}\) prefactors and the floor of the ladder.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests the algebra behind the spectrum.</em>
+From \([\hat{a}_-,\hat{a}_+] = 1\) and \(\hat{H} = \hbar\omega(\hat{a}_+\hat{a}_- + \tfrac{1}{2})\), derive \([\hat{H},\hat{a}_+] = \hbar\omega\,\hat{a}_+\). Then show in two lines that if \(\hat{H}|n\rangle = E_n|n\rangle\), the state \(\hat{a}_+|n\rangle\) has energy \(E_n + \hbar\omega\).
+<em>Tests: whether the student can run the commutator argument that makes \(\hat{a}_+\) a raising operator.</em></p>
+</li>
+</ol>
+<p><strong>Application</strong></p>
+<ol start="4">
+<li>
+<p><em>Difficulty: Application — tests expectation values via ladder operators.</em>
+For the eigenstate \(|n\rangle\), use \(\hat{x} = \sqrt{\hbar/2m\omega}\,(\hat{a}_+ + \hat{a}_-)\) and \(\hat{p} = i\sqrt{m\hbar\omega/2}\,(\hat{a}_+ - \hat{a}_-)\) to (a) show \(\langle x\rangle = \langle p\rangle = 0\); (b) compute \(\langle x^2\rangle\) and \(\langle p^2\rangle\) without doing any position-space integral; © confirm \(\sigma_x\sigma_p = (n+\tfrac{1}{2})\hbar\) and identify which state saturates the Kennard bound.
+<em>Tests: using the ladder algebra as a shortcut for expectation values and connecting to the uncertainty floor.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — tests the dipole selection rule.</em>
+The dipole transition strength between oscillator states is governed by \(\langle m|\hat{x}|n\rangle\). (a) Using \(\hat{x} \propto (\hat{a}_+ + \hat{a}_-)\), show that this vanishes unless \(m = n\pm 1\). (b) Explain why this makes the vibrational absorption spectrum of a diatomic molecule a single line at frequency \(\omega\) rather than a series of lines. © Real molecules show faint overtone lines near \(2\omega\). What feature, absent from the ideal oscillator, must be responsible?
+<em>Tests: deriving the \(\Delta n = \pm 1\) rule and recognizing what anharmonicity adds.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — tests the spectrum for a real molecule.</em>
+Carbon monoxide vibrates with \(\omega \approx 4.09\times10^{14}\) rad/s. (a) Compute its zero-point energy and level spacing in eV. (b) Compare \(\hbar\omega\) with the room-temperature thermal energy \(k_BT \approx 0.025\) eV, and use the Boltzmann factor \(e^{-\hbar\omega/k_BT}\) to estimate the fraction of CO molecules that are vibrationally excited. © Compute the wavelength of the photon emitted in an \(n = 1 \to 0\) transition and state which band of the spectrum it lies in.
+<em>Tests: applying the oscillator spectrum to spectroscopy and a Boltzmann population estimate.</em></p>
+</li>
+</ol>
+<p><strong>Synthesis</strong></p>
+<ol start="7">
+<li>
+<p><em>Difficulty: Synthesis — tests the coherent state as the classical limit.</em>
+A coherent state is \(|\alpha\rangle = e^{-|\alpha|^2/2}\sum_n (\alpha^n/\sqrt{n!})\,|n\rangle\) with \(\hat{a}_-|\alpha\rangle = \alpha|\alpha\rangle\). (a) Show that the probability of finding \(n\) quanta is Poisson, \(P(n) = e^{-|\alpha|^2}|\alpha|^{2n}/n!\), with \(\langle n\rangle = |\alpha|^2\). (b) Given \(\langle\hat{x}(t)\rangle = \sqrt{2\hbar/m\omega}\,|\alpha|\cos(\omega t - \arg\alpha)\), explain in what sense the coherent state reproduces classical oscillation. © The coherent state keeps \(\sigma_x\sigma_p = \hbar/2\) for all time, unlike the free-particle packet of Chapter 4. In one paragraph, explain why the harmonic potential prevents the spreading that the free packet suffers.
+<em>Tests: connecting the coherent state to classical motion, Poisson photon statistics, and the role of the potential in suppressing spreading.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Synthesis — tests stationary states versus superpositions.</em>
+Compare the eigenstate \(|0\rangle\) with the superposition \(|\Psi\rangle = (|0\rangle + |1\rangle)/\sqrt{2}\). (a) Show that \(|\Psi_0(x,t)|^2\) is time-independent. (b) Show that for the superposition, \(|\Psi(x,t)|^2\) contains a cross term oscillating at frequency \(\omega = (E_1 - E_0)/\hbar\), and interpret this as the “sloshing.” © Compute \(\langle\hat{H}\rangle\) for the superposition and confirm it is time-independent even though \(|\Psi|^2\) moves. Why does the probability slosh while the energy does not?
+<em>Tests: the distinction between a stationary eigenstate and a moving superposition, and energy conservation under sloshing.</em></p>
+</li>
+</ol>
+<p><strong>Challenge</strong></p>
+<ol start="9">
+<li><em>Difficulty: Challenge — derives the ground state and its forbidden-region penetration.</em>
+(a) Starting from \(\hat{a}_-|0\rangle = 0\), write the condition in position space as a first-order differential equation for \(\psi_0(x)\) and solve it to obtain the normalized Gaussian \(\psi_0(x) = (m\omega/\pi\hbar)^{1/4}e^{-m\omega x^2/2\hbar}\). (b) The classical turning points for a particle with energy \(E_0 = \hbar\omega/2\) lie at \(x = \pm\sqrt{\hbar/m\omega}\). Write the probability of finding the particle beyond the turning points as an integral, reduce it to a standard error-function form, and show numerically that it is about \(0.16\). © State plainly what it means that roughly \(16\%\) of the ground-state probability lies where a classical particle of the same energy could never be found.
+<em>Tests: solving the lowering-operator condition for the ground state and quantifying classically forbidden penetration with the error function.</em></li>
+</ol>
+<hr>
+<h2>References</h2>
+<ul>
+<li>Griffiths, D.J., <em>Introduction to Quantum Mechanics</em>, 3rd ed., §2.3–2.4.</li>
+<li>Sakurai, J.J. and Napolitano, J., <em>Modern Quantum Mechanics</em>, 3rd ed., §2.3.</li>
+<li>Glauber, R.J., “The Quantum Theory of Optical Coherence,” <em>Physical Review</em> <strong>130</strong>, 2529 (1963); “Coherent and Incoherent States of the Radiation Field,” <em>Physical Review</em> <strong>131</strong>, 2766 (1963).</li>
+<li>Lamoreaux, S.K., “Demonstration of the Casimir Force in the 0.6 to 6 μm Range,” <em>Physical Review Letters</em> <strong>78</strong>, 5 (1997).</li>
+<li>DLMF §18, National Institute of Standards and Technology. Hermite polynomials. <a href="https://dlmf.nist.gov/18">https://dlmf.nist.gov/18</a></li>
+</ul>
+
+</article>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 09-operators-and-uncertainty-fig-02.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 09-operators-and-uncertainty
+  Figure: 02 - Classical state (a phase-space point) vs quantum incompatibility of x and p
+  Generated: 2026-06-22
+  Source: hand-authored house SVG (replaces off-style matplotlib original)
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-09-02">
+  <title id="fig-title-09-02">A classical state is a single phase-space point; no quantum state has both position and momentum definite</title>
+  <desc>Left panel: a classical phase space with position on the horizontal axis and momentum on the vertical axis, containing one filled point that fixes both x and p at once. Right panel: two quantum probability densities. A near-position eigenstate is a sharp spike, definite in x but completely spread in momentum; a plane wave (momentum eigenstate) is a flat oscillation, definite in p but completely spread in x. No single state can be both. The banner states the commutator of x-hat and p-hat equals i h-bar, which is nonzero.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="09-operators-and-uncertainty" figure-number="02"
+      figure-title="Classical phase-space point vs quantum incompatibility"
+      figure-slug="classical-vs-quantum-definiteness" figure-type="diagram"
+      priority="High" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-22" source-file="hand-authored"/>
+  </metadata>
+  <defs>
+    <marker id="arr-09-02" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+  </defs>
+  <rect width="700" height="420" fill="#FFFFFF"/>
+  <text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">A classical state is a point; a quantum state cannot be</text>
+<rect x="48" y="80" width="250" height="222" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="173" y="72" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#0072B2" text-anchor="middle">Classical mechanics</text>
+<line x1="62" y1="191.0" x2="288" y2="191.0" stroke="#2a1a0e" stroke-width="1" marker-end="url(#arr-09-02)"/>
+<line x1="173.0" y1="288" x2="173.0" y2="92" stroke="#2a1a0e" stroke-width="1" marker-end="url(#arr-09-02)"/>
+<text x="288" y="208.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#545454" text-anchor="end">position x</text>
+<text x="180.0" y="100" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12.5" fill="#545454">momentum p</text>
+<line x1="219.0" y1="147.0" x2="219.0" y2="191.0" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+<line x1="219.0" y1="147.0" x2="173.0" y2="147.0" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+<circle cx="219.0" cy="147.0" r="6.5" fill="#0072B2"/>
+<text x="230.0" y="142.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e">(x&#8320;, p&#8320;)</text>
+<text x="173" y="324" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">one point fixes both x and p</text>
+<rect x="402" y="80" width="250" height="222" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="527" y="72" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#BF7400" text-anchor="middle">Quantum mechanics</text>
+<text x="418" y="100" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e">definite x  (&#968; &#8776; &#948;)</text>
+<line x1="418" y1="172" x2="636" y2="172" stroke="#2a1a0e" stroke-width="0.75"/>
+<polyline points="418.00,172.00 510.20,172.00 511.60,172.00 513.00,172.00 514.40,172.00 515.80,172.00 517.20,172.00 518.60,171.96 520.00,171.66 521.40,169.80 522.80,162.66 524.20,145.74 525.60,123.20 527.00,112.00 528.40,123.20 529.80,145.74 531.20,162.66 532.60,169.80 534.00,171.66 535.40,171.96 536.80,172.00 538.20,172.00 539.60,172.00 541.00,172.00 542.40,172.00 543.80,172.00 636.00,172.00" fill="#CCE5F1" stroke="#0072B2" stroke-width="2"/>
+<text x="636" y="189" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="end">&#8594; p fully spread</text>
+<text x="418" y="216" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e">definite p  (plane wave)</text>
+<line x1="418" y1="256" x2="636" y2="256" stroke="#D4D4D4" stroke-width="0.5" stroke-dasharray="4 3"/>
+<polyline points="418.00,256.00 419.56,259.13 421.11,262.18 422.67,265.08 424.23,267.76 425.79,270.14 427.34,272.18 428.90,273.82 430.46,275.02 432.01,275.75 433.57,276.00 435.13,275.75 436.69,275.02 438.24,273.82 439.80,272.18 441.36,270.14 442.91,267.76 444.47,265.08 446.03,262.18 447.59,259.13 449.14,256.00 450.70,252.87 452.26,249.82 453.81,246.92 455.37,244.24 456.93,241.86 458.49,239.82 460.04,238.18 461.60,236.98 463.16,236.25 464.71,236.00 466.27,236.25 467.83,236.98 469.39,238.18 470.94,239.82 472.50,241.86 474.06,244.24 475.61,246.92 477.17,249.82 478.73,252.87 480.29,256.00 481.84,259.13 483.40,262.18 484.96,265.08 486.51,267.76 488.07,270.14 489.63,272.18 491.19,273.82 492.74,275.02 494.30,275.75 495.86,276.00 497.41,275.75 498.97,275.02 500.53,273.82 502.09,272.18 503.64,270.14 505.20,267.76 506.76,265.08 508.31,262.18 509.87,259.13 511.43,256.00 512.99,252.87 514.54,249.82 516.10,246.92 517.66,244.24 519.21,241.86 520.77,239.82 522.33,238.18 523.89,236.98 525.44,236.25 527.00,236.00 528.56,236.25 530.11,236.98 531.67,238.18 533.23,239.82 534.79,241.86 536.34,244.24 537.90,246.92 539.46,249.82 541.01,252.87 542.57,256.00 544.13,259.13 545.69,262.18 547.24,265.08 548.80,267.76 550.36,270.14 551.91,272.18 553.47,273.82 555.03,275.02 556.59,275.75 558.14,276.00 559.70,275.75 561.26,275.02 562.81,273.82 564.37,272.18 565.93,270.14 567.49,267.76 569.04,265.08 570.60,262.18 572.16,259.13 573.71,256.00 575.27,252.87 576.83,249.82 578.39,246.92 579.94,244.24 581.50,241.86 583.06,239.82 584.61,238.18 586.17,236.98 587.73,236.25 589.29,236.00 590.84,236.25 592.40,236.98 593.96,238.18 595.51,239.82 597.07,241.86 598.63,244.24 600.19,246.92 601.74,249.82 603.30,252.87 604.86,256.00 606.41,259.13 607.97,262.18 609.53,265.08 611.09,267.76 612.64,270.14 614.20,272.18 615.76,273.82 617.31,275.02 618.87,275.75 620.43,276.00 621.99,275.75 623.54,275.02 625.10,273.82 626.66,272.18 628.21,270.14 629.77,267.76 631.33,265.08 632.89,262.18 634.44,259.13 636.00,256.00" fill="none" stroke="#BF7400" stroke-width="2"/>
+<text x="636" y="296" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#545454" text-anchor="end">&#8594; x fully spread</text>
+<text x="350" y="372" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">No state has both definite, because  [x&#770;, p&#770;] = i&#8463; &#8800; 0.</text>
+<text x="350" y="394" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">The incompatibility is algebraic &#8212; built into the operators, not caused by measurement.</text>
+</svg>

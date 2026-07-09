@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photoelectric Effect Lab — Quantum Mechanics Vol. 1, Chapter 1</title>
+<style>
+  :root{--ink:#2a1a0e;--red:#C8102E;--gray:#545454;--hair:#D4D4D4;--ochre:#C8860E;--chart:#F5F5F5;--green:#1d9e75;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:var(--chart);}
+  .controls{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:10px;font-size:14px;}
+  input[type=range]{width:180px;accent-color:var(--red);}
+  select{font:inherit;padding:5px 8px;border:0.75px solid var(--hair);border-radius:6px;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--chart);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:92px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .verdict{font-weight:600;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Photoelectric effect lab</h1>
+  <p class="sub">Pick a metal, tune the light. Below the threshold frequency no electrons come out, however bright the lamp — and the stopping potential rises with frequency on a line of slope h/e.</p>
+  <canvas id="plot" width="720" height="380" aria-label="Stopping potential versus frequency"></canvas>
+  <div class="controls">
+    <div class="ctl"><label for="wl">Wavelength</label>
+      <input type="range" id="wl" min="180" max="700" step="2" value="300">
+      <span id="wlout" style="font-weight:600;min-width:118px;">300 nm</span></div>
+    <div class="ctl"><label for="I">Intensity</label>
+      <input type="range" id="I" min="0" max="100" step="1" value="60"></div>
+    <div class="ctl"><label for="metal">Metal</label>
+      <select id="metal">
+        <option value="2.1">Cs (Φ=2.10 eV)</option>
+        <option value="2.28" selected>Na (Φ=2.28 eV)</option>
+        <option value="2.30">K (Φ=2.30 eV)</option>
+        <option value="2.90">Ca (Φ=2.90 eV)</option>
+        <option value="4.30">Zn (Φ=4.30 eV)</option>
+        <option value="4.70">Cu (Φ=4.70 eV)</option>
+      </select></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">Photon energy hν</div><div class="v" id="hv">—</div></div>
+    <div class="card"><div class="l">Emission</div><div class="v verdict" id="emit">—</div></div>
+    <div class="card"><div class="l">K_max</div><div class="v" id="kmax">—</div></div>
+    <div class="card"><div class="l">Stopping potential</div><div class="v" id="vs">—</div></div>
+    <div class="card"><div class="l">Photocurrent</div><div class="v" id="cur">—</div></div>
+  </div>
+  <p class="note">The line is V_stop = (h/e)(ν − ν₀) for the chosen metal; its slope h/e ≈ 4.14×10⁻¹⁵ V·s is the same for every metal. Intensity sets how many electrons leave, never their energy.</p>
+</div>
+<script>
+const cv=document.getElementById('plot'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height,mL=64,mR=24,mT=24,mB=50;
+const hc=1240, he=4.135667e-15;        // eV·nm ; h/e (V·s)
+const NU=1.6e15;                        // x-axis max (Hz)
+const wl=document.getElementById('wl'),Iin=document.getElementById('I'),metal=document.getElementById('metal');
+const xnu=nu=>mL+nu/NU*(W-mL-mR), Vmax=5.5, yv=v=>H-mB-v/Vmax*(H-mT-mB);
+function draw(){
+  const lam=+wl.value, phi=+metal.value, I=+Iin.value;
+  const Eph=hc/lam;                      // photon energy (eV)
+  const freq=3e8/(lam*1e-9);             // ν = c/λ (Hz)
+  const f0=3e8/((hc/phi)*1e-9);          // threshold frequency (Hz)
+  const emits=Eph>phi, Kmax=Math.max(0,Eph-phi), Vs=Kmax;
+  document.getElementById('wlout').textContent=lam+' nm  ('+(freq/1e15).toFixed(2)+'×10¹⁵ Hz)';
+  cx.clearRect(0,0,W,H);
+  // axes
+  cx.strokeStyle='#2a1a0e';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(mL,mT);cx.lineTo(mL,H-mB);cx.lineTo(W-mR,H-mB);cx.stroke();
+  cx.fillStyle='#545454';cx.font="12px 'JetBrains Mono',monospace";cx.textAlign='center';
+  for(let f=0;f<=1.6;f+=0.4){const x=xnu(f*1e15);cx.fillText(f.toFixed(1),x,H-mB+18);
+    cx.strokeStyle='#D4D4D4';cx.lineWidth=0.5;cx.beginPath();cx.moveTo(x,mT);cx.lineTo(x,H-mB);cx.stroke();}
+  cx.textAlign='right';for(let v=1;v<=5;v++){const y=yv(v);cx.fillText(v,mL-8,y+4);
+    cx.strokeStyle='#D4D4D4';cx.lineWidth=0.5;cx.beginPath();cx.moveTo(mL,y);cx.lineTo(W-mR,y);cx.stroke();}
+  cx.fillStyle='#2a1a0e';cx.font="13px 'EB Garamond',Georgia,serif";cx.textAlign='center';
+  cx.fillText('Frequency ν (×10¹⁵ Hz)',(mL+W-mR)/2,H-10);
+  cx.save();cx.translate(16,(mT+H-mB)/2);cx.rotate(-Math.PI/2);cx.fillText('Stopping potential (V)',0,0);cx.restore();
+  // V_stop = (h/e)(ν − ν0); stop the segment where it would leave the plot
+  const nuTop=f0+Vmax/he, xEnd=Math.min(NU,nuTop), vEnd=he*(xEnd-f0);
+  cx.strokeStyle='#C8102E';cx.lineWidth=2.2;cx.beginPath();
+  cx.moveTo(xnu(f0),yv(0));cx.lineTo(xnu(xEnd),yv(vEnd));cx.stroke();
+  // threshold marker
+  cx.setLineDash([4,3]);cx.strokeStyle='#545454';cx.lineWidth=0.8;cx.beginPath();cx.moveTo(xnu(f0),mT);cx.lineTo(xnu(f0),H-mB);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle='#545454';cx.font="11px 'Inter',sans-serif";cx.textAlign='center';cx.fillText('ν₀',xnu(f0),H-mB-6);
+  // current operating point
+  const px=xnu(freq), py=yv(Math.min(Vs,Vmax));
+  cx.strokeStyle='#2a1a0e';cx.setLineDash([3,3]);cx.lineWidth=0.8;
+  cx.beginPath();cx.moveTo(px,H-mB);cx.lineTo(px,py);cx.lineTo(mL,py);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=emits?'#C8102E':'#888780';cx.beginPath();cx.arc(px,py,5,0,7);cx.fill();
+  // stats
+  document.getElementById('hv').textContent=Eph.toFixed(2)+' eV';
+  const em=document.getElementById('emit');em.textContent=emits?'yes':'none';em.style.color=emits?'#1d9e75':'#C8102E';
+  document.getElementById('kmax').textContent=Kmax.toFixed(2)+' eV';
+  document.getElementById('vs').textContent=Vs.toFixed(2)+' V';
+  document.getElementById('cur').textContent=emits?(I+' %'):'0 %';
+}
+['input','change'].forEach(e=>{wl.addEventListener(e,draw);Iin.addEventListener(e,draw);metal.addEventListener(e,draw);});
+draw();
+</script>
+</body>
+</html>

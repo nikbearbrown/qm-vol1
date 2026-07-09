@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>de Broglie Wavelength — Quantum Mechanics Vol. 1, Chapter 2</title>
+<style>
+  :root{--ink:#2a1a0e;--red:#C8102E;--gray:#545454;--hair:#D4D4D4;--chart:#F5F5F5;--ochre:#C8860E;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:var(--chart);}
+  .controls{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:10px;font-size:14px;}
+  input[type=range]{width:230px;accent-color:var(--red);}
+  select{font-family:inherit;font-size:14px;padding:3px 6px;border:0.75px solid var(--hair);border-radius:5px;background:#fff;color:var(--ink);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--chart);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .verdict{font-size:14px;margin:14px 0 0;padding:9px 13px;border-left:3px solid var(--red);background:var(--chart);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The de Broglie wavelength</h1>
+  <p class="sub">Every moving particle has a wavelength &lambda; = h/p. Pick a particle and its energy, and watch where the wavelength falls — and whether it is large enough to diffract from a crystal.</p>
+  <canvas id="plot" width="720" height="300" aria-label="de Broglie wavelength on a logarithmic length scale"></canvas>
+  <div class="controls">
+    <div class="ctl"><label for="part">Particle</label>
+      <select id="part">
+        <option value="e">electron</option>
+        <option value="p">proton</option>
+        <option value="n">neutron</option>
+        <option value="c">C&#8326;&#8320; buckyball</option>
+      </select></div>
+    <div class="ctl"><label for="en">Kinetic energy</label>
+      <input type="range" id="en" min="0" max="100" step="0.1" value="59.155">
+      <span id="enout" style="font-weight:600;min-width:78px;font-family:'JetBrains Mono',monospace;">54 eV</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">momentum p</div><div class="v" id="mom">&mdash;</div></div>
+    <div class="card"><div class="l">wavelength &lambda;</div><div class="v" id="lam">&mdash;</div></div>
+    <div class="card"><div class="l">speed</div><div class="v" id="spd">&mdash;</div></div>
+  </div>
+  <div class="verdict" id="verdict">&mdash;</div>
+  <p class="note">Non-relativistic: p = &radic;(2mK), &lambda; = h/p, with h = 6.626&times;10&#8315;&#179;&#8308; J&middot;s. For a singly-charged particle the kinetic energy in electron-volts equals the accelerating voltage in volts. The shaded band marks the 0.05&ndash;0.3 nm spacing between atomic planes in a crystal — diffraction is observable only when &lambda; lands in or near it.</p>
+</div>
+<script>
+const cv=document.getElementById('plot'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const h=6.626e-34, eV=1.602e-19;
+const M={e:9.109e-31, p:1.673e-27, n:1.675e-27, c:1.196e-24};
+const NAME={e:'electron',p:'proton',n:'neutron',c:'C₆₀'};
+const part=document.getElementById('part'), en=document.getElementById('en');
+const LMIN=-15, LMAX=-6, padL=64, padR=24, axisY=150;
+function xof(log10m){return padL+(log10m-LMIN)/(LMAX-LMIN)*(W-padL-padR);}
+function fmtLen(m){
+  if(m>=1e-9) return (m*1e9).toPrecision(3)+' nm';
+  if(m>=1e-12) return (m*1e12).toPrecision(3)+' pm';
+  if(m>=1e-15) return (m*1e15).toPrecision(3)+' fm';
+  return m.toExponential(2)+' m';
+}
+function eFromSlider(s){ return Math.pow(10, -3 + s/100*8); }
+function draw(){
+  const m=M[part.value], K=eFromSlider(+en.value)*eV;
+  const p=Math.sqrt(2*m*K), lam=h/p, v=p/m;
+  const Kev=K/eV;
+  document.getElementById('enout').textContent = Kev>=1000? (Kev/1000).toPrecision(3)+' keV' : Kev.toPrecision(3)+' eV';
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle='rgba(200,134,14,0.18)';
+  cx.fillRect(xof(Math.log10(0.05e-9)),26,xof(Math.log10(0.3e-9))-xof(Math.log10(0.05e-9)),H-70);
+  cx.fillStyle=getCSS('--ochre');cx.font="11px 'Inter',sans-serif";cx.textAlign='center';
+  cx.fillText('crystal-plane spacing',(xof(Math.log10(0.05e-9))+xof(Math.log10(0.3e-9)))/2,20);
+  cx.strokeStyle=getCSS('--ink');cx.lineWidth=1.4;
+  cx.beginPath();cx.moveTo(padL,axisY);cx.lineTo(W-padR,axisY);cx.stroke();
+  cx.fillStyle=getCSS('--gray');cx.font="11px 'JetBrains Mono',monospace";
+  for(let e2=LMIN;e2<=LMAX;e2++){const x=xof(e2);
+    cx.strokeStyle=getCSS('--hair');cx.lineWidth=0.8;cx.beginPath();cx.moveTo(x,axisY-4);cx.lineTo(x,axisY+4);cx.stroke();
+    cx.fillText('10'+sup(e2),x,axisY+18);}
+  cx.fillStyle=getCSS('--ink');cx.font="12px 'EB Garamond',serif";
+  cx.fillText('wavelength (m, log scale)',W/2,axisY+38);
+  ref(Math.log10(0.84e-15),'proton radius',-1);
+  ref(Math.log10(5.3e-11),'atom',1);
+  ref(Math.log10(5e-7),'visible light',-1);
+  cx.fillStyle=getCSS('--gray');cx.font="10px 'Inter',sans-serif";cx.textAlign='left';
+  cx.fillText('← a walking person sits near 10⁻³⁵ m',padL+4,H-10);
+  let lg=Math.log10(lam), clamped=false, lx;
+  if(lg<LMIN){lg=LMIN;clamped=true;} if(lg>LMAX){lg=LMAX;clamped=true;}
+  lx=xof(lg);
+  cx.strokeStyle=getCSS('--red');cx.lineWidth=1;cx.setLineDash([4,3]);
+  cx.beginPath();cx.moveTo(lx,axisY);cx.lineTo(lx,52);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=getCSS('--red');cx.beginPath();cx.arc(lx,axisY,6,0,7);cx.fill();
+  cx.textAlign='center';cx.font="12px 'Inter',sans-serif";
+  cx.fillText(NAME[part.value]+(clamped?' (off scale)':''),lx,46);
+  cx.font="11px 'JetBrains Mono',monospace";cx.fillStyle=getCSS('--gray');
+  cx.fillText('λ = '+fmtLen(lam),lx,64);
+  document.getElementById('mom').textContent=p.toExponential(2);
+  document.getElementById('lam').textContent=fmtLen(lam);
+  document.getElementById('spd').textContent=(v>=3e5? (v/1000).toPrecision(3)+' km/s':v.toPrecision(3)+' m/s');
+  const vd=document.getElementById('verdict');
+  if(lam>0.01e-9 && lam<2e-9){vd.innerHTML='<b>Diffracts from a crystal.</b> &lambda; is comparable to the atom-to-atom spacing, so a crystal acts as a diffraction grating — this is the Davisson&ndash;Germer regime.';}
+  else if(lam>=2e-9){vd.innerHTML='<b>Too long for crystal diffraction.</b> &lambda; is much larger than atomic spacings; you would need a coarser grating to see fringes.';}
+  else {vd.innerHTML='<b>Too short for ordinary diffraction.</b> &lambda; is far below atomic spacings — the wave nature is real but extremely hard to resolve.';}
+}
+function ref(log10m,label,dir){
+  const x=xof(log10m); if(x<padL-2||x>W-padR+2) return;
+  cx.strokeStyle=getCSS('--hair');cx.lineWidth=0.8;
+  cx.beginPath();cx.moveTo(x,axisY-10);cx.lineTo(x,axisY+10);cx.stroke();
+  if(label){cx.fillStyle=getCSS('--gray');cx.font="10px 'Inter',sans-serif";cx.textAlign='center';
+    cx.fillText(label,x,dir>0?axisY-16:axisY+30);}
+}
+function sup(n){const m={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};return (''+n).split('').map(c=>m[c]||c).join('');}
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+['input','change'].forEach(e=>{en.addEventListener(e,draw);part.addEventListener(e,draw);});
+draw();
+</script>
+</body>
+</html>

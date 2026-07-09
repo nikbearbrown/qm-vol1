@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 1 — How Classical Physics Failed, Leading to the Birth of the Quantum</title>
+<meta name="description" content="Heat almost anything hot enough and it begins to glow. A stove element creeps from dull red to bright orange. A blacksmith's iron in the forge passes through the same sequence —" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Chapter 1 — How Classical Physics Failed, Leading to the Birth of the Quantum</h1>
+<p>Heat almost anything hot enough and it begins to glow. A stove element creeps from dull red to bright orange. A blacksmith’s iron in the forge passes through the same sequence — dull red, then cherry red, then orange, then a dazzling yellow-white — as it gets hotter. The striking thing is what the color does <em>not</em> depend on. It makes no difference whether the object is iron, ceramic, or a lump of coal: two objects heated to the same temperature glow with the same color and give off the same blend of light. The glow acts as a thermometer, reporting the object’s temperature and nothing else about it.</p>
+<p>To pin this down, physicists spread the emitted light out into its separate colors — its <em>spectrum</em> — and measure how much energy comes out at each wavelength, running from infrared, through the visible band, into the ultraviolet. Plotted as a graph, the result is a smooth hump: little energy at the lowest and highest frequencies (longest and shortest wavelengths), rising to a peak in between, with that peak sliding toward the blue end as the object gets hotter. By 1900 two experimenters, Otto Lummer and Ernst Pringsheim, had charted these curves in the laboratory with great precision, and found the same clean, reproducible shape for every hot object. It was exactly the kind of simple, universal fact that a good theory ought to explain with ease — and that is precisely where the trouble started.</p>
+<p>When physicists fed this glowing light into the established physics of the day — the same mechanics and electromagnetism that had succeeded everywhere else — the theory did not just miss the curve by a little. It predicted a catastrophe. It insisted that every warm object should radiate <em>infinite</em> energy, piling up more and more output at higher and higher frequencies (shorter wavelengths) without any limit — a runaway toward the ultraviolet that would come to be called the <em>ultraviolet catastrophe</em>. Taken at face value, the equations claimed that the walls of an ordinary warm room should be drenching you in an endless torrent of ultraviolet light and beyond. Plainly, nothing of the kind happens — a warm room is just a warm room. But the fact that respectable, well-tested physics confidently predicted something so absurd was a signal, loud and impossible to ignore, that something at the foundation was badly broken.</p>
+<hr>
+<h2>1.1 Blackbody Radiation and the Ultraviolet Catastrophe</h2>
+<p>The classical argument is short, and it is worth walking through slowly, because every quantity in it has a clear physical meaning. Picture a hollow box — physicists call it a <em>cavity</em> — with walls held at a fixed temperature \(T\) (measured in kelvin). The warm walls glow, filling the inside with electromagnetic radiation: light of every color, plus the infrared and ultraviolet we cannot see. In thermal equilibrium this radiation settles into a steady mixture, and our goal is to predict how much energy the mixture carries at each frequency.</p>
+<p>Light inside the box behaves like a standing wave, in the same way a guitar string fixed at both ends can only vibrate in certain patterns that fit between its endpoints. Each allowed pattern is called a <em>mode</em>. The first question is simply how many modes are available near a given frequency. Here \(\nu\) (the Greek letter <em>nu</em>) is the frequency — the number of oscillations per second, measured in hertz — and \(c\) is the speed of light. Counting the standing-wave patterns that fit inside the box gives</p>
+<p>\[\frac{8\pi\nu^2}{c^3}\]</p>
+<p>modes per unit volume per unit frequency interval — that is, the number of available wave patterns per cubic meter of cavity, in a one-hertz-wide band around the frequency \(\nu\). The feature to notice is the \(\nu^2\): the higher the frequency, the more ways there are to fit a wave into the box, so the mode count climbs steeply toward the blue and ultraviolet. This count is not in dispute; it is a geometric fact about waves in a box.</p>
+<p>The next step is to decide how much energy each mode carries. Classical physics answers with the <em>equipartition theorem</em>, a cornerstone of nineteenth-century thermodynamics: in thermal equilibrium, every independent way a system can store energy holds, on average, \(\tfrac{1}{2}k_B T\). The constant \(k_B\) is <em>Boltzmann’s constant</em>, the fixed conversion factor between temperature and energy (about \(1.38\times10^{-23}\) joules per kelvin); multiplying it by the temperature \(T\) turns “how hot” into “how much energy.” A light wave stores energy in two places at once — its electric field and its magnetic field — so each mode counts as two such terms and carries a full \(k_B T\) on average. Multiplying the energy per mode by the number of modes gives the energy per unit volume per unit frequency, written \(u(\nu, T)\):</p>
+<p>\[u(\nu, T) = \frac{8\pi\nu^2}{c^3}\,k_BT. \tag{1.1}\]</p>
+<p>This is the <em>Rayleigh–Jeans law</em>. The quantity on the left, \(u(\nu,T)\), is the <em>spectral energy density</em> — the radiant energy packed into each cubic meter of the cavity, per unit of frequency, at temperature \(T\). At low frequencies (the long-wavelength, red and infrared end) it matches the measured curves beautifully. But watch what happens as \(\nu\) grows: the mode count rises like \(\nu^2\) without limit, while each mode stubbornly keeps its fixed share \(k_B T\). Their product grows without bound, and adding up the energy over all frequencies gives an <em>infinite</em> total. This is the ultraviolet catastrophe written in equations: classical physics predicts that a warm box should hold an infinite amount of radiant energy, piled up at the highest frequencies.</p>
+<p>It is worth being precise about which assumption breaks, because only one of them does. The mode counting is not wrong. Equipartition is not wrong in general — it works beautifully for ideal gases, setting aside the separate puzzle of low-temperature heat capacities. The fatal assumption is hidden and innocent-looking: that energy can be shared <em>continuously</em> among the modes, in arbitrarily small amounts. There is no smallest chunk; any mode, however high its frequency, may hold any energy from zero upward, and on average it holds \(k_B T\). That assumption of smooth, unlimited divisibility is what produces the catastrophe — and it is exactly the assumption Planck was forced to abandon.</p>
+<hr>
+<h2>1.2 Planck’s Quantum Hypothesis and the Radiation Law</h2>
+<p>Max Planck was not trying to invent a new physics. He was trying to fit a curve. He had the precise measurements from Lummer and Pringsheim in front of him, and he wanted a single formula that reproduced their smooth, humped curves at every temperature. Working backward from the data toward a formula — a perfectly respectable way to do physics, as long as one is honest that the data came first — he found that there was only one way to keep the total energy finite. He had to change a basic assumption about how the radiation stores energy, and the change he was forced into struck him, and everyone else, as bizarre.</p>
+<p>Here is that change. The walls of the cavity are full of tiny electric oscillators — picture charges that jiggle, and in jiggling emit and absorb radiation. Classically, such an oscillator may hold any energy at all. Planck’s move was to forbid that. Suppose an oscillator vibrating at frequency \(\nu\) can take on only the energies</p>
+<p>\[0,\ h\nu,\ 2h\nu,\ 3h\nu,\ \ldots\]</p>
+<p>— whole-number multiples of a single basic unit \(h\nu\). The quantity \(h\) is a new constant of nature, <em>Planck’s constant</em>, and \(h\nu\) is the smallest indivisible packet of energy the oscillator can gain or lose, later called a <em>quantum</em>. Energy now comes in fixed steps, like coins of a single denomination, rather than as a smooth fluid that can be divided without limit.</p>
+<p>This one restriction changes the arithmetic completely. The classical calculation finds an oscillator’s average energy by integrating over a continuous range, and the answer is always \(k_BT\), whatever the frequency — which is exactly what caused the catastrophe. With energy allowed only in discrete steps, that integral turns into a sum over the allowed rungs \(0, h\nu, 2h\nu, \ldots\), each weighted by how likely it is at temperature \(T\). Carrying out the sum — it is a geometric series — gives a new average energy per mode:</p>
+<p>\[\langle E \rangle = \frac{h\nu}{e^{h\nu/k_BT} - 1}. \tag{1.2}\]</p>
+<p>The angle brackets \(\langle\,\cdot\,\rangle\) stand for an average, so \(\langle E\rangle\) is the mean energy of a mode of frequency \(\nu\) at temperature \(T\), and \(e \approx 2.718\) is the base of the natural exponential. The whole difference from the classical \(k_BT\) lives in that exponential, as we are about to see.</p>
+<p>Multiplying this average energy per mode by the mode density from the previous section — the \(8\pi\nu^2/c^3\) patterns per unit volume per unit frequency — gives the energy stored per unit volume per unit frequency, now corrected. The result is the <strong>Planck distribution</strong>:</p>
+<p>\[u(\nu, T) = \frac{8\pi h\nu^3}{c^3} \cdot \frac{1}{e^{h\nu/k_BT} - 1}. \tag{1.3}\]</p>
+<p>This is the formula that matched the data, and it is one of the most consequential equations in the history of physics — born not from a grand principle but from a stubborn fit to a stubborn curve.</p>
+<p>It is worth testing the two extremes at once, because they show the formula doing just what it must. At low frequencies, where a single quantum \(h\nu\) is tiny next to the thermal energy \(k_BT\) (written \(h\nu \ll k_BT\)), the steps in the energy ladder are so fine that it looks continuous, and the discreteness should barely matter. It doesn’t: expanding the exponential as \(e^{h\nu/k_BT} \approx 1 + h\nu/k_BT\), the \(-1\) cancels the \(1\), the denominator collapses to \(h\nu/k_BT\), and the whole expression reduces to \(k_BT\). Planck’s formula reproduces the Rayleigh–Jeans law exactly — it agrees with classical physics precisely where classical physics already worked. At high frequencies, where one quantum dwarfs the thermal energy (\(h\nu \gg k_BT\)), the story reverses. The exponential \(e^{h\nu/k_BT}\) grows enormous, the \(-1\) beside it is negligible, and \(u\) falls off like \(e^{-h\nu/k_BT}\) — a decay that crushes the rising \(\nu^3\) in front of it. The high-frequency modes are throttled, not amplified, and the catastrophe is gone. The reason is physical, not just algebraic: at high frequency the quantum \(h\nu\) is so large that there is rarely enough thermal energy on hand to lift the oscillator even onto its first rung, so those modes stay dark.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-01.svg" alt="Planck distribution vs. Rayleigh–Jeans law showing the ultraviolet catastrophe" loading="lazy" /><figcaption>Figure 1.1 — Planck spectral distribution compared with the Rayleigh–Jeans law: the two curves agree at low frequencies, but the classical prediction diverges while the Planck curve falls exponentially in the ultraviolet.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=01-blackbody-explorer.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/01-blackbody-explorer.html" title="Interactive simulation: Blackbody spectrum explorer" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Blackbody spectrum explorer. If the embedded widget does not load, open <a href="simulations/01-blackbody-explorer.html" target="_blank" rel="noopener">simulations/01-blackbody-explorer.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=01-blackbody-explorer.html -->
+<p>When Planck fit his formula to the Berlin measurements, the value of the new constant that made everything match was \(h = 6.55 \times 10^{-34}\) joule-seconds. The modern accepted value is \(6.626 \times 10^{-34}\) J·s — his very first fit landed within about one percent, a strong hint that he had caught hold of something real and not merely fooled the data.</p>
+<p>One subtlety is crucial, and Planck felt its weight. He quantized the <em>oscillators in the walls</em>, not the electromagnetic field itself. In his picture the light field stayed perfectly classical, obeying Maxwell’s equations; only the wall oscillators were restricted, trading energy with the field in chunks of \(h\nu\). Planck treated the discreteness as a mathematical device — an “act of desperation,” as he later described it — and for years he tried to recover his formula without it. He never could, because it cannot be done. But the bolder step — declaring that the <em>field itself</em> comes in discrete packets, that light is quite literally made of particles — was one he was unwilling to take. That step would fall to Einstein.</p>
+<hr>
+<h2>1.3 Wien’s Displacement Law: Temperature and the Spectral Peak</h2>
+<p>The Planck distribution does more than cure the catastrophe; it tells us exactly where the spectrum peaks, and that turns out to be a useful thermometer. To find the peak, we ask where the curve stops rising and starts falling — the point at which its slope is momentarily zero. In calculus that condition is written \(\partial u/\partial\nu = 0\), the requirement that the rate of change of \(u\) with frequency vanishes. Imposing it on the Planck formula and simplifying leaves a single equation for the dimensionless combination \(x = h\nu/k_BT\). It cannot be solved with ordinary algebra (it is what is called a <em>transcendental</em> equation, with \(x\) trapped both inside and outside an exponential), but it has a definite numerical solution, \(x \approx 2.821\). Reading that back as a statement about the peak frequency \(\nu_\text{max}\) gives</p>
+<p>\[\nu_\text{max} = 2.821\,\frac{k_BT}{h}. \tag{1.4}\]</p>
+<p>This is <em>Wien’s displacement law</em>, and its message is simple: the peak frequency is directly proportional to temperature. Double the temperature and you double the peak frequency, which halves the peak wavelength — the glow shifts toward the blue, exactly the trend we noticed in the forge. The same peak-finding, applied to the spectrum written per unit wavelength instead of per unit frequency, gives a companion law for the peak wavelength: \(\lambda_\text{max} = (2.898\ \text{mm}\cdot\text{K})/T\). Putting in numbers, at \(T = 5778\) K (the temperature of the Sun’s visible surface) this peak wavelength comes out near 501 nm, in the green, close to the middle of the visible band. At \(T = 3000\) K (a tungsten light-bulb filament) the peak sits near 966 nm, out in the infrared, so most of the light an incandescent bulb emits is invisible heat — one reason those bulbs have been phased out in favor of more efficient lighting.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-05.svg" alt="Blackbody spectra at 4000, 5000, and 6000 K showing the peak shifting with temperature" loading="lazy" /><figcaption>Figure 1.2 — Blackbody spectra at 4000, 5000, and 6000 K. As the temperature rises the peak grows and shifts toward higher frequency; the dashed line traces the locus of peaks, ν_max ∝ T (Wien's displacement law). The colored strip marks the visible band.</figcaption></figure>
+<p>One subtlety is worth flagging so it does not trip you up later. The spectrum peaks at a different place depending on whether you plot it against frequency or against wavelength. You might expect to convert the peak frequency to a wavelength with \(\lambda = c/\nu\) and recover the wavelength-form peak, but you do not. This is not an error or a contradiction. It happens because a fixed slice of frequency, \(d\nu\), does not correspond to a fixed slice of wavelength, \(d\lambda\) — the two are stretched relative to each other across the spectrum. As a result, “energy per unit frequency” and “energy per unit wavelength” are genuinely different functions that peak in different places. Both are correct descriptions of the same light; they are simply written in different coordinates.</p>
+<hr>
+<h2>1.4 Worked Example — Planck vs. Rayleigh–Jeans in the Ultraviolet</h2>
+<p>It is one thing to say classical physics fails in the ultraviolet and another to see by how much. Let us put a number on it. Take a hot object at \(T = 3000\) K and look at one ultraviolet frequency, \(\nu = 3 \times 10^{15}\) Hz. How far apart are the Planck and Rayleigh–Jeans predictions there?</p>
+<p>Both formulas share the same mode density \(8\pi\nu^2/c^3\), so when we divide one by the other that common factor cancels, and the comparison reduces to the ratio of the average energies per mode:</p>
+<p>\[\frac{u_\text{Planck}}{u_\text{RJ}} = \frac{h\nu/k_BT}{e^{h\nu/k_BT} - 1}. \tag{1.5}\]</p>
+<p>Everything hinges on the dimensionless number \(x = h\nu/k_BT\), which compares the size of one quantum of energy, \(h\nu\), with the available thermal energy, \(k_BT\). Let us compute each piece. The quantum is \(h\nu = (6.626\times10^{-34})(3\times10^{15}) = 1.988\times10^{-18}\) joules. It is easier to feel these energies in <em>electron-volts</em> (1 eV \(= 1.602\times10^{-19}\) J, the energy an electron gains crossing a one-volt drop), which makes \(h\nu = 12.4\) eV. The thermal energy is \(k_BT = (1.381\times10^{-23})(3000) = 4.14\times10^{-20}\) J \(= 0.259\) eV. Their ratio is</p>
+<p>\[x = \frac{h\nu}{k_BT} \approx 48.0, \tag{1.6}\]</p>
+<p>so a single ultraviolet quantum here carries about forty-eight times the energy that is thermally available. That large \(x\) sits in an exponential, and exponentials of large numbers are vast: \(e^{48.0} \approx 7\times10^{20}\). Substituting,</p>
+<p>\[\frac{u_\text{Planck}}{u_\text{RJ}} \approx \frac{48.0}{7\times10^{20}} \approx 7\times10^{-20}. \tag{1.7}\]</p>
+<p>That is a gap of twenty orders of magnitude. Classical physics overpredicts the energy here not by a little but by a factor of more than ten billion billion. At ultraviolet frequencies and ordinary temperatures it is not approximately wrong; it is simply wrong. And the whole story is governed by that one ratio \(x = h\nu/k_BT\): when \(x \ll 1\) (plenty of thermal energy compared with a quantum) the two theories agree, and when \(x \gg 1\) (a quantum far larger than the thermal energy) they diverge by factors growing like \(e^x\). The crossover at \(h\nu \sim k_BT\), where \(x\) is around 1, marks the boundary where quantization starts to matter — a theme that will recur for the rest of the book.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-03.svg" alt="Regime map of the dimensionless parameter x = hν/k_BT" loading="lazy" /><figcaption>Figure 1.3 — Regime map of the dimensionless ratio x = hν/k_BT: the classical and quantum regimes are separated at x = 1, with representative values from deep infrared (x ≈ 0.1), the transition boundary, and the ultraviolet catastrophe case (x ≈ 48) from the worked example.</figcaption></figure>
+<hr>
+<h2>1.5 The Photoelectric Effect: Three Experimental Puzzles</h2>
+<p>The blackbody puzzle was not the only crack in classical physics. A second one had opened in a completely different experiment, and it would prove even harder to explain away. While Planck was fitting curves in Berlin, Heinrich Hertz had noticed something strange. In 1887 — the same year he produced electromagnetic waves in the laboratory and confirmed Maxwell’s theory — he found that shining ultraviolet light on a metal surface made it spit out tiny sparks. By 1902 Philipp Lenard had shown that the sparks were <em>electrons</em> being knocked loose from the metal, and by 1914 Robert Millikan had measured every feature of the effect. This ejection of electrons by light is the <em>photoelectric effect</em>, and the data made three statements, each of which a wave picture of light cannot account for.</p>
+<p><strong>First, there is a threshold frequency.</strong> Below a certain frequency \(\nu_0\) — a cutoff value that is different for each metal — no electrons come out at all, ever, no matter how bright the light. A blindingly intense red lamp pointed at sodium liberates nothing; a feeble ultraviolet lamp liberates electrons at once. What matters is the frequency of the light, not its brightness.</p>
+<p><strong>Second, the energy of each ejected electron is set by frequency, not brightness.</strong> The fastest electrons come off with a maximum kinetic energy — the energy of their motion — that rises with the light’s frequency but does not budge when you make the light brighter. Doubling the brightness doubles the <em>number</em> of electrons emitted per second, but each one leaves with exactly the same energy as before.</p>
+<p><strong>Third, there is no delay.</strong> Emission begins essentially the instant the light arrives — within nanoseconds — at any intensity above the threshold, even for very dim light.</p>
+<p>Every one of these defies the classical wave picture. If light is a wave, its energy washes over the metal surface continuously and evenly, like water filling a basin. Then there should be <em>no</em> threshold: even low-frequency light, given enough time or enough intensity, ought to pour in the energy needed to shake an electron loose. Faint light should take a measurable while to accumulate that energy, so there should be a delay that lengthens as the light is dimmed. And the electron’s energy should depend on how hard the wave pushes — on the brightness — not on the frequency. Classical physics gets all three predictions backwards. Something was deeply wrong with the picture of light as a continuous wave.</p>
+<hr>
+<h2>1.6 Einstein’s Photon and the Photoelectric Equation</h2>
+<p>In 1905 Einstein proposed a way out, and it was radical. Planck had said only that the wall oscillators exchange energy with the field in discrete units; he had kept the light field itself smooth and continuous. Einstein took the daring further step of claiming that light energy is <em>not spread out continuously at all</em>. Light itself arrives in discrete packets, he said, each one carrying a definite energy fixed by its frequency:</p>
+<p>\[E = h\nu. \tag{1.8}\]</p>
+<p>Here \(E\) is the energy of a single packet, \(\nu\) its frequency, and \(h\) the same Planck constant from the blackbody problem. Einstein called these packets <em>Lichtquanten</em> — light quanta; today we call them <em>photons</em>. The key picture is that the energy of light is not a continuous flood but a hail of individual grains.</p>
+<p>Now follow one photon to the metal. A single photon is absorbed by a single electron, handing over all its energy \(h\nu\) in one go. To break free of the metal, the electron must pay an energy toll — the <strong>work function</strong> \(\Phi\), the minimum energy needed to pull an electron out of that particular material. If the photon brings less than this, \(h\nu < \Phi\), the electron cannot escape, and it makes no difference how many such photons rain down per second: each one acts alone, and none is individually big enough. If the photon brings more than the toll, \(h\nu > \Phi\), the electron escapes and keeps the leftover as the energy of its motion — its kinetic energy:</p>
+<p>\[K_\text{max} = h\nu - \Phi. \tag{1.9}\]</p>
+<p>This is Einstein’s photoelectric equation, and \(K_\text{max}\) is the maximum kinetic energy of the emerging electrons. We can measure that energy with a clever trick: apply a reverse voltage that pushes the electrons back, and turn it up until even the fastest electron is just stopped. That voltage is the <strong>stopping potential</strong> \(V_\text{stop}\). Since an electron of charge \(e\) loses energy \(eV_\text{stop}\) climbing through a voltage \(V_\text{stop}\), the stopping point satisfies</p>
+<p>\[eV_\text{stop} = K_\text{max} = h\nu - \Phi. \tag{1.10}\]</p>
+<p>With this one idea, every stubborn fact falls into place. There is a threshold frequency because a photon with \(h\nu < \Phi\) simply cannot free an electron — not “almost, if another photon helps,” but genuinely never, since each photon is absorbed on its own. The electron’s energy tracks frequency because it is set by the photon energy \(h\nu\), which frequency alone determines; brightness only changes how many photons arrive each second, hence how many electrons come out, not how energetic each one is. And there is no time delay because the transaction is a single instantaneous event: one photon, one electron, immediately.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-07.svg" alt="Photoelectric energy budget: the photon energy splits into the work function and the electron kinetic energy" loading="lazy" /><figcaption>Figure 1.4 — The photoelectric energy budget for sodium (Φ = 2.28 eV). A 300 nm photon (4.13 eV) clears the escape threshold and keeps K_max = 1.85 eV as kinetic energy; a 546 nm photon (2.27 eV) falls just below Φ and frees no electron, however many arrive.</figcaption></figure>
+<p>Around 1914, Millikan set out to disprove this. He thought the photon idea was absurd. For two years he made extraordinarily careful measurements with freshly scraped metal surfaces in vacuum, recording \(V_\text{stop}\) as a function of \(\nu\) for sodium, lithium, and potassium. Every metal gave the same slope: \(h/e = 4.136\times10^{-15}\) V·s. Einstein’s equation fit perfectly. Millikan published his confirmation in 1916, remarking that the result was “obtained in spite of my personal conviction,” and won the Nobel Prize in 1923, cited both for his measurement of the elementary charge and for this photoelectric work. Einstein won the Nobel Prize in 1921 specifically for the photoelectric effect — not for special relativity.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-02.svg" alt="Stopping potential vs. frequency for three metals showing identical slopes" loading="lazy" /><figcaption>Figure 1.5 — Stopping potential as a function of frequency for sodium, aluminum, and copper: three parallel line segments with identical slope h/e and different threshold frequencies set by each metal's work function.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=01-photoelectric-lab.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/01-photoelectric-lab.html" title="Interactive simulation: Photoelectric effect lab" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Photoelectric effect lab. If the embedded widget does not load, open <a href="simulations/01-photoelectric-lab.html" target="_blank" rel="noopener">simulations/01-photoelectric-lab.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=01-photoelectric-lab.html -->
+<hr>
+<h2>1.7 Worked Example — Stopping Potential for Ultraviolet Light on Sodium</h2>
+<p>Let us put the photoelectric equation to work. Ultraviolet light of wavelength \(\lambda = 300\) nm shines on sodium, whose work function is \(\Phi = 2.28\) eV. What stopping potential do we expect?</p>
+<p>First we need the photon’s energy. Frequency and wavelength are linked by \(\nu = c/\lambda\), so \(E = h\nu = hc/\lambda\). The combination \(hc\) comes up so often that it is worth memorizing in convenient units: \(hc = 1240\) eV·nm. Dividing by the wavelength in nanometers then gives the photon energy directly in electron-volts:</p>
+<p>\[E = \frac{1240\ \text{eV}\cdot\text{nm}}{300\ \text{nm}} = 4.13\ \text{eV}. \tag{1.11}\]</p>
+<p>The electron must spend \(\Phi = 2.28\) eV escaping the metal and keeps the rest as kinetic energy, \(K_\text{max} = 4.13 - 2.28 = 1.85\) eV. Since \(eV_\text{stop} = K_\text{max}\) and energies measured in electron-volts convert to stopping voltages with no extra arithmetic (that is the whole convenience of the unit), the stopping potential is</p>
+<p>\[V_\text{stop} = 1.85\ \text{V}. \tag{1.12}\]</p>
+<p>Now repeat with green light at \(\lambda = 546\) nm. Its photon energy is \(E = 1240/546 \approx 2.27\) eV — just a hair below the \(2.28\) eV toll. The result is no electrons at all: not one, not even under a 10,000-watt lamp. Each green photon falls a sliver short of the threshold, and because the electrons absorb photons one at a time, piling more and more sub-threshold photons onto the metal never adds up to a single one that can cross the barrier. This is the threshold effect in its starkest form — a wall that brightness cannot climb.</p>
+<hr>
+<h2>1.8 Wave–Particle Duality and Compton Scattering</h2>
+<p>Einstein’s photons raise an obvious objection. By 1905 the wave nature of light was not a guess but settled fact. Young’s 1801 double-slit experiment, Maxwell’s 1865 electromagnetic theory, and Hertz’s 1887 production of radio waves — half a century of evidence — had shown beyond doubt that light is a wave. Interference, diffraction, and polarization are things only waves do; a stream of tiny bullets could never produce them. And yet here was Einstein insisting that light comes in particles. How can both be true?</p>
+<p>The resolution is <em>not</em> that light “sometimes” acts like a wave and “sometimes” like a particle, flipping between two personalities depending on which experiment you run. That popular phrasing is misleading. In the quantum description there is a single consistent object: light is always carried by a <em>probability amplitude</em>, which behaves as a wave and spreads, interferes, and diffracts. What that wave determines is where the discrete, localized detection events — the photons — are likely to land. The wave governs the odds; the particle is what you actually catch. Both are real, and they are not two separate things but two aspects of one thing. This <em>wave–particle duality</em> is a theme we will return to repeatedly; for now the point is only that the wave evidence and the particle evidence do not contradict each other.</p>
+<p>Arthur Compton’s 1923 experiment removed any lingering doubt that photons are real particles that carry momentum. When X-rays bounce off the electrons in a block of graphite, the scattered X-rays emerge with a slightly <em>longer</em> wavelength than they went in with, and the amount of lengthening depends on the angle through which they scatter. Compton’s measured shift is</p>
+<p>\[\Delta\lambda = \frac{h}{m_e c}(1 - \cos\theta), \tag{1.13}\]</p>
+<p>where \(\Delta\lambda\) is the increase in wavelength, \(\theta\) is the angle by which the X-ray is deflected, \(m_e\) is the electron’s mass, and the constant \(h/(m_e c) = 2.426\times10^{-12}\) m is called the <em>Compton wavelength</em> of the electron. The formula drops out of treating the photon as a particle carrying momentum \(p = h/\lambda = E/c\) and analyzing its collision with an electron like two billiard balls, using the bookkeeping of relativistic energy and momentum. A photon that gives up momentum to the electron comes away with less energy, hence lower frequency and longer wavelength — exactly the observed shift. Classical wave theory predicts no change in wavelength whatsoever. The result was decisive, and Compton received the Nobel Prize in 1927.</p>
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-06.svg" alt="Compton scattering geometry: an X-ray photon scatters off a resting electron through angle theta" loading="lazy" /><figcaption>Figure 1.6 — Compton scattering. An X-ray photon of wavelength λ strikes a resting electron and scatters through an angle θ with a longer wavelength λ′ = λ + Δλ, while the electron recoils. The shift Δλ = (h/mₑc)(1 − cos θ) depends only on the scattering angle.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=01-compton-scattering.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/01-compton-scattering.html" title="Interactive simulation: Compton scattering" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Compton scattering. If the embedded widget does not load, open <a href="simulations/01-compton-scattering.html" target="_blank" rel="noopener">simulations/01-compton-scattering.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=01-compton-scattering.html -->
+<hr>
+<h2>1.9 Planck’s Constant, Action, and the Scale of Quantum Effects</h2>
+<p>Running through all of this is a single number that sets the scale of the quantum world. It appears in two closely related forms:</p>
+<p>\[h = 6.62607015\times10^{-34}\ \text{J}\cdot\text{s}, \qquad \hbar = \frac{h}{2\pi} = 1.054571817\times10^{-34}\ \text{J}\cdot\text{s}. \tag{1.14}\]</p>
+<p>The second, \(\hbar\) (“h-bar”), is just \(h\) divided by \(2\pi\); it turns up wherever angular frequency or angular quantities are natural, and it will become our constant of choice in later chapters. Notice the units: joule-seconds, that is, energy multiplied by time — which is the same as momentum multiplied by length. This combination is important enough to have its own name, <strong>action</strong>; it is the quantity whose minimization governs classical mechanics in its Lagrangian form. The thing to keep straight is that \(h\) is not itself an energy. The energy of a photon is \(h\nu\) and its momentum is \(h/\lambda\); \(h\) is the conversion factor — the number you multiply a frequency by to get an energy, or divide into a wavelength to get a momentum.</p>
+<p>Because \(h\) has the units of action, it provides a yardstick for deciding when quantum effects matter at all. Roughly, quantum mechanics becomes important for a system whenever the natural “action” of its motion — a typical momentum times a typical distance, or a typical energy times a typical time — is no longer enormous compared with \(h\). Two contrasting estimates make the point. Confine an electron to a well one nanometer wide and its lowest possible kinetic energy works out to \(\pi^2\hbar^2/(2m_e L^2) \approx 0.38\) eV (here \(m_e\) is the electron mass and \(L\) the width of the well) — easily large enough to measure and to matter chemically. Do the same calculation for a one-gram marble in a ten-centimeter box and the corresponding energy is around \(5\times10^{-63}\) joules, a number so small it can never be detected. The lesson is not that quantum mechanics fails for big objects; it is <em>exactly</em> right for them too. It is simply that, for anything large and heavy, the quantum energies are so vanishingly tiny that classical mechanics is indistinguishable from the full quantum theory. Quantum effects do not switch off at large scales — they just shrink below anything we could ever notice.</p>
+<hr>
+<h2>1.10 From Planck’s Formula to Quantum Mechanics: A Historical Note</h2>
+<p>It is worth being clear about what actually happened in 1900, because the story is often told carelessly. Planck did not discover quantum mechanics. He found a formula that fit a curve, and he found a derivation of that formula that required the wall oscillators to take only discrete energies. In his original paper and for years afterward, he said plainly that he hoped this discreteness was a mathematical convenience — an artifact of the way he had counted possibilities — that would someday be explained away within ordinary classical physics. In that hope he was wrong, but he had no way of knowing it at the time, and he went on resisting Einstein’s photon for years after it was proposed.</p>
+<p>Einstein’s 1905 step was different in kind, not just in degree. Planck had quantized the <em>matter</em> — the oscillators in the cavity walls — while leaving the light field continuous. Einstein quantized the <em>light field itself</em>. That is a far bolder claim: not merely that matter trades energy with the field in chunks, but that the field’s energy is intrinsically grainy, regardless of whatever matter it happens to touch. Planck would not go there; Einstein would. That the discoverer of the quantum spent a decade uneasy with the quantum is a useful reminder that writing down the right formula and understanding what it means are two very different accomplishments.</p>
+<p>And a true understanding of <em>why</em> oscillators are restricted to discrete energies did not yet exist. It would arrive only with full quantum mechanics, built by Heisenberg and Schrödinger in 1925 and 1926 — the subject of the chapters ahead. Planck held the formula in his hand in 1900; the machinery that explains it lay another quarter-century in the future.</p>
+<!-- → [TABLE: Work functions of common metals in eV — Cs 2.1, Na 2.28, K 2.3, Mg 3.7, Al 4.1, Ag 4.3, Fe 4.5, Cu 4.7, Ni 5.0, Au 5.1, Pt 6.35] -->
+<figure class="qm-figure"><img src="images/01-why-classical-physics-failed-fig-04.svg" alt="Work functions of eleven common metals as a dot-plot" loading="lazy" /><figcaption>Figure 1.7 — Work functions of eleven metals ranked by threshold energy: metals below the 4.13 eV reference line (the photon energy at 300 nm) emit electrons under the sodium worked example; those above do not.</figcaption></figure>
+<hr>
+<h2>Looking Ahead</h2>
+<p>The next chapter, <strong>Chapter 2 — Matter Waves</strong>, turns the argument around: if light waves can behave like particles, can matter particles behave like waves? De Broglie assigns every particle a wavelength \(\lambda = h/p\), and an accidental nickel crystal in Davisson and Germer’s laboratory confirms it.</p>
+<hr>
+<h2>Interactive Simulations</h2>
+<p>These companion simulations run in the browser and accompany this chapter online.</p>
+<ul>
+<li><a href="simulations/01-blackbody-explorer.html" target="_blank" rel="noopener">Blackbody explorer</a> — slide temperature to redraw the Planck spectrum, mark the Wien peak, and toggle the Rayleigh–Jeans curve to see the ultraviolet catastrophe.</li>
+<li><a href="simulations/01-photoelectric-lab.html" target="_blank" rel="noopener">Photoelectric lab</a> — set wavelength, intensity and metal; read photon energy, whether electrons are emitted, Kmax, and the stopping potential vs frequency.</li>
+<li><a href="simulations/01-compton-scattering.html" target="_blank" rel="noopener">Compton scattering</a> — sweep the scattering angle and read the wavelength shift Δλ, the scattered wavelength, and the photon energy.</li>
+</ul>
+<hr>
+<h2>Exercises</h2>
+<p><strong>Warm-up</strong></p>
+<ol>
+<li>
+<p><em>Difficulty: Warm-up — tests the Planck relation and unit conversions.</em>
+A green-light photon has frequency \(\nu = 5.0 \times 10^{14}\) Hz. (a) Compute its energy in joules and in electron-volts using \(E = h\nu\). (b) Using the shortcut \(hc = 1240\) eV·nm, find its wavelength and verify that \(E = hc/\lambda\) gives the same energy. © How many such photons must arrive each second to deliver a power of 1 W?
+<em>Tests: fluency with \(E = h\nu\), the \(hc = 1240\) eV·nm shortcut, and the photon-flux interpretation of intensity.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests the conceptual core of the ultraviolet catastrophe.</em>
+In one or two sentences each, state (a) which step of the Rayleigh–Jeans derivation is wrong, (b) which steps are correct, and © the single assumption Planck changed to remove the divergence. Explain why that change matters only at high frequency.
+<em>Tests: whether the student can locate the failed classical assumption — continuous energy — rather than blaming the mode counting or equipartition.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests the photoelectric facts against classical expectations.</em>
+List the three experimental features of the photoelectric effect: the threshold frequency, the energy–frequency relation, and the absence of a time delay. For each, state in one sentence what classical wave theory predicts and what Einstein’s photon picture predicts.
+<em>Tests: command of the three photoelectric facts and the contrast between the wave and photon accounts.</em></p>
+</li>
+</ol>
+<p><strong>Application</strong></p>
+<ol start="4">
+<li>
+<p><em>Difficulty: Application — tests Wien’s displacement law across scales.</em>
+Using \(\nu_\text{max} = 2.821\,k_BT/h\), compute the peak frequency and the corresponding wavelength \(\lambda = c/\nu_\text{max}\) for (a) the cosmic microwave background at \(T = 2.73\) K, (b) a human body at \(T = 310\) K, and © a tungsten filament at \(T = 3000\) K. For each, name the band of the spectrum — microwave, infrared, or visible — in which the peak falls.
+<em>Tests: application of Wien’s law over many temperature scales and the frequency-to-wavelength conversion.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — tests the photoelectric equation and stopping potential.</em>
+Ultraviolet light of wavelength \(\lambda = 250\) nm strikes a copper surface with work function \(\Phi = 4.7\) eV. (a) Find the photon energy using \(hc = 1240\) eV·nm. (b) Are electrons emitted? If so, find the maximum kinetic energy \(K_\text{max}\) and the stopping potential \(V_\text{stop}\). © Find copper’s threshold wavelength \(\lambda_0\), the longest wavelength that can still free an electron.
+<em>Tests: full use of \(K_\text{max} = h\nu - \Phi\), the stopping-potential relation, and the threshold condition.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — tests Compton scattering.</em>
+X-rays of wavelength \(\lambda = 0.0709\) nm scatter from electrons in graphite. Using \(\Delta\lambda = (h/m_e c)(1 - \cos\theta)\) with \(h/m_e c = 2.426 \times 10^{-12}\) m, compute the scattered wavelength at \(\theta = 0^\circ\), \(90^\circ\), and \(180^\circ\). (a) At which angle is the shift largest? (b) Express that largest shift as a percentage of the incident wavelength. © Explain why the Compton shift is negligible for visible light.
+<em>Tests: quantitative use of the Compton formula and an appreciation of why the effect requires short wavelengths.</em></p>
+</li>
+</ol>
+<p><strong>Synthesis</strong></p>
+<ol start="7">
+<li>
+<p><em>Difficulty: Synthesis — connects the dimensionless ratio to both limits.</em>
+The ratio \(x = h\nu/k_BT\) decides whether quantization matters. (a) Show that for \(x \ll 1\) the Planck average energy \(h\nu/(e^{h\nu/k_BT} - 1)\) reduces to \(k_BT\) by expanding the exponential. (b) Show that for \(x \gg 1\) it falls off like \(h\nu\,e^{-h\nu/k_BT}\). © Compute \(x\) for visible light (\(\nu = 5 \times 10^{14}\) Hz) at room temperature (\(T = 293\) K) and state which regime the room is in for visible light.
+<em>Tests: ability to take both limits of the Planck factor analytically and to interpret the crossover physically.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Synthesis — probes the meaning of wave–particle duality.</em>
+A student says, “Light is a wave on Tuesdays and a particle on Thursdays — it switches depending on the experiment.” (a) Explain why this phrasing is misleading. (b) Using the double-slit experiment performed one photon at a time, describe what the wave governs and what the particle is. © Name one experiment from the chapter whose result cannot be explained with waves alone, and one that cannot be explained with particles alone.
+<em>Tests: whether the student can articulate the single-amplitude picture rather than a two-personality model.</em></p>
+</li>
+</ol>
+<p><strong>Challenge</strong></p>
+<ol start="9">
+<li><em>Difficulty: Challenge — derives Wien’s law from the Planck distribution.</em>
+Starting from \(u(\nu, T) \propto \nu^3/(e^{h\nu/k_BT} - 1)\), set \(\partial u/\partial\nu = 0\) to locate the peak. (a) Show that the condition reduces to \(3(1 - e^{-x}) = x\) with \(x = h\nu/k_BT\). (b) Explain why this cannot be solved in closed form, and verify numerically that \(x \approx 2.821\) satisfies it. © Hence recover \(\nu_\text{max} = 2.821\,k_BT/h\).
+<em>Tests: the calculus of locating a maximum, recognition of a transcendental equation, and reproduction of the chapter’s stated constant.</em></li>
+</ol>
+<hr>
+<h2>References</h2>
+<ul>
+<li>Planck, M. (1901). “Ueber das Gesetz der Energieverteilung im Normalspectrum.” <em>Annalen der Physik</em> 4, 553–563. — The original blackbody quantization paper.</li>
+<li>Einstein, A. (1905). “Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt.” <em>Annalen der Physik</em> 17, 132–148. — The photoelectric effect paper introducing photons.</li>
+<li>Millikan, R.A. (1916). “A direct photoelectric determination of Planck’s h.” <em>Physical Review</em> 7(3), 355–388. <a href="https://doi.org/10.1103/PhysRev.7.355">doi:10.1103/PhysRev.7.355</a></li>
+<li>Compton, A.H. (1923). “A quantum theory of the scattering of X-rays by light elements.” <em>Physical Review</em> 21(5), 483–502. <a href="https://doi.org/10.1103/PhysRev.21.483">doi:10.1103/PhysRev.21.483</a></li>
+<li>NIST CODATA 2018 recommended values of fundamental physical constants. <a href="https://physics.nist.gov/cgi-bin/cuu/Value?h">physics.nist.gov/constants</a></li>
+<li>Griffiths, D.J. (2018). <em>Introduction to Quantum Mechanics</em> (3rd ed.). Cambridge University Press. §1.2.</li>
+<li>Townsend, J.S. (2012). <em>A Modern Approach to Quantum Mechanics</em> (2nd ed.). University Science Books. §1.3–1.4.</li>
+<li>Krane, K.S. (2019). <em>Modern Physics</em> (4th ed.). Wiley. Chapter 3.</li>
+<li>Nobel Prize facts: Einstein 1921 — <a href="https://www.nobelprize.org/prizes/physics/1921/einstein/facts/">nobelprize.org/prizes/physics/1921/einstein/facts/</a>; Millikan 1923 — <a href="https://www.nobelprize.org/prizes/physics/1923/millikan/facts/">nobelprize.org/prizes/physics/1923/millikan/facts/</a>; Compton 1927 — <a href="https://www.nobelprize.org/prizes/physics/1927/compton/facts/">nobelprize.org/prizes/physics/1927/compton/facts/</a>.</li>
+<li>Hake, R.R. (1998). “Interactive-engagement versus traditional methods.” <em>Am. J. Phys.</em> 66(1), 64–74. <a href="https://pubs.aip.org/aapt/ajp/article/66/1/64/1055076/Interactive-engagement-versus-traditional-methods">doi:10.1119/1.18809</a></li>
+</ul>
+
+</article>
+</body>
+</html>

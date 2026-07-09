@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tunneling barrier explorer — Quantum Mechanics Vol. 1, Chapter 6</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:150px;accent-color:var(--blue);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:96px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tunneling barrier explorer</h1>
+  <p class="sub">An electron of energy E meets a rectangular barrier of height V&#8320; and width L. The real part of the wave function is found by integrating the Schrödinger equation exactly. Watch it oscillate, decay across the barrier, and emerge with reduced amplitude &mdash; and see how steeply the transmission collapses as the barrier widens.</p>
+  <canvas id="cv" width="760" height="340" aria-label="Wave function across a rectangular barrier"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>Re&nbsp;&psi;(x)</span>
+    <span class="key"><span class="dot" style="background:var(--paleblue)"></span>barrier V&#8320;</span>
+    <span class="key"><span class="dot" style="background:var(--verm)"></span>energy E</span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="E">energy E (eV)</label><input type="range" id="E" min="0.2" max="10" step="0.1" value="1.0"><span id="Ev" style="font-family:monospace">1.0</span></div>
+    <div class="ctl"><label for="V0">barrier V&#8320; (eV)</label><input type="range" id="V0" min="1" max="10" step="0.1" value="5.0"><span id="V0v" style="font-family:monospace">5.0</span></div>
+    <div class="ctl"><label for="L">width L (Å)</label><input type="range" id="L" min="1" max="12" step="0.1" value="5.0"><span id="Lv" style="font-family:monospace">5.0</span></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">T (exact)</div><div class="v" id="Texact">&mdash;</div></div>
+    <div class="card"><div class="l">T (WKB)</div><div class="v" id="Twkb">&mdash;</div></div>
+    <div class="card"><div class="l">R = 1 &minus; T</div><div class="v" id="R">&mdash;</div></div>
+    <div class="card"><div class="l">decay 1/&kappa;</div><div class="v" id="pen">&mdash;</div></div>
+  </div>
+  <p class="note">Below the barrier (E &lt; V&#8320;) the wave decays as e<sup>&minus;&kappa;x</sup> and T is exponentially small; the WKB estimate e<sup>&minus;2&kappa;L</sup> tracks it closely. Add one ångström of width and watch T fall by roughly a factor of e<sup>2&kappa;</sup>. Above the barrier (E &gt; V&#8320;) the curve oscillates everywhere and T &rarr; 1 at resonances, where the barrier width fits a whole number of half-wavelengths.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const HB=3.80998; // hbar^2/2m_e in eV*Angstrom^2
+const EEL=document.getElementById('E'),V0EL=document.getElementById('V0'),LEL=document.getElementById('L');
+function Vof(x,L,V0){ return (x>=0 && x<=L)?V0:0; }
+function compute(E,V0,L){
+  const k=Math.sqrt(E/HB);
+  const xmin=-Math.max(8,0.6*L), xmax=L+Math.max(8,0.6*L);
+  const N=2400, h=(xmax-xmin)/N;
+  // integrate leftward from x=L: psi=1, psi'=ik (region III outgoing e^{ik(x-L)})
+  // state: psi(re,im), phi=psi'(re,im). d psi=phi; d phi=(V-E)/HB*psi
+  let pr=1,pi=0, qr=0,qi=k; // psi=1, phi=ik
+  const xs=[],pre=[],pim=[];
+  // store from x=L down to xmin
+  let x=L;
+  const deriv=(pr,pi,qr,qi,xx)=>{ const f=(Vof(xx,L,V0)-E)/HB; return [qr,qi, f*pr, f*pi]; };
+  // we integrate with negative step
+  const steps=Math.round((L-xmin)/h);
+  const arrX=[],arrR=[],arrI=[];
+  arrX.push(x);arrR.push(pr);arrI.push(pi);
+  for(let s=0;s<steps;s++){
+    const dh=-h;
+    let [a1,b1,c1,d1]=deriv(pr,pi,qr,qi,x);
+    let [a2,b2,c2,d2]=deriv(pr+0.5*dh*a1,pi+0.5*dh*b1,qr+0.5*dh*c1,qi+0.5*dh*d1,x+0.5*dh);
+    let [a3,b3,c3,d3]=deriv(pr+0.5*dh*a2,pi+0.5*dh*b2,qr+0.5*dh*c2,qi+0.5*dh*d2,x+0.5*dh);
+    let [a4,b4,c4,d4]=deriv(pr+dh*a3,pi+dh*b3,qr+dh*c3,qi+dh*d3,x+dh);
+    pr+=dh/6*(a1+2*a2+2*a3+a4); pi+=dh/6*(b1+2*b2+2*b3+b4);
+    qr+=dh/6*(c1+2*c2+2*c3+c4); qi+=dh/6*(d1+2*d2+2*d3+d4);
+    x+=dh; arrX.push(x);arrR.push(pr);arrI.push(pi);
+  }
+  // at x≈xmin region I: psi=A e^{ikx}+B e^{-ikx}; A=(psi + phi/(ik))/2 evaluated at that x, times e^{-ik x}... easier: use values at x0=arrX[last]
+  const x0=x; const P=[pr,pi], Q=[qr,qi];
+  // A coefficient: A = (psi(x0) + phi(x0)/(ik)) /2 * e^{-i k x0}
+  // phi/(ik) = phi * (-i/k)
+  const fdivR = Q[1]/k, fdivI = -Q[0]/k; // phi/(ik) = (qr+i qi)*( -i/k) = (qi - i qr)/k -> re=qi/k, im=-qr/k
+  let Ar=(P[0]+fdivR)/2, Ai=(P[1]+fdivI)/2;
+  // multiply by e^{-i k x0}
+  const cosx=Math.cos(k*x0), sinx=Math.sin(-k*x0);
+  const Are=Ar*cosx - Ai*sinx, Aim=Ar*sinx + Ai*cosx;
+  const A2=Are*Are+Aim*Aim;
+  const T=1/A2; // since |F|=1, same k both sides
+  // normalize displayed psi by A so incident amplitude =1: divide (pr,pi) by A (complex)
+  // build display arrays (Re of psi/A) for region [xmin, L]
+  // also region III analytic e^{ik(x-L)} /A
+  const disp=[];
+  for(let i=0;i<arrX.length;i++){
+    // (arrR+i arrI)/A : real part = (R*Are + I*Aim)/A2
+    const re=(arrR[i]*Are + arrI[i]*Aim)/A2;
+    disp.push([arrX[i],re]);
+  }
+  disp.reverse();
+  // region III
+  for(let xx=L+ h; xx<=xmax; xx+=h){
+    // e^{ik(xx-L)}/A : real part
+    const cr=Math.cos(k*(xx-L)), ci=Math.sin(k*(xx-L));
+    const re=(cr*Are + ci*Aim)/A2; // (e^{i..}/A) real = (cr*Are + ci*Aim)/A2
+    disp.push([xx,re]);
+  }
+  return {disp,T,xmin,xmax,k};
+}
+function draw(){
+  const E=+EEL.value,V0=+V0EL.value,L=+LEL.value;
+  document.getElementById('Ev').textContent=E.toFixed(1);
+  document.getElementById('V0v').textContent=V0.toFixed(1);
+  document.getElementById('Lv').textContent=L.toFixed(1);
+  const {disp,T,xmin,xmax}=compute(E,V0,L);
+  cx.clearRect(0,0,W,H);
+  const px0=40,px1=W-16,py0=16,py1=H-28;
+  const xx=x=>px0+(px1-px0)*((x-xmin)/(xmax-xmin));
+  // barrier shading
+  cx.fillStyle=C('--paleblue');
+  cx.fillRect(xx(0),py0,xx(L)-xx(0),py1-py0);
+  // axis (psi zero line) at vertical middle-ish
+  const midY=py0+(py1-py0)*0.5;
+  cx.strokeStyle=C('--hair');cx.lineWidth=1;cx.beginPath();cx.moveTo(px0,midY);cx.lineTo(px1,midY);cx.stroke();
+  // energy line E (vermillion dashed) — show as proportion of an energy scale to V0 region? draw near top as reference band
+  // We'll show E and V0 as labels only (psi plot is separate). Draw a small energy inset bar:
+  // psi curve
+  let amax=0; disp.forEach(d=>{amax=Math.max(amax,Math.abs(d[1]));}); amax=amax||1;
+  const sc=(py1-py0)*0.46/amax;
+  cx.strokeStyle=C('--blue');cx.lineWidth=2;cx.beginPath();
+  disp.forEach((d,i)=>{const X=xx(d[0]),Y=midY-sc*d[1]; i?cx.lineTo(X,Y):cx.moveTo(X,Y);});
+  cx.stroke();
+  // barrier top line + label
+  cx.strokeStyle=C('--blue');cx.lineWidth=0;
+  cx.fillStyle=C('--gray');cx.font="13px 'Inter',sans-serif";cx.textAlign="center";
+  cx.fillText("V₀",(xx(0)+xx(L))/2,py0+14);
+  cx.textAlign="left";cx.fillStyle=C('--gray');cx.font="12px 'JetBrains Mono',monospace";
+  cx.fillText("x = 0",xx(0)-14,py1+18); cx.fillText("x = L",xx(L)-14,py1+18);
+  // stats
+  document.getElementById('Texact').textContent = T<1e-3? T.toExponential(2): T.toFixed(3);
+  if(E<V0){
+    const kap=Math.sqrt((V0-E)/HB);
+    const twkb=Math.exp(-2*kap*L);
+    document.getElementById('Twkb').textContent= twkb<1e-3? twkb.toExponential(2): twkb.toFixed(3);
+    document.getElementById('pen').textContent=(1/kap).toFixed(2)+' Å';
+  } else {
+    document.getElementById('Twkb').textContent='—';
+    document.getElementById('pen').textContent='— (above)';
+  }
+  document.getElementById('R').textContent=(1-T).toFixed(3);
+}
+[EEL,V0EL,LEL].forEach(e=>e.addEventListener('input',draw));
+draw();
+</script>
+</body>
+</html>

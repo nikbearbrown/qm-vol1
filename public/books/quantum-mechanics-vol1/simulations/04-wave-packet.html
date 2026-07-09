@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wave packet: group vs phase velocity — Quantum Mechanics Vol. 1, Chapter 4</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:160px;accent-color:var(--blue);}
+  button{font-family:inherit;font-size:14px;padding:6px 15px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;}
+  button:hover{background:#f3f3f3;}
+  button.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:#F5F7F9;border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  .key{margin-right:16px;font-size:13px;white-space:nowrap;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px;position:relative;top:-1px;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Group velocity vs. phase velocity</h1>
+  <p class="sub">A free electron wave packet. The envelope &mdash; the particle &mdash; moves at the group velocity v<sub>g</sub>; the crests inside it move at the phase velocity v<sub>ph</sub> = v<sub>g</sub>/2. The envelope outruns its own ripples, so each crest drifts backward through the packet. The packet also slowly spreads.</p>
+  <canvas id="cv" width="720" height="300" aria-label="A travelling Gaussian wave packet"></canvas>
+  <div style="margin-top:8px;">
+    <span class="key"><span class="dot" style="background:var(--green)"></span>envelope peak &middot; v<sub>g</sub></span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>one crest &middot; v<sub>ph</sub></span>
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>Re&nbsp;&Psi;</span>
+  </div>
+  <div class="controls">
+    <button id="play" class="on">Pause</button>
+    <button id="reset">Reset</button>
+    <div class="ctl"><label for="k0">mean momentum (k&#8320;)</label><input type="range" id="k0" min="0.6" max="2.2" step="0.05" value="1.2"></div>
+    <div class="ctl"><label for="sig">packet width (&sigma;&#8320;)</label><input type="range" id="sig" min="30" max="85" step="1" value="50"></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">group velocity v<sub>g</sub></div><div class="v" id="vg">&mdash;</div></div>
+    <div class="card"><div class="l">phase velocity v<sub>ph</sub></div><div class="v" id="vph">&mdash;</div></div>
+    <div class="card"><div class="l">ratio v<sub>g</sub> / v<sub>ph</sub></div><div class="v" id="ratio">2.00</div></div>
+  </div>
+  <p class="note">For a free non-relativistic particle &omega; = &hbar;k&sup2;/2m, so v<sub>ph</sub> = &hbar;k/2m and v<sub>g</sub> = &hbar;k/m &mdash; the group velocity is exactly twice the phase velocity and equals the classical speed p/m. Raising k&#8320; speeds both up (ratio stays 2); a wider packet spreads more slowly. Velocities are shown in arbitrary units (1.00 = the default k&#8320;).</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height, midY=Math.round(H/2)-4, AMP=92;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const k0EL=document.getElementById('k0'), sigEL=document.getElementById('sig');
+const playBtn=document.getElementById('play'), resetBtn=document.getElementById('reset');
+let t=0, running=true, raf=null, last=null;
+const X0=50, VG_SCALE=15000;
+function kVal(){ return +k0EL.value/18; }
+function sigT(){ return +sigEL.value*Math.sqrt(1+Math.pow(t/7,2)); }
+function draw(){
+  const k=kVal(), vg=VG_SCALE*k*k, vph=vg/2, omega=vph*k;
+  const xc=X0+vg*t, sig=sigT();
+  if(xc-3.2*sig>W){ t=0; return draw(); }
+  cx.clearRect(0,0,W,H);
+  cx.strokeStyle=C('--hair'); cx.lineWidth=1; cx.beginPath(); cx.moveTo(0,midY); cx.lineTo(W,midY); cx.stroke();
+  const top=[],bot=[];
+  for(let x=0;x<=W;x+=2){ const e=Math.exp(-Math.pow(x-xc,2)/(2*sig*sig))*AMP; top.push([x,midY-e]); bot.push([x,midY+e]); }
+  cx.beginPath(); cx.moveTo(top[0][0],top[0][1]); top.forEach(p=>cx.lineTo(p[0],p[1])); for(let i=bot.length-1;i>=0;i--)cx.lineTo(bot[i][0],bot[i][1]); cx.closePath();
+  cx.fillStyle=C('--paleblue'); cx.globalAlpha=0.55; cx.fill(); cx.globalAlpha=1;
+  cx.strokeStyle=C('--hair'); cx.lineWidth=1;
+  cx.beginPath(); top.forEach((p,i)=>i?cx.lineTo(p[0],p[1]):cx.moveTo(p[0],p[1])); cx.stroke();
+  cx.beginPath(); bot.forEach((p,i)=>i?cx.lineTo(p[0],p[1]):cx.moveTo(p[0],p[1])); cx.stroke();
+  cx.strokeStyle=C('--blue'); cx.lineWidth=2; cx.beginPath();
+  for(let x=0;x<=W;x++){ const e=Math.exp(-Math.pow(x-xc,2)/(2*sig*sig)); const y=midY-AMP*e*Math.cos(k*x-omega*t); x?cx.lineTo(x,y):cx.moveTo(x,y); }
+  cx.stroke();
+  cx.fillStyle=C('--green'); cx.beginPath(); cx.arc(xc,midY,6,0,7); cx.fill();
+  const period=2*Math.PI/k, base=vph*t; let xcr=base+Math.round((xc-base)/period)*period;
+  if(xcr>2&&xcr<W-2){ const e=Math.exp(-Math.pow(xcr-xc,2)/(2*sig*sig)); cx.fillStyle=C('--amber'); cx.beginPath(); cx.arc(xcr,midY-AMP*e,6,0,7); cx.fill(); }
+  const u=(k/(1.2/18));
+  document.getElementById('vg').textContent=u.toFixed(2);
+  document.getElementById('vph').textContent=(u/2).toFixed(2);
+}
+function step(ts){ if(!running) return; if(last==null)last=ts; const dt=Math.min(0.04,(ts-last)/1000); last=ts; t+=dt; draw(); raf=requestAnimationFrame(step); }
+function start(){ running=true; playBtn.textContent='Pause'; playBtn.classList.add('on'); last=null; raf=requestAnimationFrame(step); }
+function stop(){ running=false; playBtn.textContent='Play'; playBtn.classList.remove('on'); if(raf)cancelAnimationFrame(raf); }
+playBtn.onclick=()=> running?stop():start();
+resetBtn.onclick=()=>{ t=0; draw(); };
+[k0EL,sigEL].forEach(e=>e.addEventListener('input',()=>{ if(!running) draw(); }));
+draw(); start();
+</script>
+</body>
+</html>

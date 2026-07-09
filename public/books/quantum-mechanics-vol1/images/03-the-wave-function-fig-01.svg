@@ -1,0 +1,36 @@
+<!-- CAJAL SVG Figure
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 03-the-wave-function
+     Figure: 01 — Born's rule: from a footnote to a Nobel Prize
+     Type: timeline  Author: Humanitarians AI Incorporated  Date-generated: 2026-06-19
+-->
+<svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl-01w">
+  <title id="ttl-01w">Born's rule: from a footnote to a Nobel Prize</title>
+  <desc>Timeline of Born's probability rule: the 1926 scattering paper first wrote probability proportional to the wave function; a footnote in proof corrected it to the squared magnitude; the statistical interpretation won the 1954 Nobel Prize.</desc>
+  <metadata><cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book-slug="quantum-mechanics-vol1" chapter="03-the-wave-function"
+      figure-number="01" figure-title="Born's rule: from a footnote to a Nobel Prize" figure-slug="born-rule-timeline" figure-type="timeline" priority="Important"
+      author="Humanitarians AI Incorporated" date-generated="2026-06-19" source-file="pantry/03-the-wave-function-cajal.md"/></metadata>
+<text x="350" y="28" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" fill="#2a1a0e" text-anchor="middle">Born's rule: from a footnote to a Nobel Prize</text>
+<defs><marker id="ar1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/></marker></defs>
+<line x1="60" y1="180" x2="640" y2="180" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#ar1)"/>
+<line x1="150" y1="128" x2="150" y2="174" stroke="#D4D4D4" stroke-width="0.9" stroke-dasharray="3 2"/>
+<rect x="66" y="78" width="168" height="50" fill="#FFFFFF" stroke="#545454" stroke-width="1"/>
+<text x="150" y="98" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">Scattering paper</text>
+<text x="150" y="116" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">draft:  P ∝ ψ</text>
+<circle cx="150" cy="180" r="6" fill="#545454"/>
+<text x="150" y="200" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">1926</text>
+<line x1="350" y1="128" x2="350" y2="174" stroke="#D4D4D4" stroke-width="0.9" stroke-dasharray="3 2"/>
+<rect x="266" y="78" width="168" height="50" fill="#FFFFFF" stroke="#0072B2" stroke-width="1.8"/>
+<text x="350" y="98" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">Footnote, in proof</text>
+<text x="350" y="116" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#0072B2" text-anchor="middle">corrected:  P ∝ |ψ|²</text>
+<circle cx="350" cy="180" r="6" fill="#0072B2"/>
+<text x="350" y="200" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">1926</text>
+<line x1="560" y1="128" x2="560" y2="174" stroke="#D4D4D4" stroke-width="0.9" stroke-dasharray="3 2"/>
+<rect x="476" y="78" width="168" height="50" fill="#FFFFFF" stroke="#009E73" stroke-width="1.8"/>
+<text x="560" y="98" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">Nobel Prize</text>
+<text x="560" y="116" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#009E73" text-anchor="middle">statistical interpretation</text>
+<circle cx="560" cy="180" r="6" fill="#009E73"/>
+<text x="560" y="200" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="11" fill="#545454" text-anchor="middle">1954</text>
+<text x="250" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9.5" fill="#545454" text-anchor="middle" font-style="italic">corrected in proof →</text>
+</svg>

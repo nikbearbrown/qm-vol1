@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 09-operators-and-uncertainty-fig-04.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 09-operators-and-uncertainty
+  Figure: 04 - Expectation value as the centroid of the probability density
+  Generated: 2026-06-22
+  Source: hand-authored house SVG (replaces a mislabeled Robertson-boundary duplicate)
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-09-04">
+  <title id="fig-title-09-04">The expectation value is the centroid of the probability density</title>
+  <desc>A probability density curve, the absolute square of the wave function, is drawn over position x and filled pale blue. Thin vertical bars sample the density to suggest the weighted sum. A dashed vertical line with a downward triangle marks the mean position, the expectation value of x, which is the balance point of the distribution. The mean sits between the tall peak and the long right tail, away from the panel center, showing the centroid is a property of the distribution.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="09-operators-and-uncertainty" figure-number="04"
+      figure-title="Expectation value as centroid of the probability density"
+      figure-slug="expectation-centroid" figure-type="chart"
+      priority="High" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-22" source-file="hand-authored"/>
+  </metadata>
+  <defs>
+    <marker id="tri-09-04" markerWidth="12" markerHeight="10" refX="6" refY="9" orient="0">
+      <polygon points="0 0, 12 0, 6 9" fill="#D55E00"/>
+    </marker>
+  </defs>
+  <rect width="700" height="420" fill="#FFFFFF"/>
+  <text x="350" y="32" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">The expectation value is the centroid of |&#968;(x)|&#178;</text>
+  <rect x="80" y="70" width="540" height="250" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+<polyline points="80.00,320.00 80.00,320.00 82.25,320.00 84.50,320.00 86.75,320.00 89.00,320.00 91.25,320.00 93.50,320.00 95.75,320.00 98.00,320.00 100.25,320.00 102.50,319.99 104.75,319.99 107.00,319.99 109.25,319.99 111.50,319.99 113.75,319.98 116.00,319.98 118.25,319.97 120.50,319.96 122.75,319.95 125.00,319.94 127.25,319.93 129.50,319.91 131.75,319.89 134.00,319.87 136.25,319.84 138.50,319.80 140.75,319.76 143.00,319.71 145.25,319.64 147.50,319.57 149.75,319.48 152.00,319.37 154.25,319.25 156.50,319.10 158.75,318.93 161.00,318.72 163.25,318.48 165.50,318.21 167.75,317.89 170.00,317.51 172.25,317.09 174.50,316.59 176.75,316.03 179.00,315.38 181.25,314.64 183.50,313.81 185.75,312.86 188.00,311.80 190.25,310.60 192.50,309.26 194.75,307.76 197.00,306.09 199.25,304.24 201.50,302.19 203.75,299.94 206.00,297.46 208.25,294.76 210.50,291.80 212.75,288.60 215.00,285.12 217.25,281.38 219.50,277.35 221.75,273.04 224.00,268.44 226.25,263.55 228.50,258.37 230.75,252.91 233.00,247.17 235.25,241.17 237.50,234.92 239.75,228.43 242.00,221.72 244.25,214.82 246.50,207.76 248.75,200.56 251.00,193.26 253.25,185.89 255.50,178.50 257.75,171.11 260.00,163.78 262.25,156.55 264.50,149.47 266.75,142.57 269.00,135.91 271.25,129.52 273.50,123.46 275.75,117.77 278.00,112.48 280.25,107.64 282.50,103.27 284.75,99.41 287.00,96.08 289.25,93.31 291.50,91.10 293.75,89.48 296.00,88.45 298.25,88.00 300.50,88.14 302.75,88.85 305.00,90.11 307.25,91.92 309.50,94.23 311.75,97.02 314.00,100.26 316.25,103.91 318.50,107.93 320.75,112.27 323.00,116.89 325.25,121.74 327.50,126.78 329.75,131.96 332.00,137.22 334.25,142.53 336.50,147.84 338.75,153.10 341.00,158.28 343.25,163.33 345.50,168.22 347.75,172.93 350.00,177.41 352.25,181.65 354.50,185.63 356.75,189.33 359.00,192.73 361.25,195.83 363.50,198.61 365.75,201.09 368.00,203.25 370.25,205.10 372.50,206.66 374.75,207.92 377.00,208.91 379.25,209.63 381.50,210.10 383.75,210.34 386.00,210.36 388.25,210.20 390.50,209.85 392.75,209.36 395.00,208.74 397.25,208.01 399.50,207.18 401.75,206.29 404.00,205.36 406.25,204.39 408.50,203.42 410.75,202.45 413.00,201.52 415.25,200.62 417.50,199.78 419.75,199.02 422.00,198.33 424.25,197.75 426.50,197.27 428.75,196.90 431.00,196.66 433.25,196.55 435.50,196.57 437.75,196.73 440.00,197.04 442.25,197.49 444.50,198.09 446.75,198.84 449.00,199.74 451.25,200.78 453.50,201.96 455.75,203.29 458.00,204.75 460.25,206.34 462.50,208.05 464.75,209.89 467.00,211.84 469.25,213.90 471.50,216.06 473.75,218.31 476.00,220.65 478.25,223.06 480.50,225.54 482.75,228.09 485.00,230.68 487.25,233.32 489.50,236.00 491.75,238.70 494.00,241.42 496.25,244.16 498.50,246.89 500.75,249.63 503.00,252.35 505.25,255.06 507.50,257.74 509.75,260.39 512.00,263.01 514.25,265.59 516.50,268.12 518.75,270.59 521.00,273.02 523.25,275.39 525.50,277.69 527.75,279.93 530.00,282.10 532.25,284.21 534.50,286.24 536.75,288.20 539.00,290.09 541.25,291.90 543.50,293.64 545.75,295.30 548.00,296.89 550.25,298.41 552.50,299.86 554.75,301.23 557.00,302.54 559.25,303.77 561.50,304.94 563.75,306.04 566.00,307.08 568.25,308.06 570.50,308.98 572.75,309.84 575.00,310.65 577.25,311.41 579.50,312.11 581.75,312.77 584.00,313.38 586.25,313.95 588.50,314.47 590.75,314.96 593.00,315.41 595.25,315.83 597.50,316.21 599.75,316.56 602.00,316.89 604.25,317.19 606.50,317.46 608.75,317.71 611.00,317.94 613.25,318.14 615.50,318.33 617.75,318.50 620.00,318.66 620.00,320.00" fill="#CCE5F1" stroke="#0072B2" stroke-width="2.5"/>
+<line x1="113.8" y1="320" x2="113.8" y2="320.0" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="147.5" y1="320" x2="147.5" y2="319.6" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="181.2" y1="320" x2="181.2" y2="314.6" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="215.0" y1="320" x2="215.0" y2="285.1" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="248.8" y1="320" x2="248.8" y2="200.6" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="282.5" y1="320" x2="282.5" y2="103.3" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="316.2" y1="320" x2="316.2" y2="103.9" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="350.0" y1="320" x2="350.0" y2="177.4" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="383.8" y1="320" x2="383.8" y2="210.3" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="417.5" y1="320" x2="417.5" y2="199.8" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="451.2" y1="320" x2="451.2" y2="200.8" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="485.0" y1="320" x2="485.0" y2="230.7" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="518.8" y1="320" x2="518.8" y2="270.6" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="552.5" y1="320" x2="552.5" y2="299.9" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="586.2" y1="320" x2="586.2" y2="313.9" stroke="#6FA8CE" stroke-width="1.4"/>
+<line x1="80" y1="320" x2="620" y2="320" stroke="#2a1a0e" stroke-width="0.75"/>
+<text x="620" y="342" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#545454" text-anchor="end">position x</text>
+<text x="296.0" y="78.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#0072B2" text-anchor="middle">|&#968;(x)|&#178;</text>
+<line x1="358.2" y1="76" x2="358.2" y2="320" stroke="#D55E00" stroke-width="1.5" stroke-dasharray="5 4"/>
+<polygon points="351.2,72 365.2,72 358.2,83" fill="#D55E00"/>
+<text x="368.2" y="86" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#D55E00">&#10216;x&#10217; = &#8747; x |&#968;(x)|&#178; dx</text>
+<text x="368.2" y="104" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">the balance point of the density</text>
+<line x1="350.0" y1="320" x2="350.0" y2="328" stroke="#545454" stroke-width="0.75"/>
+<text x="350.0" y="342" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="12" fill="#545454" text-anchor="middle">center</text>
+<text x="350" y="372" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13.5" fill="#2a1a0e" text-anchor="middle">Each thin bar weights a position by its probability; their balance point is &#10216;x&#10217;.</text>
+<text x="350" y="394" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">&#10216;x&#10217; lies between the peak and the long tail &#8212; it is a property of the distribution, not the origin.</text>
+</svg>

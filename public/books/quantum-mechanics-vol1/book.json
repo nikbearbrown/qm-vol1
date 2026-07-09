@@ -1,0 +1,136 @@
+{
+  "title": "Quantum Mechanics",
+  "subtitle": "Foundations: The Quantum World",
+  "authors": ["Srinivas Sridhar", "Nik Bear Brown"],
+  "publisher": "Humanitarians AI Incorporated",
+  "language": "en",
+  "isbn": "",
+  "asin": "",
+  "published": "",
+  "status": "in-progress",
+  "edition": "1st",
+  "series": { "name": "AI+1", "position": 1 },
+  "description": "A first course in one-dimensional quantum mechanics that pairs every derivation with an interactive simulation you build and verify yourself — from the ultraviolet catastrophe to a working 1-D Schrödinger solver.",
+  "keywords": [
+    "quantum mechanics",
+    "Schrödinger equation",
+    "wave function",
+    "blackbody radiation",
+    "photoelectric effect",
+    "matter waves",
+    "tunneling",
+    "harmonic oscillator",
+    "uncertainty principle",
+    "qubit"
+  ],
+  "categories": ["Physics", "Quantum Mechanics", "Education"],
+  "cover": "/books/quantum-mechanics-vol1/cover.jpg",
+  "coverImage": "cover.jpg",
+  "amazonUrl": "",
+  "relatedCourse": "",
+  "license": "CC BY-NC-SA 4.0",
+  "type": "intelligent",
+  "tags": ["Physics", "Quantum", "Interactive"],
+  "stats": { "chapters": 10, "appendices": 2, "topics": 116 },
+  "youtubeId": "",
+  "thematicStructure": [
+    { "number": 1, "title": "The Collapse of Classical Physics", "chapterRange": "Ch. 1–2" },
+    { "number": 2, "title": "The Wave Function & the Schrödinger Equation", "chapterRange": "Ch. 3–4" },
+    { "number": 3, "title": "Bound States, Barriers & Tunneling", "chapterRange": "Ch. 5–6" },
+    { "number": 4, "title": "Operators, Uncertainty & the Oscillator", "chapterRange": "Ch. 7–8" },
+    { "number": 5, "title": "Measurement, Qubits & a 1-D Solver", "chapterRange": "Ch. 9–10" }
+  ],
+  "audiences": [
+    {
+      "icon": "🎓",
+      "title": "Undergraduates",
+      "description": "A rigorous but readable first pass through 1-D quantum mechanics, with every result you can run and check for yourself."
+    },
+    {
+      "icon": "🧑‍🏫",
+      "title": "Instructors",
+      "description": "Derivations paired with build-and-verify simulations you can drop straight into a course."
+    },
+    {
+      "icon": "💻",
+      "title": "Self-learners",
+      "description": "Learn by building — each chapter culminates in a simulation you construct under explicit verification rules."
+    },
+    {
+      "icon": "🔬",
+      "title": "Researchers",
+      "description": "A clean reference for the foundations, notation, and numerics behind the 1-D Schrödinger equation."
+    }
+  ],
+  "featuredPreview": {
+    "label": "Featured Preview",
+    "chapterRef": "Chapter 1 · The Ultraviolet Catastrophe",
+    "title": "How classical physics predicted an impossible infinity",
+    "excerpt": "Heat almost anything hot enough and it begins to glow. Two objects at the same temperature glow with the same color, whatever they are made of — a clean, universal fact any good theory ought to explain with ease. That is precisely where the trouble started: fed into the established physics of the day, the theory did not miss by a little, it predicted a catastrophe — infinite energy piling up toward the ultraviolet."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "Front Matter",
+      "chapterRange": "Preface–Notation",
+      "chapters": [
+        { "slug": "00-frontmatter", "title": "Preface", "filename": "00-frontmatter.html" },
+        { "slug": "00-introduction", "title": "Introduction", "filename": "00-introduction.html" },
+        { "slug": "00-notation", "title": "Notation & Symbols", "filename": "00-notation.html" }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "The Collapse of Classical Physics",
+      "chapterRange": "Ch. 1–2",
+      "chapters": [
+        { "slug": "01-why-classical-physics-failed", "title": "How Classical Physics Failed", "filename": "01-why-classical-physics-failed.html" },
+        { "slug": "02-matter-waves", "title": "Matter Waves", "filename": "02-matter-waves.html" }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "The Wave Function & the Schrödinger Equation",
+      "chapterRange": "Ch. 3–4",
+      "chapters": [
+        { "slug": "03-the-wave-function", "title": "The Wave Function & the Schrödinger Equation", "filename": "03-the-wave-function.html" },
+        { "slug": "04-the-free-particle-and-wave-packets", "title": "The Free Particle & Wave Packets", "filename": "04-the-free-particle-and-wave-packets.html" }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Bound States, Barriers & Tunneling",
+      "chapterRange": "Ch. 5–6",
+      "chapters": [
+        { "slug": "05-the-infinite-square-well", "title": "Bound States: The Infinite Square Well", "filename": "05-the-infinite-square-well.html" },
+        { "slug": "06-finite-wells-steps-and-barriers", "title": "Reflection, Transmission & Tunneling", "filename": "06-finite-wells-steps-and-barriers.html" }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Operators, Uncertainty & the Oscillator",
+      "chapterRange": "Ch. 7–8",
+      "chapters": [
+        { "slug": "07-operators-and-uncertainty", "title": "Operators & Uncertainty", "filename": "07-operators-and-uncertainty.html" },
+        { "slug": "08-the-harmonic-oscillator", "title": "The Quantum Harmonic Oscillator", "filename": "08-the-harmonic-oscillator.html" }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Measurement, Qubits & a 1-D Solver",
+      "chapterRange": "Ch. 9–10",
+      "chapters": [
+        { "slug": "09-measurement-and-the-qubit", "title": "Measurement, Superposition & the Qubit", "filename": "09-measurement-and-the-qubit.html" },
+        { "slug": "10-capstone-a-1d-quantum-sandbox", "title": "Capstone: A 1-D Schrödinger Solver", "filename": "10-capstone-a-1d-quantum-sandbox.html" }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Back Matter",
+      "chapterRange": "Glossary & Resources",
+      "chapters": [
+        { "slug": "99-back-matter", "title": "Glossary & Back Matter", "filename": "99-back-matter.html" }
+      ]
+    }
+  ]
+}

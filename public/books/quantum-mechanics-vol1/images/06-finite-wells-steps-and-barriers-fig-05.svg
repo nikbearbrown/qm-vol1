@@ -1,0 +1,25 @@
+<!-- CAJAL SVG Figure
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 06-finite-wells-steps-and-barriers
+     Figure: 05 — Scanning tunneling microscope exponential ruler
+     Type: schematic  Author: Humanitarians AI Incorporated  Date-generated: 2026-06-22
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl-0605">
+<title id="ttl-0605">The scanning tunneling microscope as an exponential ruler</title>
+<desc>A sharp metal tip hovers a gap d above a metal surface. The wave function decays exponentially across the gap, so the tunnelling current depends exponentially on d: one extra ångström changes the current by a factor of about 7 to 10, which is what makes atomic-resolution imaging possible.</desc>
+<defs><marker id="arr" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#2a1a0e"/></marker></defs>
+<metadata><cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0" book-slug="quantum-mechanics-vol1" chapter="06-finite-wells-steps-and-barriers" figure-number="05" figure-title="Scanning tunneling microscope exponential ruler" figure-slug="stm-exponential-ruler" figure-type="schematic" priority="Important" author="Humanitarians AI Incorporated" date-generated="2026-06-22" source-file="pantry/06-finite-wells-steps-and-barriers-cajal.md"/></metadata>
+<text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle"><tspan>Scanning tunneling microscope: an exponential ruler</tspan></text>
+<rect x="60.00" y="330.00" width="580.00" height="46.00" fill="#EDEDED" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="350" y="360" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle"><tspan>metal surface</tspan></text>
+<path d="M 290.00 120.00 L 430.00 120.00 L 360.00 292.00 Z" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.6"/>
+<text x="440" y="140" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="14" fill="#0072B2" text-anchor="start"><tspan>STM tip</tspan></text>
+<line x1="540.00" y1="292.00" x2="540.00" y2="330.00" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="540.00" y1="330.00" x2="540.00" y2="292.00" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="552" y="315.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="start"><tspan>d  (gap)</tspan></text>
+<path d="M 360.00 292.00 L 361.69 292.48 L 363.32 292.95 L 364.89 293.43 L 366.41 293.90 L 367.86 294.38 L 369.27 294.85 L 370.62 295.32 L 371.92 295.80 L 373.18 296.27 L 374.38 296.75 L 375.55 297.23 L 376.67 297.70 L 377.75 298.18 L 378.79 298.65 L 379.79 299.12 L 380.75 299.60 L 381.68 300.07 L 382.58 300.55 L 383.44 301.02 L 384.27 301.50 L 385.07 301.98 L 385.84 302.45 L 386.58 302.93 L 387.30 303.40 L 387.99 303.88 L 388.65 304.35 L 389.29 304.82 L 389.90 305.30 L 390.50 305.77 L 391.07 306.25 L 391.62 306.73 L 392.15 307.20 L 392.66 307.68 L 393.15 308.15 L 393.62 308.62 L 394.07 309.10 L 394.51 309.57 L 394.94 310.05 L 395.34 310.52 L 395.74 311.00 L 396.11 311.48 L 396.48 311.95 L 396.83 312.43 L 397.17 312.90 L 397.49 313.38 L 397.80 313.85 L 398.11 314.32 L 398.40 314.80 L 398.68 315.27 L 398.95 315.75 L 399.21 316.23 L 399.46 316.70 L 399.70 317.18 L 399.93 317.65 L 400.15 318.12 L 400.37 318.60 L 400.57 319.07 L 400.77 319.55 L 400.97 320.02 L 401.15 320.50 L 401.33 320.98 L 401.50 321.45 L 401.67 321.93 L 401.83 322.40 L 401.98 322.88 L 402.13 323.35 L 402.27 323.82 L 402.41 324.30 L 402.54 324.77 L 402.67 325.25 L 402.79 325.73 L 402.91 326.20 L 403.02 326.68 L 403.13 327.15 L 403.24 327.62 L 403.34 328.10 L 403.44 328.57 L 403.53 329.05 L 403.62 329.52 L 403.71 330.00" fill="none" stroke="#D55E00" stroke-width="2.4"/>
+<text x="325" y="322" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#D55E00" text-anchor="middle"><tspan>ψ ∝ e</tspan><tspan dy="-5.46" font-size="9.36">−κx</tspan></text>
+<text x="82" y="174" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e" text-anchor="start"><tspan>one extra Å of gap:</tspan></text>
+<text x="82" y="196" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#2a1a0e" text-anchor="start"><tspan>I ∝ e</tspan><tspan dy="-5.46" font-size="9.36">−2κd</tspan></text>
+<text x="82" y="218" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e" text-anchor="start"><tspan>→ current ×7–10 → atomic resolution</tspan></text>
+</svg>

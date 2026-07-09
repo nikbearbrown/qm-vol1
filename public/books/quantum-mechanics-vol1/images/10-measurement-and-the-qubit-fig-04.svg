@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CAJAL Figure: 10-measurement-and-the-qubit-fig-04.svg
+  Book: Quantum Mechanics (quantum-mechanics-vol1)
+  Chapter: 10-measurement-and-the-qubit
+  Figure: 04 - Born-Rule Probabilities for the Worked-Example State
+  Generated: 2026-06-06  (palette + caption corrected 2026-06-23; legend moved off the bars)
+  Source: pantry/10-measurement-and-the-qubit-cajal.md
+-->
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
+     xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+     role="img" aria-labelledby="fig-title-10-04">
+  <title id="fig-title-10-04">Born-rule measurement probabilities for three Pauli observables on the worked-example qubit state</title>
+  <desc>Grouped bar chart with three pairs of bars for sigma-z, sigma-x, and sigma-y. Each pair shows P(+1) in green and P(-1) in vermillion. sigma-z: 0.75/0.25; sigma-x: 0.50/0.50; sigma-y: 0.933/0.067. A dashed reference line at probability 0.5 marks the equiprobable benchmark.</desc>
+  <metadata>
+    <cajal:figure book="Quantum Mechanics" book-slug="quantum-mechanics-vol1"
+      chapter="10-measurement-and-the-qubit" figure-number="04"
+      figure-title="Born-Rule Probabilities for the Worked-Example State"
+      figure-slug="born-rule-bar-chart" figure-type="bar-chart"
+      priority="Important" author="Humanitarians AI Incorporated"
+      date-generated="2026-06-06"
+      source-file="pantry/10-measurement-and-the-qubit-cajal.md"/>
+  </metadata>
+
+  <rect width="700" height="420" fill="#FFFFFF"/>
+
+  <text x="350" y="30" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="18" fill="#2a1a0e" text-anchor="middle">Born-rule probabilities for three Pauli observables</text>
+
+  <rect x="104" y="58" width="496" height="282" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="0.75"/>
+
+  <line x1="104" y1="340.0" x2="600" y2="340.0" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="96" y="344.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">0.00</text>
+  <line x1="104" y1="269.5" x2="600" y2="269.5" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="96" y="274.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">0.25</text>
+  <line x1="104" y1="199.0" x2="600" y2="199.0" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="96" y="203.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">0.50</text>
+  <line x1="104" y1="128.5" x2="600" y2="128.5" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="96" y="133.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">0.75</text>
+  <line x1="104" y1="58.0" x2="600" y2="58.0" stroke="#DDDDDD" stroke-width="0.5"/>
+  <text x="96" y="62.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#545454" text-anchor="end">1.00</text>
+
+  <line x1="104" y1="199.0" x2="600" y2="199.0" stroke="#BF7400" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="604" y="203.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#BF7400">0.5</text>
+
+  <!-- Legend in the empty upper-left of the plot -->
+  <rect x="120" y="70" width="14" height="14" fill="#009E73"/>
+  <text x="139" y="82" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">P(+1)</text>
+  <rect x="120" y="90" width="14" height="14" fill="#D55E00"/>
+  <text x="139" y="102" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454">P(&#8722;1)</text>
+
+  <rect x="220" y="128.5" width="42" height="211.5" fill="#009E73"/>
+  <rect x="268" y="269.5" width="42" height="70.5" fill="#D55E00"/>
+  <text x="241" y="122.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#009E73" text-anchor="middle">0.75</text>
+  <text x="289" y="263.5" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#D55E00" text-anchor="middle">0.25</text>
+  <text x="265" y="362" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#963;z</text>
+
+  <rect x="342" y="199.0" width="42" height="141.0" fill="#009E73"/>
+  <rect x="390" y="199.0" width="42" height="141.0" fill="#D55E00"/>
+  <text x="363" y="193.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#009E73" text-anchor="middle">0.50</text>
+  <text x="411" y="193.0" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#D55E00" text-anchor="middle">0.50</text>
+  <text x="387" y="362" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#963;x</text>
+
+  <rect x="464" y="77.1" width="42" height="262.9" fill="#009E73"/>
+  <rect x="512" y="321.1" width="42" height="18.9" fill="#D55E00"/>
+  <text x="485" y="71.1" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#009E73" text-anchor="middle">0.933</text>
+  <text x="533" y="315.1" font-family="'JetBrains Mono','Fira Code','Courier New',monospace" font-size="13" fill="#D55E00" text-anchor="middle">0.067</text>
+  <text x="509" y="362" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#2a1a0e" text-anchor="middle">&#963;y</text>
+
+  <line x1="104" y1="340" x2="600" y2="340" stroke="#2a1a0e" stroke-width="0.75"/>
+  <line x1="104" y1="58" x2="104" y2="340" stroke="#2a1a0e" stroke-width="0.75"/>
+
+  <text x="34" y="199.0" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="15" fill="#545454" text-anchor="middle" transform="rotate(-90,34,199.0)">Probability</text>
+
+  <text x="350" y="396" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#545454" text-anchor="middle">State |&#968;&#10217; = (&#8730;3/2)|0&#10217; + (i/2)|1&#10217; &#8212; the worked example; each pair sums to 1</text>
+</svg>

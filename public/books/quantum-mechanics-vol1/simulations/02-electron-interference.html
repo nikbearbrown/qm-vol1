@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electron interference diffraction — Quantum Mechanics Vol. 1, Chapter 2</title>
+<style>
+  :root{--ink:#2a1a0e;--red:#C8102E;--gray:#545454;--hair:#D4D4D4;--chart:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 20px 30px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:var(--chart);}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:180px;accent-color:var(--red);}
+  button{font-family:inherit;font-size:14px;padding:6px 15px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;}
+  button:hover{background:var(--chart);}
+  button.on{background:var(--red);color:#fff;border-color:var(--red);}
+  .count{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;}
+  label.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--gray);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Electron interference diffraction</h1>
+  <p class="sub">Electrons arrive one at a time, each a single dot at a spot no one can predict &mdash; yet after thousands of them an interference pattern appears. Only one electron is ever in the apparatus at a time.</p>
+  <canvas id="screen" width="720" height="300" aria-label="Detector screen accumulating electron impacts"></canvas>
+  <div class="controls">
+    <button id="pause" class="on">Pause</button>
+    <button id="reset">Reset</button>
+    <span class="count">total: <span id="n">0</span></span>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label for="sep">Slit separation</label>
+      <input type="range" id="sep" min="2" max="9" step="0.1" value="4">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;" id="sepout">wider fringes</span></div>
+    <label class="chk"><input type="checkbox" id="show"> show predicted intensity |&psi;|&sup2;</label>
+  </div>
+  <p class="note">Each dot is drawn from the probability density |&psi;|&sup2; for a wave that passed through both slits: a cosine-squared fringe pattern under a single-slit envelope. The electrons never interact &mdash; each interferes only with itself. The run starts automatically and stops at 30,000 electrons; use Pause to freeze it, Reset to start over, and the slider to change the fringe spacing.</p>
+</div>
+<script>
+const cv=document.getElementById('screen'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const X0=20,X1=700,Y0=20,Y1=275,SW=X1-X0,SH=Y1-Y0;
+const CAP=30000;
+let dots=[], total=0, running=false, raf=null;
+const sep=document.getElementById('sep'), show=document.getElementById('show');
+const pauseBtn=document.getElementById('pause'), resetBtn=document.getElementById('reset');
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function intensity(xN){ const f=+sep.value, u=xN-0.5;
+  return Math.pow(Math.cos(Math.PI*f*u),2)*Math.exp(-Math.pow(u/0.30,2)); }
+function sampleX(){ for(;;){ const x=Math.random(); if(Math.random()<intensity(x)) return x; } }
+function addOne(){ const xN=sampleX(); dots.push([X0+xN*SW, Y0+Math.random()*SH]); total++; }
+function drawDot(d){ cx.fillStyle='rgba(42,26,14,0.80)'; cx.beginPath(); cx.arc(d[0],d[1],1.4,0,7); cx.fill(); }
+function frameBase(){
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle=getCSS('--chart');cx.fillRect(0,0,W,H);
+}
+function redrawAll(){ frameBase(); for(const d of dots) drawDot(d); if(show.checked) drawCurve(); }
+function drawCurve(){
+  cx.strokeStyle=getCSS('--red');cx.lineWidth=1.6;cx.beginPath();
+  for(let px=0;px<=SW;px+=2){const xN=px/SW; const y=Y1-intensity(xN)*SH;
+    if(px===0)cx.moveTo(X0+px,y); else cx.lineTo(X0+px,y);}
+  cx.stroke();
+  cx.fillStyle=getCSS('--red');cx.font="11px 'Inter',sans-serif";cx.textAlign='right';
+  cx.fillText('|ψ|²',X1-4,Y0+12);
+}
+function setBtn(){ pauseBtn.textContent = total>=CAP ? 'Done' : (running ? 'Pause' : 'Resume');
+  pauseBtn.classList.toggle('on', running); }
+function stopRun(){ running=false; if(raf){cancelAnimationFrame(raf);raf=null;} setBtn(); }
+function startRun(){ if(total>=CAP || running) { setBtn(); return; } running=true; setBtn(); loop(); }
+function add(k){ k=Math.min(k, CAP-total); if(k<=0){ stopRun(); return; }
+  const start=dots.length; for(let i=0;i<k;i++) addOne();
+  if(show.checked){ redrawAll(); } else { for(let i=start;i<dots.length;i++) drawDot(dots[i]); }
+  document.getElementById('n').textContent=total.toLocaleString()+(total>=CAP?' (complete)':'');
+  if(total>=CAP) stopRun();
+}
+function loop(){ if(!running) return; add(45); if(running) raf=requestAnimationFrame(loop); }
+pauseBtn.onclick=()=>{ if(total>=CAP) return; running ? stopRun() : startRun(); };
+resetBtn.onclick=()=>{ stopRun(); dots=[]; total=0; document.getElementById('n').textContent='0'; redrawAll(); startRun(); };
+sep.addEventListener('input',()=>{ document.getElementById('sepout').textContent=(+sep.value<4?'wider fringes':(+sep.value>7?'tight fringes':'medium fringes'));
+  stopRun(); dots=[]; total=0; document.getElementById('n').textContent='0'; redrawAll(); startRun(); });
+show.addEventListener('change',redrawAll);
+redrawAll(); startRun();
+</script>
+</body>
+</html>

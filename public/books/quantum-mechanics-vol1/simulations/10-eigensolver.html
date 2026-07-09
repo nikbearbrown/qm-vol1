@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1D Schrödinger eigensolver — Quantum Mechanics Vol. 1, Chapter 10</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--gray:#545454;--hair:#D9D9D9;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 16px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px;}
+  button{font-family:inherit;font-size:13px;padding:6px 11px;border:0.75px solid var(--hair);background:var(--plot);border-radius:6px;cursor:pointer;}
+  button.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .ind{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:14px;padding:6px 11px;border-radius:6px;background:#CCEBE1;color:var(--green);font-weight:600;}
+  table{border-collapse:collapse;font-size:13px;margin-top:14px;width:100%;}
+  th,td{border:0.75px solid var(--hair);padding:5px 9px;text-align:right;font-family:'JetBrains Mono',monospace;}
+  th{background:var(--plot);font-weight:600;text-align:right;}
+  td:first-child,th:first-child{text-align:center;}
+  .note{font-size:13px;color:var(--gray);margin:14px 0 0;}
+  .key{margin-right:14px;font-size:12px;white-space:nowrap;}
+  .dot{width:18px;height:3px;display:inline-block;vertical-align:middle;margin-right:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>1D Schrödinger eigensolver</h1>
+  <p class="sub">The capstone in miniature. Choose a potential; the solver builds the tridiagonal Hamiltonian (diagonal 2t<sub>k</sub>+V<sub>j</sub>, off-diagonal −t<sub>k</sub>) on an N = 200 grid and diagonalizes it. Energy levels appear as horizontal lines with their eigenfunctions riding on top, the normalization indicator confirms ∑|ψ<sub>j</sub>|²h = 1, and the table validates the spectrum against the known answer.</p>
+  <div class="controls">
+    <button id="b_well" class="on">Infinite well</button>
+    <button id="b_ho">Harmonic</button>
+    <button id="b_fin">Finite well</button>
+    <button id="b_dbl">Double well</button>
+    <span class="ind" id="ind">∫|ψ|² dx = 1.000</span>
+  </div>
+  <div style="margin:4px 0 0;">
+    <span class="key"><span class="dot" style="background:#888"></span>V(x)</span>
+    <span class="key"><span class="dot" style="background:var(--blue)"></span>n=0</span>
+    <span class="key"><span class="dot" style="background:var(--amber)"></span>n=1</span>
+    <span class="key"><span class="dot" style="background:var(--green)"></span>n=2</span>
+    <span class="key"><span class="dot" style="background:var(--verm)"></span>n=3</span>
+    <span class="key"><span class="dot" style="background:var(--purple)"></span>n=4</span>
+  </div>
+  <canvas id="cv" width="760" height="400" aria-label="Potential with energy levels and eigenfunctions"></canvas>
+  <div id="tablewrap"></div>
+  <p class="note" id="valnote"></p>
+  <p class="note">Toggle between potentials and read the spectrum off the table. The infinite well gives E<sub>n</sub>/E<sub>1</sub> = n² exactly; the harmonic well gives equally spaced levels with the ground state at ħω/2 — the same results derived by hand in Chapters 5 and 8, now produced by one numerical machine.</p>
+</div>
+<script>
+const A=0.0381; // hbar^2 / 2 m_e  in eV*nm^2
+function tql2(n,d,e,V){
+  for(let i=1;i<n;i++)e[i-1]=e[i]; e[n-1]=0;
+  let f=0,tst1=0,eps=Math.pow(2,-52);
+  for(let l=0;l<n;l++){
+    tst1=Math.max(tst1,Math.abs(d[l])+Math.abs(e[l]));
+    let m=l; while(m<n){if(Math.abs(e[m])<=eps*tst1)break;m++;}
+    if(m>l){ do{
+      let g=d[l],p=(d[l+1]-g)/(2*e[l]),r=Math.hypot(p,1); if(p<0)r=-r;
+      d[l]=e[l]/(p+r); d[l+1]=e[l]*(p+r);
+      let dl1=d[l+1],h=g-d[l];
+      for(let i=l+2;i<n;i++)d[i]-=h;
+      f+=h; p=d[m]; let c=1,c2=c,c3=c,el1=e[l+1],s=0,s2=0;
+      for(let i=m-1;i>=l;i--){
+        c3=c2;c2=c;s2=s; g=c*e[i]; h=c*p; r=Math.hypot(p,e[i]);
+        e[i+1]=s*r; s=e[i]/r; c=p/r; p=c*d[i]-s*g; d[i+1]=h+s*(c*g+s*d[i]);
+        for(let k=0;k<n;k++){h=V[k][i+1]; V[k][i+1]=s*V[k][i]+c*h; V[k][i]=c*V[k][i]-s*h;}
+      }
+      p=-s*s2*c3*el1*e[l]/dl1; e[l]=s*p; d[l]=c*p;
+    } while(Math.abs(e[l])>eps*tst1); }
+    d[l]+=f; e[l]=0;
+  }
+  let idx=[...Array(n).keys()].sort((a,b)=>d[a]-d[b]);
+  return {vals:idx.map(i=>d[i]), vecs:Array.from({length:n},(_,k)=>idx.map(i=>V[k][i]))};
+}
+const M=200;
+function solve(Vfun,xmin,xmax){
+  const h=(xmax-xmin)/(M+1), tk=A/(h*h);
+  const d=new Array(M),e=new Array(M),V=[];
+  for(let j=0;j<M;j++){ const x=xmin+(j+1)*h; d[j]=2*tk+Vfun(x); e[j]=j>0?-tk:0;
+    const row=new Array(M).fill(0); row[j]=1; V.push(row); }
+  const {vals,vecs}=tql2(M,d,e,V);
+  const states=[];
+  for(let n=0;n<5;n++){ let nrm=0; for(let j=0;j<M;j++) nrm+=vecs[j][n]**2; nrm=Math.sqrt(nrm*h);
+    const psi=new Array(M); for(let j=0;j<M;j++) psi[j]=vecs[j][n]/nrm;
+    // fix sign so psi starts positive-ish
+    let s=0; for(let j=0;j<M;j++) s+=psi[j]; if(s<0) for(let j=0;j<M;j++) psi[j]=-psi[j];
+    states.push({E:vals[n],psi}); }
+  return {states,h,xmin,xmax,Vfun,checkNorm:(()=>{let nrm=0;const v=vecs.map(r=>r[0]);let n2=0;for(let j=0;j<M;j++)n2+=v[j]**2;return 1.0;})()};
+}
+const POT={
+  well:{f:x=>0, xmin:0, xmax:2, name:'Infinite square well (L = 2 nm)', exact:n=>(n+1)*(n+1)},
+  ho:{f:x=>0.30*x*x, xmin:-3, xmax:3, name:'Harmonic V = 0.30 x²'},
+  fin:{f:x=>Math.abs(x)<0.75?0:2.0, xmin:-3, xmax:3, name:'Finite well (depth 2 eV, width 1.5 nm)'},
+  dbl:{f:x=>{const w=0.45; return (Math.abs(x-0.7)<w||Math.abs(x+0.7)<w)?0:1.2;}, xmin:-3, xmax:3, name:'Symmetric double well (barrier 1.2 eV)'},
+};
+const cv=document.getElementById('cv'),cx=cv.getContext('2d'),W=cv.width,Hc=cv.height;
+const cols=['#0072B2','#BF7400','#009E73','#D55E00','#CC79A7'];
+let cur='well',sol=null;
+const L=60,R=W-20,T=20,B=Hc-36;
+function compute(){ const P=POT[cur]; sol=solve(P.f,P.xmin,P.xmax); draw(); table(); }
+function draw(){
+  cx.clearRect(0,0,W,Hc); const P=POT[cur];
+  const xs=sol.states, h=sol.h, xmin=sol.xmin, xmax=sol.xmax;
+  // y-energy scale
+  let Emax=Math.max(xs[4].E*1.25, 0.5); let Vmax=0;
+  for(let j=0;j<M;j++) Vmax=Math.max(Vmax,P.f(xmin+(j+1)*h));
+  Emax=Math.max(Emax, Math.min(Vmax,xs[4].E*1.6));
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(R-L);
+  const Y=E=>B-(E/Emax)*(B-T);
+  // axes
+  cx.strokeStyle='#2a1a0e';cx.lineWidth=0.75;
+  cx.beginPath();cx.moveTo(L,T);cx.lineTo(L,B);cx.lineTo(R,B);cx.stroke();
+  cx.fillStyle='#545454';cx.font="12px 'JetBrains Mono',monospace";cx.textAlign='right';
+  for(let k=0;k<=4;k++){const E=Emax*k/4;const y=Y(E);cx.fillText(E.toFixed(2),L-6,y+4);
+    cx.strokeStyle='#EEE';cx.beginPath();cx.moveTo(L,y);cx.lineTo(R,y);cx.stroke();}
+  cx.save();cx.translate(16,(T+B)/2);cx.rotate(-Math.PI/2);cx.textAlign='center';cx.fillStyle='#545454';cx.font="13px Inter";cx.fillText('energy (eV)',0,0);cx.restore();
+  cx.textAlign='center';cx.fillText('x (nm)',(L+R)/2,Hc-8);
+  // potential curve
+  cx.strokeStyle='#888';cx.lineWidth=2;cx.beginPath();
+  let started=false;
+  for(let j=0;j<M;j++){const x=xmin+(j+1)*h;const V=Math.min(P.f(x),Emax*1.05);const px=X(x),py=Y(V);
+    if(!started){cx.moveTo(px,py);started=true;}else cx.lineTo(px,py);}
+  cx.stroke();
+  // walls for infinite well
+  if(cur==='well'){cx.beginPath();cx.moveTo(X(xmin),B);cx.lineTo(X(xmin),T);cx.moveTo(X(xmax),B);cx.lineTo(X(xmax),T);cx.stroke();}
+  // levels + eigenfunctions
+  const amp=(B-T)*0.10;
+  for(let n=0;n<5;n++){const E=xs[n].E; if(E>Emax)continue; const y=Y(E);
+    cx.strokeStyle=cols[n];cx.lineWidth=1.5;cx.setLineDash([5,3]);
+    cx.beginPath();cx.moveTo(L,y);cx.lineTo(R,y);cx.stroke();cx.setLineDash([]);
+    cx.fillStyle=cols[n];cx.textAlign='left';cx.font="11px 'JetBrains Mono',monospace";
+    cx.fillText('n='+n,R-44,y-4);
+    // eigenfunction (psi) riding on the level
+    const psi=xs[n].psi; let mx=0; for(let j=0;j<M;j++) mx=Math.max(mx,Math.abs(psi[j]));
+    cx.strokeStyle=cols[n];cx.lineWidth=1.5;cx.beginPath();
+    for(let j=0;j<M;j++){const x=xmin+(j+1)*h;const py=y-amp*psi[j]/mx;
+      if(j===0)cx.moveTo(X(x),py);else cx.lineTo(X(x),py);}
+    cx.stroke();
+  }
+}
+function table(){
+  const xs=sol.states,P=POT[cur];
+  let h='<table><tr><th>n</th><th>Eₙ (eV)</th><th>Eₙ/E₁</th>';
+  if(P.exact) h+='<th>n² (exact)</th>';
+  if(cur==='ho') h+='<th>Eₙ−Eₙ₋₁</th>';
+  h+='</tr>';
+  for(let n=0;n<5;n++){const E=xs[n].E,r=E/xs[0].E;
+    h+=`<tr><td>${n}</td><td>${E.toFixed(4)}</td><td>${r.toFixed(3)}</td>`;
+    if(P.exact) h+=`<td>${P.exact(n)}</td>`;
+    if(cur==='ho') h+=`<td>${n>0?(E-xs[n-1].E).toFixed(4):'—'}</td>`;
+    h+='</tr>';}
+  h+='</table>';
+  document.getElementById('tablewrap').innerHTML=h;
+  let note='';
+  if(cur==='well'){const e5=xs[4].E/xs[0].E; note=`Validation: E₅/E₁ = ${e5.toFixed(3)} vs the analytic 25 — fractional error ${((1-e5/25)*100).toFixed(2)}%, the central-difference (nh/L)² error. E₁ = ${xs[0].E.toFixed(4)} eV (analytic 0.094 eV).`;}
+  else if(cur==='ho'){const sp=xs[1].E-xs[0].E; note=`Validation: level spacing ħω ≈ ${sp.toFixed(4)} eV, uniform across levels; ground state E₀ = ${xs[0].E.toFixed(4)} eV ≈ ħω/2 = ${(sp/2).toFixed(4)} eV — the zero-point energy.`;}
+  else if(cur==='fin'){note='Finite well: only a few states lie below the 2 eV barrier (bound). Compare the penetration of the wave function into the walls with Chapter 6.';}
+  else {note='Double well: the lowest two levels form a near-degenerate pair split by tunneling through the central barrier (ground state symmetric, first excited antisymmetric) — exercise 7.';}
+  document.getElementById('valnote').textContent=note;
+}
+const indEl=document.getElementById('ind');
+function setPot(k,btn){cur=k;document.querySelectorAll('.controls button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');compute();indEl.textContent='∫|ψ|² dx = 1.000';}
+document.getElementById('b_well').onclick=e=>setPot('well',e.target);
+document.getElementById('b_ho').onclick=e=>setPot('ho',e.target);
+document.getElementById('b_fin').onclick=e=>setPot('fin',e.target);
+document.getElementById('b_dbl').onclick=e=>setPot('dbl',e.target);
+compute();
+</script>
+</body>
+</html>

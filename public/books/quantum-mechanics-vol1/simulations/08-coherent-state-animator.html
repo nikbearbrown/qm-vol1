@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coherent states &amp; oscillator dynamics — Quantum Mechanics Vol. 1, Chapter 8</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  canvas{width:100%;height:auto;display:block;border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 4px;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:140px;accent-color:var(--blue);}
+  .seg{display:inline-flex;border:0.75px solid var(--hair);border-radius:6px;overflow:hidden;}
+  .seg button{font:inherit;font-size:13px;padding:5px 11px;border:0;background:#fff;color:var(--ink);cursor:pointer;}
+  .seg button.on{background:var(--blue);color:#fff;}
+  button.act{font:inherit;font-size:13px;padding:6px 14px;border:0.75px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:104px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .card.hl{background:#eef6ec;border-color:var(--green);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  sub{font-size:0.7em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Coherent states &amp; oscillator dynamics</h1>
+  <p class="sub">Watch |Ψ(x,t)|² evolve in the harmonic well. A single eigenstate holds perfectly still. A two-state superposition sloshes at the classical frequency ω. A coherent state |α⟩ is the minimum-uncertainty Gaussian that rides the classical orbit forever without spreading — the quantum state of laser light. Units ξ = √(mω/ℏ)·x, ℏ = ω = 1, so the period is 2π.</p>
+  <canvas id="cv" width="760" height="430" aria-label="Time evolution of the probability density in a harmonic oscillator"></canvas>
+  <div class="controls">
+    <div class="ctl">state
+      <span class="seg">
+        <button id="mEig" class="on">eigenstate |n⟩</button>
+        <button id="mSup">(|0⟩+|1⟩)/√2</button>
+        <button id="mCoh">coherent |α⟩</button>
+      </span>
+    </div>
+    <div class="ctl" id="cN"><label for="n">n</label><input type="range" id="n" min="0" max="6" step="1" value="0"><span id="nv" style="font-family:monospace">0</span></div>
+    <div class="ctl" id="cA" style="opacity:.35"><label for="al">α</label><input type="range" id="al" min="0.5" max="3" step="0.1" value="2.0"><span id="alv" style="font-family:monospace">2.0</span></div>
+    <div class="ctl"><button id="play" class="act">Pause</button><button id="reset" class="act">Reset</button></div>
+  </div>
+  <div class="stats">
+    <div class="card"><div class="l">⟨H⟩ (constant)</div><div class="v" id="EH">&mdash;</div></div>
+    <div class="card"><div class="l">⟨n⟩</div><div class="v" id="nbar">&mdash;</div></div>
+    <div class="card hl"><div class="l">σ<sub>x</sub>σ<sub>p</sub> (ℏ)</div><div class="v" id="sp">&mdash;</div></div>
+    <div class="card"><div class="l">⟨x⟩(t)</div><div class="v" id="xt">&mdash;</div></div>
+  </div>
+  <p class="note" id="msg"></p>
+  <p class="note">The energy ⟨H⟩ is constant in every case — even while the density sloshes — because each eigenstate's phase rotates at its own rate and only the cross terms move |Ψ|². The eigenstate's |Ψ|² is exactly time-independent (the rotating phase cancels). The coherent state keeps σ<sub>x</sub>σ<sub>p</sub> = ℏ/2 for all time and traces ⟨x⟩(t) = √2·α·cos t: a classical orbit carried out by a quantum packet that never disperses.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height;
+const C=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const nEL=document.getElementById('n'),alEL=document.getElementById('al');
+let mode='eig', t=0, playing=true, hist=[];
+
+const mEig=document.getElementById('mEig'),mSup=document.getElementById('mSup'),mCoh=document.getElementById('mCoh');
+function setMode(m){mode=m;
+  mEig.classList.toggle('on',m==='eig');mSup.classList.toggle('on',m==='sup');mCoh.classList.toggle('on',m==='coh');
+  document.getElementById('cN').style.opacity=(m==='eig')?'1':'.35';
+  document.getElementById('cA').style.opacity=(m==='coh')?'1':'.35';
+  nEL.disabled=(m!=='eig');alEL.disabled=(m!=='coh');
+  t=0;hist=[];}
+mEig.onclick=()=>setMode('eig');mSup.onclick=()=>setMode('sup');mCoh.onclick=()=>setMode('coh');
+document.getElementById('play').onclick=function(){playing=!playing;this.textContent=playing?'Pause':'Play';if(playing)loop();};
+document.getElementById('reset').onclick=()=>{t=0;hist=[];};
+nEL.oninput=()=>{document.getElementById('nv').textContent=nEL.value;t=0;hist=[];};
+alEL.oninput=()=>{document.getElementById('alv').textContent=(+alEL.value).toFixed(1);t=0;hist=[];};
+
+function hermite(n,x){if(n===0)return 1;if(n===1)return 2*x;let hm=1,h=2*x;for(let k=1;k<n;k++){const hn=2*x*h-2*k*hm;hm=h;h=hn;}return h;}
+function logfact(n){let s=0;for(let k=2;k<=n;k++)s+=Math.log(k);return s;}
+function psi(n,x){const logN=-0.5*(n*Math.log(2)+logfact(n)+0.5*Math.log(Math.PI));return Math.exp(logN)*hermite(n,x)*Math.exp(-x*x/2);}
+
+function coeffs(){
+  if(mode==='eig'){const a=[];a[+nEL.value]=1;return a;}
+  if(mode==='sup'){return [Math.SQRT1_2,Math.SQRT1_2];}
+  // coherent: c_n = e^{-a^2/2} a^n/sqrt(n!)
+  const a=+alEL.value,Nm=Math.min(28,Math.ceil(a*a+8*Math.sqrt(a*a)+6));const c=[];
+  for(let n=0;n<=Nm;n++) c[n]=Math.exp(-a*a/2 + n*Math.log(a) - 0.5*logfact(n));
+  return c;
+}
+
+const XI=6;
+function fieldAt(c,xi,t){ // returns [Re,Im] of Psi
+  let re=0,im=0;
+  for(let n=0;n<c.length;n++){const cn=c[n]||0;if(!cn)continue;const ph=(n+0.5)*t;const p=cn*psi(n,xi);re+=p*Math.cos(-ph);im+=p*Math.sin(-ph);}
+  return [re,im];
+}
+
+function draw(){
+  const c=coeffs();
+  cx.clearRect(0,0,W,H);
+  const padL=50,padR=18;
+  // main density panel
+  const px0=padL,px1=W-padR,py0=24,py1=300;
+  const X=xi=>px0+(px1-px0)*(xi+XI)/(2*XI);
+  cx.fillStyle=C('--plot');cx.fillRect(px0,py0,px1-px0,py1-py0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(px0,py0,px1-px0,py1-py0);
+  // faint parabola reference
+  cx.strokeStyle="rgba(84,84,84,0.35)";cx.lineWidth=1;cx.beginPath();let s0=false;
+  for(let xi=-XI;xi<=XI;xi+=0.05){const v=0.5*xi*xi; const yy=py1-(v/18)*(py1-py0); if(yy<py0)continue; s0?cx.lineTo(X(xi),yy):cx.moveTo(X(xi),yy);s0=true;}
+  cx.stroke();
+  // density
+  const N=240;let dens=[],maxd=0,mx=0,norm=0;
+  for(let i=0;i<=N;i++){const xi=-XI+2*XI*i/N;const[re,im]=fieldAt(c,xi,t);const d=re*re+im*im;dens.push([xi,d]);maxd=Math.max(maxd,d);}
+  // <x> and norm via grid
+  const dxi=2*XI/N;
+  for(const[xi,d] of dens){norm+=d*dxi;mx+=xi*d*dxi;}
+  const xmean=mx/norm;
+  const base=py1, amp=(py1-py0)*0.86;
+  cx.beginPath();cx.moveTo(X(-XI),base);
+  for(const[xi,d] of dens){cx.lineTo(X(xi),base-amp*d/maxd);}
+  cx.lineTo(X(XI),base);cx.closePath();
+  cx.fillStyle="rgba(0,114,178,0.16)";cx.fill();
+  cx.beginPath();let f=true;for(const[xi,d] of dens){const xx=X(xi),yy=base-amp*d/maxd;f?cx.moveTo(xx,yy):cx.lineTo(xx,yy);f=false;}
+  cx.strokeStyle=C('--blue');cx.lineWidth=2.4;cx.stroke();
+  // <x> marker
+  cx.strokeStyle=C('--amber');cx.lineWidth=1.6;cx.setLineDash([5,4]);
+  cx.beginPath();cx.moveTo(X(xmean),py0);cx.lineTo(X(xmean),py1);cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=C('--amber');cx.font="12px 'Inter',sans-serif";cx.textAlign="center";cx.fillText("⟨x⟩",X(xmean),py0+13);
+  // labels
+  cx.fillStyle=C('--ink');cx.font="14px 'Inter',sans-serif";cx.textAlign="left";cx.fillText("|Ψ(x,t)|²",px0+8,py0+18);
+  cx.fillStyle=C('--gray');cx.font="13px 'Inter',sans-serif";cx.textAlign="right";cx.fillText("position  ξ",px1-6,py1+18);
+  // Poisson inset for coherent
+  if(mode==='coh'){
+    const a=+alEL.value, ix0=px1-168, iy0=py0+10, iw=150, ih=78;
+    cx.fillStyle="#fff";cx.fillRect(ix0,iy0,iw,ih);cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(ix0,iy0,iw,ih);
+    cx.fillStyle=C('--gray');cx.font="11px 'Inter',sans-serif";cx.textAlign="left";cx.fillText("photon number  P(n) — Poisson",ix0+6,iy0+13);
+    let pmax=0;const ps=[];for(let n=0;n<16;n++){const p=Math.exp(-a*a+n*Math.log(a*a)-logfact(n));ps.push(p);pmax=Math.max(pmax,p);}
+    const bw=(iw-16)/16;
+    for(let n=0;n<16;n++){const bh=(ih-26)*ps[n]/pmax;cx.fillStyle=C('--green');cx.fillRect(ix0+8+n*bw,iy0+ih-8-bh,bw*0.8,bh);}
+    cx.fillStyle=C('--gray');cx.textAlign="center";cx.fillText("⟨n⟩="+(a*a).toFixed(1),ix0+iw/2,iy0+ih-1);
+  }
+  // <x>(t) trace strip
+  const sx0=px0,sx1=px1,sy0=322,sy1=H-18;
+  cx.fillStyle=C('--plot');cx.fillRect(sx0,sy0,sx1-sx0,sy1-sy0);
+  cx.strokeStyle=C('--hair');cx.lineWidth=0.75;cx.strokeRect(sx0,sy0,sx1-sx0,sy1-sy0);
+  const midY=(sy0+sy1)/2, xamp=(sy1-sy0)/2*0.8, xscale=xamp/4.5; // |<x>| up to ~sqrt(2)*3=4.24
+  cx.strokeStyle="rgba(84,84,84,0.3)";cx.lineWidth=0.5;cx.beginPath();cx.moveTo(sx0,midY);cx.lineTo(sx1,midY);cx.stroke();
+  cx.fillStyle=C('--ink');cx.font="13px 'Inter',sans-serif";cx.textAlign="left";cx.fillText("⟨x⟩(t)",sx0+8,sy0+16);
+  // hist: keep last ~Tspan
+  const Tspan=4*Math.PI;
+  hist.push([t,xmean]);while(hist.length&&hist[0][0]<t-Tspan)hist.shift();
+  cx.strokeStyle=C('--amber');cx.lineWidth=2;cx.beginPath();let g=true;
+  for(const[tt,xm] of hist){const xx=sx1-(t-tt)/Tspan*(sx1-sx0);const yy=midY-xm*xscale;g?cx.moveTo(xx,yy):cx.lineTo(xx,yy);g=false;}
+  cx.stroke();
+  // stats
+  let EH,nbar,sp;
+  if(mode==='eig'){const n=+nEL.value;EH=n+0.5;nbar=n;sp=(n+0.5);}
+  else if(mode==='sup'){EH=1.0;nbar=0.5;sp=null;}
+  else{const a=+alEL.value;EH=a*a+0.5;nbar=a*a;sp=0.5;}
+  document.getElementById('EH').textContent=EH.toFixed(2)+' ℏω';
+  document.getElementById('nbar').textContent=nbar.toFixed(2);
+  document.getElementById('sp').textContent= sp===null? '> 0.5 (varies)' : sp.toFixed(2);
+  document.getElementById('xt').textContent=xmean.toFixed(2);
+  let m;
+  if(mode==='eig')m="A single eigenstate is stationary: |Ψ|² does not move and ⟨x⟩ stays at 0, no matter how the phase spins.";
+  else if(mode==='sup')m="The superposition sloshes at ω: the cross term beats at the classical frequency, so ⟨x⟩ swings while the shape also breathes.";
+  else m="The coherent state is a rigid Gaussian (σₓσₚ=ℏ/2) whose center rides the classical orbit ⟨x⟩=√2·α·cos t — never spreading. Photon number is Poisson with ⟨n⟩=α².";
+  document.getElementById('msg').textContent=m;
+}
+
+function loop(){draw();if(playing){t+=0.035;requestAnimationFrame(loop);}}
+setMode('eig');loop();
+</script>
+</body>
+</html>

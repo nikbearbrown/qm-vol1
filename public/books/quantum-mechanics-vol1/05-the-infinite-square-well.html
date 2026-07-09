@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 5 — Bound States and Energy Spectra</title>
+<meta name="description" content="In 1993, physicists at IBM's Almaden Research Center imaged the electron density inside a ring of 48 iron atoms they had arranged one by one on a copper surface using a scanning" />
+<meta name="keywords" content="quantum mechanics, physics, Schrödinger equation, wave function, Medhavy, interactive textbook" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none', processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --bb-1:#121212; --bb-2:#1F3D1A; --bb-3:#8C3422; --bb-4:#C8860E;
+  --bb-5:#5C5A4E; --bb-6:#8C8878; --bb-7:#999387; --bb-8:#FFFFFF;
+  --bg:#FFFFFF; --surface:#F7F6F2; --text:#1a1a1a; --muted:#5C5A4E;
+  --border:#e6e4dd; --heading:#1F3D1A; --link:#1F3D1A; --accent:#C8860E;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#121212; --surface:#1c1c1c; --text:#ededed; --muted:#a5a196;
+    --border:#2a2a2a; --heading:#7bb46e; --link:#8fca82; --accent:#e0a63a;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 18px; line-height: 1.75; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+.qm-reader { max-width: 760px; margin: 0 auto; padding: 3.25rem 1.5rem 6rem; }
+.qm-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1rem;
+}
+.qm-eyebrow::before { content:""; width: 1.6rem; height: 2px; background: var(--accent); display:inline-block; }
+h1 {
+  color: var(--heading); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; margin: 0 0 1.6rem;
+}
+h2 {
+  color: var(--heading); font-weight: 700; letter-spacing: -.015em;
+  font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; padding-top: .4rem;
+}
+h3 { color: var(--text); font-weight: 700; font-size: 1.18rem; margin: 2.2rem 0 .8rem; }
+h4 { color: var(--text); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; margin: 1.8rem 0 .6rem; }
+p { margin: 1.1rem 0; }
+strong { color: var(--heading); font-weight: 700; }
+a { color: var(--link); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--link) 35%, transparent); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--link); }
+ul, ol { margin: 1.1rem 0; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+li::marker { color: var(--bb-6); }
+blockquote {
+  margin: 1.6rem 0; padding: .2rem 0 .2rem 1.2rem;
+  border-left: 3px solid var(--accent); color: var(--muted); font-style: italic;
+}
+hr {
+  border: 0; height: 1px; width: 42%; margin: 2.8rem auto;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88em; background: var(--surface); padding: .12em .38em; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.1rem 1.25rem; overflow-x: auto; line-height: 1.55; font-size: .9rem;
+}
+pre code { background: none; border: 0; padding: 0; }
+/* Figures */
+figure.qm-figure { margin: 2rem 0; text-align: center; }
+figure.qm-figure img {
+  max-width: 100%; height: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: #fff; padding: .5rem;
+}
+figure.qm-figure figcaption, figure.medhavy-sim figcaption {
+  margin-top: .7rem; font-size: .84rem; color: var(--muted); line-height: 1.55;
+  text-align: center; font-style: italic;
+}
+/* Interactive simulation embeds */
+figure.medhavy-sim {
+  margin: 2.25rem 0; padding: .75rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+figure.medhavy-sim iframe {
+  width: 100%; height: 540px; border: 1px solid var(--border) !important;
+  border-radius: 10px; background: #fff; display: block;
+}
+figure.medhavy-sim figcaption { font-style: normal; text-align: left; padding: 0 .3rem; }
+figure.medhavy-sim figcaption strong { color: var(--accent); }
+/* Tables (notation, comparisons) */
+table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: .94rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--heading); font-weight: 700; border-bottom: 2px solid var(--bb-7); }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Math overflow on small screens */
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: .2rem 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<article class="qm-reader">
+<p class="qm-eyebrow">Quantum Mechanics · Volume 1</p>
+<h1>Chapter 5 — Bound States and Energy Spectra</h1>
+<p>In 1993, physicists at IBM’s Almaden Research Center imaged the electron density inside a ring of 48 iron atoms they had arranged one by one on a copper surface using a scanning tunneling microscope. The result was not a smooth distribution of charge but a series of concentric rings — a standing-wave pattern in the probability density. This is precisely what the Schrödinger equation predicts for an electron confined to a circular region.</p>
+<p>The key observation is that the experimenters did not place those rings in the image by hand. Confinement produced them. Once a particle is confined, the only available states are the modes that fit inside the container. Those modes are standing waves, and the allowed energies are discrete because only certain spatial frequencies satisfy the boundary conditions. The quantization is not assumed or postulated; it follows from the mathematics of confinement.</p>
+<p>This chapter works through the one-dimensional version of the same argument for the infinite square well, where the geometry is simple enough to carry the derivation completely in closed form. We proceed from the Schrödinger equation to the energy spectrum and then to the time evolution of superpositions. The goal is to identify, step by step, exactly where the discreteness comes from.</p>
+<figure class="qm-figure"><img src="images/05-the-infinite-square-well-fig-01.png" alt="A rendering of the quantum corral: 48 iron atoms arranged in a ring on copper, with concentric standing-wave rings of electron probability density inside." loading="lazy" /><figcaption>Figure 5.1 — A rendering of the quantum corral. Forty-eight iron atoms (light dots) arranged in a ring on a copper surface confine the surface electrons into concentric standing-wave rings of probability density. The figure illustrates the confinement pattern that Crommie, Lutz, and Eigler imaged by scanning tunneling microscopy in 1993; it is a schematic reconstruction, not the original micrograph.</figcaption></figure>
+<hr>
+<h2>5.1 The Guitar String Analogy, and Why It Breaks Down</h2>
+<p>A guitar string fixed at both ends vibrates at a fundamental frequency and its integer harmonics. The reason is purely geometrical: a mode survives only if it vanishes at both fixed endpoints. A half-wavelength fits. A full wavelength fits. Three half-wavelengths fit. But one-and-a-third half-wavelengths cannot vanish at both walls at once — they contradict themselves at the boundary and collapse. The surviving frequencies are the ones that fit, and the fitting condition is discrete.</p>
+<p>The analogy with a quantum particle in a box goes this deep and then stops. For the guitar string, the modes are literal physical displacements of a medium. For the electron, the “wave” is the wave function \(\psi(x)\) — a complex-valued function whose squared modulus gives the probability of finding the particle at position \(x\). No medium is vibrating. The wave is not a wave in space; it is a wave of probability amplitude in the space of possible positions. The boundary conditions share the same mathematical structure, but the physical meaning of what is waving is entirely different.</p>
+<p>Keeping that distinction in mind, we can now run the calculation, which follows the guitar string argument step for step, simply restated in quantum language.</p>
+<hr>
+<h2>5.2 The Potential and the Boundary Conditions</h2>
+<p>The infinite square well potential is</p>
+<p>\[V(x) = \begin{cases} 0 & 0 < x < L, \\ \infty & x \leq 0 \text{ or } x \geq L. \end{cases} \tag{5.1}\]</p>
+<p>Where the potential is infinite, the wave function must vanish. This is not an extra assumption bolted on; it is forced by the time-independent Schrödinger equation (TISE) itself. Look at the equation, \(-(\hbar^2/2m)\psi'' + V\psi = E\psi\), at a point where \(V = \infty\). The term \(V\psi\) blows up unless \(\psi = 0\) there, while the right-hand side \(E\psi\) stays finite — the two sides cannot balance unless \(\psi\) vanishes. So the wave function is zero everywhere outside the well, and because \(\psi\) must be continuous (it cannot jump), it has to reach zero exactly at the walls:</p>
+<p>\[\psi(0) = 0, \qquad \psi(L) = 0. \tag{5.2}\]</p>
+<p>Those two equations are the boundary conditions — the walls of the well, rewritten in the language of the wave function.</p>
+<p>Inside the well, \(V = 0\), and the TISE is simply</p>
+<p>\[-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} = E\psi. \tag{5.3}\]</p>
+<p>Now we ask: what values of \(E\) are allowed?</p>
+<figure class="qm-figure"><img src="images/05-the-infinite-square-well-fig-02.svg" alt="The infinite square well with its first five eigenstates drawn as standing sine waves resting on energy levels in the ratio 1 : 4 : 9 : 16 : 25." loading="lazy" /><figcaption>Figure 5.2 — The infinite square well. The walls at \(x = 0\) and \(x = L\) are infinitely high (\(V = \infty\)); inside, \(V = 0\). The first five eigenstates are drawn as standing sine waves resting on their energy levels, which sit at relative heights \(1 : 4 : 9 : 16 : 25\) — the \(n^2\) growth of \(E_n\), with gaps that widen as \(n\) increases, made visible by eye.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=05-infinite-well-explorer.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/05-infinite-well-explorer.html" title="Interactive simulation: Infinite-well explorer" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Infinite-well explorer. If the embedded widget does not load, open <a href="simulations/05-infinite-well-explorer.html" target="_blank" rel="noopener">simulations/05-infinite-well-explorer.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=05-infinite-well-explorer.html -->
+<hr>
+<h2>5.3 The Derivation in Eight Steps</h2>
+<p><strong>Step 1 — Rule out negative energy.</strong> Could \(E < 0\)? Write \(\kappa^2 = -2mE/\hbar^2 > 0\). The equation becomes \(\psi'' = \kappa^2\psi\), with general solution \(\psi = Ae^{\kappa x} + Be^{-\kappa x}\) — a sum of real exponentials. Such a sum cannot vanish at both \(x = 0\) and \(x = L\) unless \(A = B = 0\), which means no particle at all.</p>
+<p><strong>Step 2 — Rule out zero energy.</strong> If \(E = 0\), the equation is \(\psi'' = 0\), so \(\psi = ax + b\), a straight line; the boundary conditions force both constants to zero. With \(E < 0\) and \(E = 0\) both excluded, only \(E > 0\) can give a non-trivial solution.</p>
+<p><strong>Step 3 — Write the general solution for \(E > 0\).</strong> Define \(k = \sqrt{2mE}/\hbar > 0\). The TISE reads \(\psi'' = -k^2\psi\) — the equation of a spatial oscillator — with general solution</p>
+<p>\[\psi(x) = A\sin(kx) + B\cos(kx). \tag{5.4}\]</p>
+<p>At this point, any positive \(k\) is allowed. No quantization yet.</p>
+<p><strong>Step 4 — Apply the boundary condition at \(x = 0\).</strong> Substituting: \(\psi(0) = A\sin(0) + B\cos(0) = B = 0\). The cosine term is killed. The solution reduces to \(\psi(x) = A\sin(kx)\). Still no quantization.</p>
+<p><strong>Step 5 — Apply the boundary condition at \(x = L\).</strong> Now: \(\psi(L) = A\sin(kL) = 0\). Either \(A = 0\) — no particle, discarded — or</p>
+<p>\[\sin(kL) = 0. \tag{5.5}\]</p>
+<p><strong>Step 6 — Read off the quantization condition.</strong> Quantization enters with this single equation. Since a sine vanishes only at integer multiples of \(\pi\), we need \(kL = n\pi\) for \(n = 1, 2, 3, \ldots\) In one stroke, the continuous set of all positive real \(k\) has collapsed into a discrete ladder labeled by a positive integer.</p>
+<p>Notice what this is and is not. It is not a postulate, not an assumption about angular momentum, not a new law brought in to patch a problem. It is simply the only way a sine wave can vanish at both walls at the same time. Where Bohr had to postulate quantization in 1913, Schrödinger derived it in 1926 from a differential equation and two boundary conditions.</p>
+<p><strong>Step 7 — Get the wave vectors and energy levels.</strong> The allowed wave vectors are \(k_n = n\pi/L\). Since \(E = \hbar^2 k^2/2m\):</p>
+<p>\[\boxed{E_n = \frac{n^2\pi^2\hbar^2}{2mL^2}, \qquad n = 1, 2, 3, \ldots} \tag{5.6}\]</p>
+<p>The energies grow as \(n^2\), so the first few stand in the ratios \(E_1 : E_2 : E_3 : E_4 = 1 : 4 : 9 : 16\), with nothing allowed in between. The integer \(n\) really does start at 1: setting \(n = 0\) gives \(k_0 = 0\) and \(\psi = A\sin(0) = 0\), which is no particle at all, so we exclude it. Negative values of \(n\) add nothing new either, because \(\sin(-n\pi x/L) = -\sin(n\pi x/L)\) yields the same probability density as the corresponding positive \(n\) — the same physical state, differing only by an unobservable sign.</p>
+<p><strong>Step 8 — Normalize.</strong> The unnormalized eigenstate is \(A\sin(n\pi x/L)\). Requiring \(\int_0^L|\psi_n|^2\,dx = 1\) and using \(\int_0^L\sin^2(n\pi x/L)\,dx = L/2\) (from the identity \(\sin^2\theta = (1-\cos2\theta)/2\), integrated over a whole number of half-periods):</p>
+<p>\[A^2 \cdot \frac{L}{2} = 1 \implies A = \sqrt{\frac{2}{L}}. \tag{5.7}\]</p>
+<p>The normalized eigenstates are</p>
+<p>\[\boxed{\psi_n(x) = \sqrt{\frac{2}{L}}\,\sin\!\left(\frac{n\pi x}{L}\right), \quad 0 \leq x \leq L; \qquad \psi_n(x) = 0 \text{ elsewhere.}} \tag{5.8}\]</p>
+<hr>
+<h2>5.4 What the Spectrum Looks Like Physically</h2>
+<p>For an electron in a well of width \(L = 1\) nm, the ground-state energy is</p>
+<p>\[E_1 = \frac{\pi^2(1.055\times10^{-34})^2}{2(9.109\times10^{-31})(10^{-9})^2} \approx 6.0\times10^{-20}\ \text{J} \approx 0.377\ \text{eV.} \tag{5.9}\]</p>
+<p>So \(E_2 \approx 1.51\) eV, \(E_3 \approx 3.39\) eV. These are energies on the scale of chemistry and optics — visible photons carry roughly 2 eV, and room-temperature thermal energy is \(k_BT \approx 0.025\) eV. The level spacings are large compared with thermal fluctuations, so quantum effects are not merely relevant here — they dominate.</p>
+<p>For contrast, compute the ground-state energy of a 1 g marble in a 1 cm box:</p>
+<p>\[E_1 \approx \frac{\pi^2(10^{-34})^2}{2(10^{-3})(10^{-2})^2} \approx 5\times10^{-61}\ \text{J} \approx 3\times10^{-42}\ \text{eV.} \tag{5.10}\]</p>
+<p>That energy lies twenty orders of magnitude below anything we could measure. In principle the quantum discreteness is still there; in practice it is invisible. The classical limit, then, is not something we choose on philosophical grounds — it is what the arithmetic delivers.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">\(n\)</th>
+<th style="text-align:center">electron, \(L=1\) nm (eV)</th>
+<th style="text-align:center">electron, \(L=10\) nm (meV)</th>
+<th style="text-align:center">proton, \(L=1\) nm (meV)</th>
+<th style="text-align:center">\(E_n/E_1\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0.377</td>
+<td style="text-align:center">3.77</td>
+<td style="text-align:center">0.205</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1.508</td>
+<td style="text-align:center">15.08</td>
+<td style="text-align:center">0.821</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3.393</td>
+<td style="text-align:center">33.93</td>
+<td style="text-align:center">1.848</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">6.032</td>
+<td style="text-align:center">60.32</td>
+<td style="text-align:center">3.285</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">9.425</td>
+<td style="text-align:center">94.25</td>
+<td style="text-align:center">5.133</td>
+<td style="text-align:center">25</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 5.1 — The first five energy levels \(E_n = n^2\pi^2\hbar^2/2mL^2\) for three confined systems. Widening the well tenfold (electron, 1 nm → 10 nm) divides every level by \(10^2 = 100\); replacing the electron with a proton, about 1836 times heavier, divides every level by a further factor of 1836, which is why the proton column is reported in meV. The \(E_n/E_1\) ratios are identical for all three: the shape of the spectrum is universal, and only its overall scale depends on \(m\) and \(L\).</em></p>
+<p>Count the interior nodes of \(\psi_n\) — the zeros that fall strictly inside \((0, L)\), not the ones at the walls — and you find exactly \(n - 1\). The ground state \(\psi_1\) has one half-period and no interior zeros; \(\psi_2\) has two half-periods and a single interior zero at \(x = L/2\); in general \(\psi_n\) has \(n\) half-periods and \(n - 1\) zeros. Each extra node means a shorter wavelength, a higher spatial frequency, a larger momentum (\(p = \hbar k_n = n\pi\hbar/L\)), and a higher energy. Counting nodes is Fourier logic you can see with your eyes.</p>
+<hr>
+<h2>5.5 Orthonormality — a Three-Line Proof</h2>
+<p>The eigenstates satisfy \(\langle\psi_m|\psi_n\rangle = \delta_{mn}\) — they are orthonormal. The proof needs only one trigonometric identity:</p>
+<p>\[\sin\alpha\sin\beta = \frac{1}{2}\bigl[\cos(\alpha-\beta) - \cos(\alpha+\beta)\bigr]. \tag{5.11}\]</p>
+<p>Applying that identity to \(\langle\psi_m|\psi_n\rangle = (2/L)\int_0^L\sin(m\pi x/L)\sin(n\pi x/L)\,dx\) gives:</p>
+<p>\[\langle\psi_m|\psi_n\rangle = \frac{1}{L}\int_0^L\!\left[\cos\!\left(\frac{(m-n)\pi x}{L}\right) - \cos\!\left(\frac{(m+n)\pi x}{L}\right)\right]dx. \tag{5.12}\]</p>
+<p>Take \(m \neq n\) first. Both cosines run over an integer number of full periods on \([0, L]\), so both integrals are zero, and \(\langle\psi_m|\psi_n\rangle = 0\). Now take \(m = n\). The first cosine collapses to \(\cos(0) = 1\) and integrates to \(L\), while the second runs over \(n\) full periods and integrates to zero, leaving \(\langle\psi_n|\psi_n\rangle = 1\).</p>
+<p>There is nothing numerical here — no eigensolver to run and no vectors to orthogonalize by hand — the result is exact, analytic, and comes straight out of classical Fourier analysis. Fourier introduced it in 1822 for the heat equation, more than a century before quantum mechanics existed. The mathematics of standing waves on a bounded interval was already complete; all quantum mechanics supplied was the physical interpretation.</p>
+<hr>
+<h2>5.6 Why the Ground State Cannot Be Still</h2>
+<p>The smallest allowed energy is \(E_1 = \pi^2\hbar^2/2mL^2\), which is strictly positive. The particle is not permitted to have \(E = 0\).</p>
+<p>The Heisenberg uncertainty principle tells us why. Were \(E = 0\), the kinetic energy would vanish, the momentum would be zero, and so the momentum spread \(\sigma_p\) would be zero as well. But a particle trapped in a box of width \(L\) has a position spread no larger than the box: \(\sigma_x \leq L\). Feed these into the Kennard inequality \(\sigma_x\sigma_p \geq \hbar/2\) and you get \(L \cdot 0 \geq \hbar/2\), which is plainly false. You cannot have both a definite momentum and confinement in space. That contradiction is exactly what rules out \(E = 0\).</p>
+<p>This is not a peculiarity of quantum mechanics — it is a consequence of the wave nature of matter. A guitar string stretched flat has zero energy and zero frequency. The minimum non-trivial mode has positive frequency and positive energy. The same logic applies to any wave confined in a finite domain.</p>
+<p>Putting numbers to it: the ground state has \(\sigma_p = \pi\hbar/L\) (from \(\langle p^2\rangle = \pi^2\hbar^2/L^2\), with \(\langle p\rangle = 0\) by symmetry) and \(\sigma_x \approx 0.181L\). Their product is \(\sigma_x\sigma_p \approx 0.568\hbar \approx 1.136 \times (\hbar/2)\), roughly 14% above the floor that the uncertainty principle sets. In other words, the ground state of the infinite well sits close to the most tightly localized state quantum mechanics allows.</p>
+<figure class="qm-figure"><img src="images/05-the-infinite-square-well-fig-03.svg" alt="Left: eigenfunctions ψ₁ and ψ₂. Right: probability densities |ψ₁|² with one central peak and |ψ₂|² with two peaks and a node at L/2." loading="lazy" /><figcaption>Figure 5.3 — The two lowest states. Left: the eigenfunctions \(\psi_1\) (no interior node) and \(\psi_2\) (one node at \(L/2\)). Right: their probability densities \(|\psi_1|^2\) (a single central peak) and \(|\psi_2|^2\) (two peaks, with a node at \(L/2\)). The number of interior nodes is \(n-1\); although \(\psi_1\) has none, its energy \(E_1\) is still strictly greater than zero — the zero-point energy.</figcaption></figure>
+<hr>
+<h2>5.7 Time Evolution and the Sloshing State</h2>
+<p>Each eigenstate \(\psi_n\) is a stationary state: its probability density \(|\psi_n|^2\) holds still in time. The full time-dependent wave function is \(\Psi_n(x,t) = \psi_n(x)e^{-iE_n t/\hbar}\), and the time-dependent factor is nothing but a phase rotating in the complex plane, which cancels out the moment you form \(|\Psi_n|^2 = |\psi_n|^2\).</p>
+<p>Motion shows up only when you combine two or more eigenstates of different energy. Consider the equal-weight mix of the lowest two:</p>
+<p>\[\Psi(x,t) = \frac{1}{\sqrt{2}}\,\psi_1(x)\,e^{-iE_1 t/\hbar} + \frac{1}{\sqrt{2}}\,\psi_2(x)\,e^{-iE_2 t/\hbar}. \tag{5.13}\]</p>
+<p>The probability density is</p>
+<p>\[|\Psi(x,t)|^2 = \frac{1}{2}\!\left[\psi_1^2 + \psi_2^2 + 2\,\psi_1\psi_2\cos\!\left(\frac{(E_2-E_1)t}{\hbar}\right)\right]. \tag{5.14}\]</p>
+<p>The first two terms hold still, while the cross term oscillates at angular frequency \(\omega = (E_2 - E_1)/\hbar = 3E_1/\hbar\). Its period is</p>
+<p>\[T = \frac{2\pi\hbar}{E_2 - E_1} = \frac{h}{3E_1}. \tag{5.15}\]</p>
+<p>For the 1 nm electron, with \(E_1 \approx 6.0\times10^{-20}\) J, this works out to \(T \approx 3.66\) femtoseconds. The probability distribution swings from one side of the well to the other on a femtosecond timescale.</p>
+<p><strong>Where is the particle, on average?</strong> Compute \(\langle x\rangle(t) = \int_0^L x|\Psi(x,t)|^2\,dx\). Since both \(\psi_1\) and \(\psi_2\) are symmetric about \(L/2\), their individual contributions give \(\langle x\rangle_{1} = \langle x\rangle_{2} = L/2\). Only the cross term contributes a time-varying piece:</p>
+<p>\[\langle x\rangle(t) = \frac{L}{2} + \cos\!\left(\frac{(E_2-E_1)t}{\hbar}\right)\int_0^L x\,\psi_1(x)\,\psi_2(x)\,dx. \tag{5.16}\]</p>
+<p>Evaluating the cross integral takes one trigonometric identity followed by an integration by parts. First turn the product of sines into a difference of cosines with the product-to-sum identity \(\sin\alpha\sin\beta = \tfrac{1}{2}[\cos(\alpha-\beta) - \cos(\alpha+\beta)]\), which converts \(\psi_1\psi_2 = (2/L)\sin(\pi x/L)\sin(2\pi x/L)\) into cosine terms in \(\cos(\pi x/L)\) and \(\cos(3\pi x/L)\). Each piece is then an integral of the form \(\int_0^L x\cos(n\pi x/L)\,dx\), which integration by parts evaluates in closed form, giving</p>
+<p>\[\int_0^L x\,\psi_1\psi_2\,dx = -\frac{16L}{9\pi^2} \approx -0.180\,L. \tag{5.17}\]</p>
+<p>So</p>
+<p>\[\langle x\rangle(t) = \frac{L}{2} - \frac{16L}{9\pi^2}\cos\!\left(\frac{(E_2-E_1)t}{\hbar}\right). \tag{5.18}\]</p>
+<p>At \(t = 0\) the cosine is 1, so \(\langle x\rangle(0) \approx L/2 - 0.180L \approx 0.320L\). The state starts out left-heavy, with its probability peak near \(x = L/4\), because \(\psi_1 + \psi_2\) — a half-sine added to a full-sine — interferes constructively in the left half of the well. The cosine sits at a turning point at \(t = 0\), so \(d\langle x\rangle/dt|_{t=0} = 0\): the center of mass begins at rest, then drifts rightward, reaching \(\langle x\rangle \approx 0.680L\) at the half-period before swinging back. The full excursion spans about \(0.360L\).</p>
+<p>Throughout all of this, the energy expectation value is</p>
+<p>\[\langle\hat{H}\rangle = \frac{1}{2}E_1 + \frac{1}{2}E_2 \approx \frac{0.377 + 1.508}{2} \approx 0.943\ \text{eV.} \tag{5.19}\]</p>
+<p>It stays constant. The probability sloshes, but the energy does not. The weights \(|c_n|^2\) on each eigenstate are set once and for all by the initial state and never change. What does change is the relative phase between the terms, and that phase reshapes the interference pattern in \(|\Psi|^2\) while leaving the energy budget exactly where it started.</p>
+<figure class="qm-figure"><img src="images/05-the-infinite-square-well-fig-04.svg" alt="Top: the sloshing probability density at three times in a period. Bottom left: ⟨x⟩ oscillating between 0.32L and 0.68L. Bottom right: ⟨H⟩ flat." loading="lazy" /><figcaption>Figure 5.4 — The sloshing state \((\psi_1 + \psi_2)/\sqrt{2}\). Top: the probability density at three times in one period — heaped on the left at \(t = 0\), symmetric at \(t = T/4\), heaped on the right at \(t = T/2\) (the curve at \(t = 3T/4\) retraces the \(T/4\) curve). Bottom left: the average position \(\langle x\rangle\) oscillates between \(0.32L\) and \(0.68L\). Bottom right: the average energy \(\langle H\rangle\) stays constant at about \(0.94\) eV. The probability moves; the energy does not.</figcaption></figure>
+<!-- MEDHAVY-EMBED start :: sim=05-superposition-animator.html -->
+<figure class="medhavy-sim">
+  <iframe src="simulations/05-superposition-animator.html" title="Interactive simulation: Superposition animator" width="100%" height="540" loading="lazy" style="border:1px solid #cccccc"></iframe>
+  <figcaption><strong>Interactive:</strong> Superposition animator. If the embedded widget does not load, open <a href="simulations/05-superposition-animator.html" target="_blank" rel="noopener">simulations/05-superposition-animator.html</a> in a browser.</figcaption>
+</figure>
+<!-- MEDHAVY-EMBED end :: sim=05-superposition-animator.html -->
+<hr>
+<h2>5.8 The Fourier Structure Underneath</h2>
+<p>Together the eigenstates \(\{\psi_n\}\) form a complete orthonormal basis for the square-integrable functions on \([0, L]\) that vanish at the endpoints. That means any such function admits an expansion:</p>
+<p>\[f(x) = \sum_{n=1}^{\infty} c_n\,\psi_n(x), \qquad c_n = \int_0^L\psi_n(x)\,f(x)\,dx. \tag{5.20}\]</p>
+<p>What we have written is the Fourier sine series. Each coefficient \(c_n\) is a projection — the inner product of the initial state with the corresponding eigenstate. So for any initial condition \(\Psi(x, 0)\), we obtain the \(c_n\) by integration and then hang the time-evolution phases on each term:</p>
+<p>\[\Psi(x,t) = \sum_{n=1}^{\infty} c_n\,\psi_n(x)\,e^{-iE_n t/\hbar}. \tag{5.21}\]</p>
+<p>Every eigenstate turns at its own angular frequency \(E_n/\hbar\). Once two or more of them are present with different energies, the relative phases drift apart, and that drift produces the time-changing interference in \(|\Psi|^2\) that we have been calling the sloshing.</p>
+<p>The probability of measuring energy \(E_n\) is \(|c_n|^2\). Notice what this means: the \(|c_n|^2\) are set by the initial state, they do not change in time, and they are the only observable consequences of the \(c_n\) as far as energy measurements are concerned. The phases matter only for position and momentum measurements, where the cross terms in \(|\Psi|^2\) — the interference terms — carry information about relative phase.</p>
+<p>A narrow initial state, concentrated near one point, requires many \(c_n\) to be nonzero — because representing a sharp feature as a sum of sine waves takes many harmonics. Many harmonics means many distinct frequencies, many beat frequencies between pairs of eigenstates, and therefore rapid dephasing of the initial spatial structure. A particle initially localized near \(x = L/4\) will not stay near \(x = L/4\); it will spread, slosh, and eventually become nearly uniform. The classical limit corresponds to packets so heavy and slow that the dephasing timescale is astronomically long — effectively infinite.</p>
+<hr>
+<h2>5.9 What the Infinite Well Leaves Open</h2>
+<p>The infinite square well gives clean answers because its walls are perfectly rigid. No wave function leaks through \(V = \infty\), and no energy can tunnel out. Real quantum systems — semiconductor quantum wells, quantum dots, atoms in optical lattice traps — have finite barriers, and wave functions do penetrate them. The discrete energy levels of a finite-depth well are qualitatively similar to those of the infinite well but shifted downward, and they are finite in number: a well of depth \(V_0\) and width \(L\) supports only finitely many bound states. As \(V_0 \to \infty\), those levels approach the infinite-well values from below.</p>
+<p>The question the infinite well leaves open — why the probability interpretation is correct, and what it means for the wave function to “collapse” upon measurement — is not answered by solving the TISE. That is the measurement problem, and it sits at the foundation of quantum mechanics in a way the Schrödinger equation does not resolve. Chapter 3 laid out Born’s rule as a postulate; it remains a postulate. What the infinite well does show is that Born’s rule, combined with the Schrödinger equation, makes predictions that are experimentally exact. The Davisson–Germer diffraction, the quantum corral, the energy levels of semiconductor quantum wells measured spectroscopically by Dingle and colleagues in 1974 — all confirm that the quantization derived here is not a mathematical artifact. The walls impose it, and nature obeys.</p>
+<hr>
+<h2>Looking Ahead</h2>
+<p>The next chapter, <strong>Chapter 6 — Reflection, Transmission and Tunneling</strong>, lowers the walls to a finite height and turns from bound states to scattering: a particle can reflect even when it has the energy to pass, penetrate classically forbidden regions, and tunnel straight through a barrier.</p>
+<hr>
+<h2>Interactive Simulations</h2>
+<p>These companion simulations run in the browser and accompany this chapter online.</p>
+<ul>
+<li><a href="simulations/05-infinite-well-explorer.html" target="_blank" rel="noopener">Infinite-well explorer</a> — choose n, width and particle to see ψn, |ψn|² and the n² energy ladder.</li>
+<li><a href="simulations/05-superposition-animator.html" target="_blank" rel="noopener">Superposition animator</a> — mix the lowest eigenstates into an animated |Ψ(x,t)|² with a live ⟨x⟩ trace and constant ⟨H⟩.</li>
+</ul>
+<hr>
+<h2>Exercises</h2>
+<p><strong>Warm-up</strong></p>
+<ol>
+<li>
+<p><em>Difficulty: Warm-up — tests command of the eight-step derivation.</em>
+Starting from the TISE with \(V = 0\) inside \([0, L]\): (a) Write the general solution \(\psi(x) = A\sin(kx) + B\cos(kx)\). (b) Apply \(\psi(0) = 0\) to determine \(B\). © Apply \(\psi(L) = 0\) and explain why \(\sin(kL) = 0\) leads to a discrete spectrum while the case \(A = 0\) is discarded. (d) Write \(k_n\), \(E_n\), and the normalized \(\psi_n(x)\). At which step does quantization first appear?
+<em>Tests: ability to trace the origin of discreteness to the boundary conditions, not to a postulate.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests the</em> \(n^2\) <em>energy scaling.</em>
+For an electron in a well of width \(L = 2\) nm: (a) Compute \(E_1\), \(E_2\), \(E_3\) in eV. (b) Verify \(E_2/E_1 = 4\) and \(E_3/E_1 = 9\) to three significant figures. © Compare these to \(k_BT = 0.025\) eV at room temperature — are quantum effects significant? (d) If \(L\) is doubled to 4 nm, by what factor does \(E_1\) change?
+<em>Tests: numerical command of the spectrum and the</em> \(L^{-2}\) <em>scaling.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Warm-up — tests the trigonometric orthonormality proof.</em>
+Verify \(\langle\psi_1|\psi_2\rangle = 0\) directly, using the identity \(\sin\alpha\sin\beta = \frac{1}{2}[\cos(\alpha-\beta)-\cos(\alpha+\beta)]\). Show all steps. Then verify \(\langle\psi_1|\psi_1\rangle = 1\) by the same method.
+<em>Tests: whether the student can carry out the exact analytic proof without numerical methods.</em></p>
+</li>
+</ol>
+<p><strong>Application</strong></p>
+<ol start="4">
+<li>
+<p><em>Difficulty: Application — connects zero-point energy to the uncertainty principle.</em>
+(a) Argue from the Kennard inequality that a particle confined to \([0, L]\) cannot have \(E = 0\). What does \(E = 0\) imply for \(\sigma_p\), and why does that contradict \(\sigma_x \leq L\)? (b) Compute \(\sigma_p\) for the ground state by evaluating \(\langle p\rangle = 0\) and \(\langle p^2\rangle = \int_0^L\psi_1(-\hbar^2\partial_x^2)\psi_1\,dx\). © Use the result \(\langle x^2\rangle = L^2(1/3 - 1/2\pi^2)\) to compute \(\sigma_x\) for the ground state. Verify \(\sigma_x\sigma_p \geq \hbar/2\) and find the ratio.
+<em>Tests: ability to turn the zero-point energy argument into a quantitative check.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — extends superposition dynamics to a different pair of states.</em>
+A particle is prepared in \(\Psi(x,0) = \frac{1}{\sqrt{2}}(\psi_1 + \psi_3)\). (a) Write \(\Psi(x,t)\). (b) Compute \(|\Psi(x,t)|^2\) and identify the oscillation frequency of the cross term. © Compute \(\langle\hat{H}\rangle\). (d) Is \(\langle x\rangle = L/2\) for all \(t\)? Argue from the parity of \(\psi_1\) and \(\psi_3\) about \(x = L/2\).
+<em>Tests: whether the student can generalize the sloshing argument to a different superposition.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Application — tests expansion coefficients and the projection integral.</em>
+An initial state is given as \(\Psi(x,0) = Bx(L-x)\) for \(0 \leq x \leq L\), normalized so \(\int_0^L|\Psi|^2\,dx = 1\). (a) Find \(B\). (b) Show that \(c_n = 0\) for all even \(n\) using the symmetry of \(\Psi(x,0)\) about \(x = L/2\) and the parity of \(\psi_n\). © Compute \(c_1 = \int_0^L\psi_1(x)\,Bx(L-x)\,dx\) by direct integration. Check that \(|c_1|^2 \approx 0.999\).
+<em>Tests: command of the Fourier expansion and recognition of symmetry as a labor-saving tool.</em></p>
+</li>
+</ol>
+<p><strong>Synthesis</strong></p>
+<ol start="7">
+<li>
+<p><em>Difficulty: Synthesis — requires carrying out the full sloshing calculation.</em>
+For \(\Psi(x,t) = \frac{1}{\sqrt{2}}(\psi_1 e^{-iE_1 t/\hbar} + \psi_2 e^{-iE_2 t/\hbar})\): (a) Derive \(\langle x\rangle(t) = L/2 - (16L/9\pi^2)\cos((E_2-E_1)t/\hbar)\) by computing the cross integral \(\int_0^L x\psi_1\psi_2\,dx\) via integration by parts, showing all steps. (b) State the maximum and minimum values of \(\langle x\rangle(t)\). © Confirm that \(d\langle x\rangle/dt|_{t=0} = 0\) and give the physical interpretation. (d) What is the initial direction of the sloshing just after \(t = 0\)?
+<em>Tests: full quantitative command of the two-state dynamics; the student must produce the integration, not recall the result.</em></p>
+</li>
+<li>
+<p><em>Difficulty: Synthesis — connects the spectrum to a photon emission calculation.</em>
+An electron in a 1 nm well emits a photon and drops from \(n = 3\) to \(n = 1\). (a) Compute the photon energy \(E_3 - E_1\) in eV. (b) Compute the photon wavelength. Is it visible, UV, or IR? © A GaAs quantum-well laser uses an effective electron mass \(m^* \approx 0.067\,m_e\). What well width produces emission at \(\lambda = 650\) nm (red light)?
+<em>Tests: ability to run the formula backward to design a system with a target emission wavelength.</em></p>
+</li>
+</ol>
+<p><strong>Challenge</strong></p>
+<ol start="9">
+<li><em>Difficulty: Challenge — tests the projection machinery on a sudden change of Hamiltonian.</em>
+A particle sits in the ground state \(\psi_1\) of an infinite well of width \(L\). At \(t = 0\) the right wall is moved instantaneously to \(2L\) — a <em>sudden expansion</em>: the wave function has no time to change, but the eigenbasis does. (a) Write the new eigenstates \(\phi_m(x) = \sqrt{1/L}\,\sin(m\pi x/2L)\) and energies \(E'_m\) of the widened well, and explain why the state immediately after the expansion is still the old \(\psi_1\) (zero beyond \(x = L\)). (b) Show that the probability that an energy measurement returns the new ground state is \(|\langle\phi_1|\psi_1\rangle|^2 = 32/9\pi^2 \approx 0.360\). © Show that the probability of the new \(n = 2\) level is exactly \(1/2\), and explain why: \(\phi_2\) restricted to \([0, L]\) is proportional to \(\psi_1\), and \(E'_2\) equals the old \(E_1\). (d) Which of the two probabilities is larger, and what does that tell you about the state after a sudden expansion?
+<em>Tests: expanding a state in a new eigenbasis after a sudden change — the chapter’s projection integral doing real work.</em></li>
+</ol>
+<hr>
+<h2>References</h2>
+<p>Schrödinger, E. (1926). Quantisierung als Eigenwertproblem. <em>Annalen der Physik</em>, 79, 361–376. (First derivation of quantized energy levels from the wave equation and boundary conditions.)</p>
+<p>Bohr, N. (1913). On the constitution of atoms and molecules. <em>Philosophical Magazine</em>, 26, 1–25. (The original quantization postulate; the contrast with Schrödinger’s derivation is the conceptual hinge of this chapter.)</p>
+<p>Griffiths, D. J., &amp; Schroeter, D. F. (2018). <em>Introduction to Quantum Mechanics</em> (3rd ed.). Cambridge University Press. §2.2.</p>
+<p>Crommie, M. F., Lutz, C. P., &amp; Eigler, D. M. (1993). Confinement of electrons to quantum corrals on a metal surface. <em>Science</em>, 262(5131), 218–220. (The quantum corral; the opening image of this chapter.)</p>
+<p>Dingle, R., Wiegmann, W., &amp; Henry, C. H. (1974). Quantum states of confined carriers in very thin AlGaAs–GaAs heterostructures. <em>Physical Review Letters</em>, 33(14), 827–830. (First spectroscopic confirmation of discrete energy levels in a semiconductor quantum well.)</p>
+<p>Esaki, L., &amp; Tsu, R. (1970). Superlattice and negative differential conductivity in semiconductors. <em>IBM Journal of Research and Development</em>, 14(1), 61–65. (Proposed that quantum-well energy levels would be tunable by controlling \(L\).)</p>
+<p>Fourier, J. B. J. (1822). <em>Théorie analytique de la chaleur</em>. Firmin Didot. (The Fourier sine series, established for heat conduction more than a century before quantum mechanics.)</p>
+<p>Stein, E. M., &amp; Shakarchi, R. (2003). <em>Fourier Analysis: An Introduction</em>. Princeton University Press. Ch. 2–4. (Orthogonality, completeness, and convergence of the trigonometric basis.)</p>
+
+</article>
+</body>
+</html>

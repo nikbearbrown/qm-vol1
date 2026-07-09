@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bloch-sphere explorer — Quantum Mechanics Vol. 1, Chapter 9</title>
+<style>
+  :root{--ink:#2a1a0e;--blue:#0072B2;--verm:#D55E00;--green:#009E73;--amber:#BF7400;--purple:#CC79A7;--sky:#56B4E9;--gray:#545454;--hair:#D9D9D9;--paleblue:#CCE5F1;--plot:#F5F5F5;}
+  body{margin:0;background:#fff;color:var(--ink);font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:22px 20px 34px;}
+  h1{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:24px;margin:0 0 2px;}
+  .sub{color:var(--gray);font-size:14px;margin:0 0 18px;}
+  .row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;}
+  canvas{border:0.75px solid var(--hair);background:#fff;}
+  .controls{display:flex;flex-direction:column;gap:12px;margin:4px 0;min-width:300px;flex:1;}
+  .ctl{display:flex;align-items:center;gap:9px;font-size:14px;}
+  input[type=range]{width:160px;accent-color:var(--blue);}
+  button{font-family:inherit;font-size:13px;padding:5px 10px;border:0.75px solid var(--hair);background:var(--plot);border-radius:6px;cursor:pointer;}
+  button:hover{background:#ececec;}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;}
+  .card{background:var(--plot);border:0.75px solid var(--hair);border-radius:6px;padding:9px 13px;min-width:90px;}
+  .card .l{font-size:12px;color:var(--gray);}
+  .card .v{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono','Fira Code',monospace;}
+  .bars{margin-top:16px;}
+  .barrow{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px;}
+  .barlbl{width:74px;font-family:'JetBrains Mono',monospace;}
+  .bartrack{flex:1;height:18px;background:var(--plot);border:0.75px solid var(--hair);position:relative;}
+  .barfill{height:100%;}
+  .barval{width:120px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gray);}
+  .note{font-size:13px;color:var(--gray);margin:16px 0 0;}
+  code{font-family:'JetBrains Mono',monospace;font-size:0.92em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bloch-sphere explorer</h1>
+  <p class="sub">Every pure qubit state is a point on the sphere: <code>|&psi;&rang; = cos(&theta;/2)|0&rang; + e<sup>i&phi;</sup> sin(&theta;/2)|1&rang;</code>. Drag the polar angle &theta; and the azimuth &phi; and watch the state vector, its components &lang;&sigma;<sub>x</sub>&rang;, &lang;&sigma;<sub>y</sub>&rang;, &lang;&sigma;<sub>z</sub>&rang;, and the Born-rule probabilities for measuring each Pauli observable.</p>
+  <div class="row">
+    <canvas id="cv" width="380" height="380" aria-label="Bloch sphere with the current state vector"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="th">&theta; (polar)</label><input type="range" id="th" min="0" max="180" step="1" value="60"><span id="thv" style="font-family:monospace">60&deg;</span></div>
+      <div class="ctl"><label for="ph">&phi; (azimuth)</label><input type="range" id="ph" min="0" max="360" step="1" value="35"><span id="phv" style="font-family:monospace">35&deg;</span></div>
+      <div class="ctl" style="gap:6px;flex-wrap:wrap;">
+        <button data-t="0" data-p="0">|0&rang;</button>
+        <button data-t="180" data-p="0">|1&rang;</button>
+        <button data-t="90" data-p="0">|+x&rang;</button>
+        <button data-t="90" data-p="180">|&minus;x&rang;</button>
+        <button data-t="90" data-p="90">|+y&rang;</button>
+        <button data-t="90" data-p="270">|&minus;y&rang;</button>
+      </div>
+      <div class="stats">
+        <div class="card"><div class="l">state |&psi;&rang;</div><div class="v" id="state" style="font-size:13px">&mdash;</div></div>
+      </div>
+      <div class="stats">
+        <div class="card"><div class="l">&lang;&sigma;<sub>x</sub>&rang;</div><div class="v" id="ex">&mdash;</div></div>
+        <div class="card"><div class="l">&lang;&sigma;<sub>y</sub>&rang;</div><div class="v" id="ey">&mdash;</div></div>
+        <div class="card"><div class="l">&lang;&sigma;<sub>z</sub>&rang;</div><div class="v" id="ez">&mdash;</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bars">
+    <div class="barrow"><span class="barlbl">&sigma;z = +1</span><span class="bartrack"><span class="barfill" id="bzp" style="background:var(--green)"></span></span><span class="barval" id="vzp"></span></div>
+    <div class="barrow"><span class="barlbl">&sigma;z = &minus;1</span><span class="bartrack"><span class="barfill" id="bzm" style="background:var(--verm)"></span></span><span class="barval" id="vzm"></span></div>
+    <div class="barrow"><span class="barlbl">&sigma;x = +1</span><span class="bartrack"><span class="barfill" id="bxp" style="background:var(--green)"></span></span><span class="barval" id="vxp"></span></div>
+    <div class="barrow"><span class="barlbl">&sigma;x = &minus;1</span><span class="bartrack"><span class="barfill" id="bxm" style="background:var(--verm)"></span></span><span class="barval" id="vxm"></span></div>
+    <div class="barrow"><span class="barlbl">&sigma;y = +1</span><span class="bartrack"><span class="barfill" id="byp" style="background:var(--green)"></span></span><span class="barval" id="vyp"></span></div>
+    <div class="barrow"><span class="barlbl">&sigma;y = &minus;1</span><span class="bartrack"><span class="barfill" id="bym" style="background:var(--verm)"></span></span><span class="barval" id="vym"></span></div>
+  </div>
+  <p class="note">North pole is |0&rang; (&sigma;<sub>z</sub> = +1), south is |1&rang; (&sigma;<sub>z</sub> = &minus;1), and the equator holds the equal superpositions. The global phase is invisible; only the <em>relative</em> phase &phi; matters, and it shows up in &lang;&sigma;<sub>x</sub>&rang; and &lang;&sigma;<sub>y</sub>&rang;. A measurement axis gives a certain outcome exactly when the state sits on that axis.</p>
+</div>
+<script>
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const W=cv.width,H=cv.height, C=(350,222);
+const cxc=W/2, cyc=H/2+6, R=150;
+// projection: yaw az, pitch -el, orthographic
+const az=26*Math.PI/180, el=-20*Math.PI/180;
+const ca=Math.cos(az),sa=Math.sin(az),ce=Math.cos(el),se=Math.sin(el);
+function proj(x,y,z){
+  const x1=x*ca-y*sa, y1=x*sa+y*ca, z1=z;
+  const y2=y1*ce-z1*se, z2=y1*se+z1*ce;
+  return [cxc+R*x1, cyc-R*z2, y2]; // depth=y2
+}
+function bvec(th,ph){return [Math.sin(th)*Math.cos(ph),Math.sin(th)*Math.sin(ph),Math.cos(th)];}
+function draw(th,ph){
+  cx.clearRect(0,0,W,H);
+  // sphere
+  cx.fillStyle='#F5F5F5';cx.strokeStyle='#D4D4D4';cx.lineWidth=1;
+  cx.beginPath();cx.arc(cxc,cyc,R,0,2*Math.PI);cx.fill();cx.stroke();
+  // equator
+  const front=[],back=[];
+  for(let t=0;t<=360;t+=3){const a=t*Math.PI/180;const p=proj(Math.cos(a),Math.sin(a),0);(p[2]>=0?front:back).push(p);}
+  cx.lineWidth=1;cx.strokeStyle='#BBB';cx.setLineDash([4,3]);
+  cx.beginPath();back.forEach((p,i)=>i?cx.lineTo(p[0],p[1]):cx.moveTo(p[0],p[1]));cx.stroke();
+  cx.setLineDash([]);cx.strokeStyle='#888';
+  cx.beginPath();front.forEach((p,i)=>i?cx.lineTo(p[0],p[1]):cx.moveTo(p[0],p[1]));cx.stroke();
+  // axes
+  const N=proj(0,0,1),S=proj(0,0,-1),Xp=proj(1,0,0),Xm=proj(-1,0,0),Yp=proj(0,1,0),Ym=proj(0,-1,0);
+  function ax(a,b,dash){cx.beginPath();cx.setLineDash(dash?[4,3]:[]);cx.strokeStyle=dash?'#aaa':'#888';cx.moveTo(cxc,cyc);cx.lineTo(a[0],a[1]);cx.stroke();cx.setLineDash([]);}
+  ax(Xm,0,true);ax(Ym,0,true);ax(S,0,true);ax(Xp,0,false);ax(Yp,0,false);
+  cx.beginPath();cx.strokeStyle='#2a1a0e';cx.moveTo(cxc,cyc);cx.lineTo(N[0],N[1]);cx.stroke();
+  // equatorial diamonds
+  function diam(p,c){cx.save();cx.translate(p[0],p[1]);cx.strokeStyle=c;cx.lineWidth=1.6;cx.beginPath();cx.moveTo(0,-5);cx.lineTo(5,0);cx.lineTo(0,5);cx.lineTo(-5,0);cx.closePath();cx.fillStyle='#fff';cx.fill();cx.stroke();cx.restore();}
+  diam(Xp,'#BF7400');diam(Xm,'#BF7400');diam(Yp,'#BF7400');diam(Ym,'#BF7400');
+  // poles
+  cx.fillStyle='#009E73';cx.beginPath();cx.arc(N[0],N[1],6,0,2*Math.PI);cx.fill();
+  cx.fillStyle='#D55E00';cx.beginPath();cx.arc(S[0],S[1],6,0,2*Math.PI);cx.fill();
+  cx.font='14px Inter,Arial';cx.fillStyle='#009E73';cx.fillText('|0⟩',N[0]-26,N[1]-4);
+  cx.fillStyle='#D55E00';cx.fillText('|1⟩',S[0]+8,S[1]+6);
+  cx.font='12px Inter,Arial';cx.fillStyle='#56B4E9';cx.fillText('|+x⟩',Xp[0]+6,Xp[1]+2);
+  cx.fillStyle='#CC79A7';cx.fillText('|+y⟩',Yp[0]-34,Yp[1]+12);
+  // state vector
+  const v=bvec(th,ph),P=proj(v[0],v[1],v[2]);
+  cx.strokeStyle='#0072B2';cx.lineWidth=2.5;cx.beginPath();cx.moveTo(cxc,cyc);cx.lineTo(P[0],P[1]);cx.stroke();
+  cx.fillStyle='#0072B2';cx.beginPath();cx.arc(P[0],P[1],5,0,2*Math.PI);cx.fill();
+}
+function fmt(x){return (x>=0?'+':'')+x.toFixed(3);}
+function update(){
+  const th=+th_.value*Math.PI/180, ph=+ph_.value*Math.PI/180;
+  thv.textContent=th_.value+'°';phv.textContent=ph_.value+'°';
+  const rx=Math.sin(th)*Math.cos(ph),ry=Math.sin(th)*Math.sin(ph),rz=Math.cos(th);
+  ex.textContent=fmt(rx);ey.textContent=fmt(ry);ez.textContent=fmt(rz);
+  const a=Math.cos(th/2), b=Math.sin(th/2);
+  const br=b*Math.cos(ph), bi=b*Math.sin(ph);
+  state.innerHTML=a.toFixed(3)+'|0⟩ + ('+br.toFixed(3)+(bi>=0?'+':'')+bi.toFixed(3)+'i)|1⟩';
+  const P={zp:(1+rz)/2,zm:(1-rz)/2,xp:(1+rx)/2,xm:(1-rx)/2,yp:(1+ry)/2,ym:(1-ry)/2};
+  for(const k in P){document.getElementById('b'+k).style.width=(P[k]*100).toFixed(1)+'%';document.getElementById('v'+k).textContent=P[k].toFixed(3);}
+  draw(th,ph);
+}
+const th_=document.getElementById('th'),ph_=document.getElementById('ph');
+th_.addEventListener('input',update);ph_.addEventListener('input',update);
+document.querySelectorAll('button[data-t]').forEach(b=>b.addEventListener('click',()=>{th_.value=b.dataset.t;ph_.value=b.dataset.p;update();}));
+update();
+</script>
+</body>
+</html>

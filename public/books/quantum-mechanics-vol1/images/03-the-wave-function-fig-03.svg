@@ -1,0 +1,35 @@
+<!-- CAJAL SVG Figure
+     Book-slug: quantum-mechanics-vol1
+     Chapter: 03-the-wave-function
+     Figure: 03 — One conservation law in two guises
+     Type: schematic  Author: Humanitarians AI Incorporated  Date-generated: 2026-06-19
+-->
+<svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl-03w">
+  <title id="ttl-03w">One conservation law in two guises</title>
+  <desc>The quantum probability continuity equation has the same form as the fluid mass-continuity equation: rate of change of a density plus divergence of its current is zero. The total amount is conserved because it can only flow across the boundary.</desc>
+  <metadata><cajal:figure xmlns:cajal="https://bearbrown.ai/cajal/1.0"
+      book-slug="quantum-mechanics-vol1" chapter="03-the-wave-function"
+      figure-number="03" figure-title="One conservation law in two guises" figure-slug="probability-continuity-analogy" figure-type="schematic" priority="Important"
+      author="Humanitarians AI Incorporated" date-generated="2026-06-19" source-file="pantry/03-the-wave-function-cajal.md"/></metadata>
+<text x="350" y="28" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="14" fill="#2a1a0e" text-anchor="middle">One conservation law in two guises</text>
+<rect x="40" y="50" width="300" height="244" fill="#FFFFFF" stroke="#545454" stroke-width="1"/>
+<rect x="360" y="50" width="300" height="244" fill="#CCE5F1" stroke="#0072B2" stroke-width="1.6"/>
+<text x="190" y="72" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="12" fill="#2a1a0e" text-anchor="middle">Fluid — mass</text>
+<text x="510" y="72" font-family="'EB Garamond','Garamond',Georgia,serif" font-size="12" fill="#0072B2" text-anchor="middle">Quantum — probability</text>
+<rect x="64" y="86" width="252" height="34" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="190" y="108" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e" text-anchor="middle">∂ρ/∂t  +  ∂J/∂x  =  0</text>
+<rect x="384" y="86" width="252" height="34" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="510" y="108" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="13" fill="#2a1a0e" text-anchor="middle">∂|ψ|²/∂t  +  ∂J/∂x  =  0</text>
+<line x1="316" y1="103" x2="384" y2="103" stroke="#545454" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="350" y="99" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="9" fill="#545454" text-anchor="middle">same form</text>
+<text x="190" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">ρ  —  mass density</text>
+<text x="190" y="176" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">J  —  mass current</text>
+<text x="190" y="210" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle" font-style="italic">the mass only flows across edges</text>
+<rect x="96" y="236" width="188" height="30" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="0.75"/>
+<text x="190" y="256" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#2a1a0e" text-anchor="middle">∫ ρ dx  =  constant</text>
+<text x="510" y="150" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">|ψ|²  —  probability density</text>
+<text x="510" y="176" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="11" fill="#2a1a0e" text-anchor="middle">J = (ℏ/m) Im(ψ* ∂ψ/∂x)</text>
+<text x="510" y="210" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="10" fill="#545454" text-anchor="middle" font-style="italic">probability only flows across edges</text>
+<rect x="416" y="236" width="188" height="30" fill="#FFFFFF" stroke="#0072B2" stroke-width="1.2"/>
+<text x="510" y="256" font-family="'Inter',-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#0072B2" text-anchor="middle">∫ |ψ|² dx  =  1</text>
+</svg>
